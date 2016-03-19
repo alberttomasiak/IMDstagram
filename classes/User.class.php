@@ -27,7 +27,7 @@
             }
         }
 
-        public function signUp()
+        public function canSignUp()
         {
             try
             {
@@ -50,7 +50,7 @@
             }
         }
 
-        public function login($p_username, $p_password)
+        public function canLogin($p_username, $p_password)
         {
             try
             {
@@ -64,10 +64,6 @@
                     if(password_verify($p_password, $userRow['password']))
                     {
                         session_start();
-                        //$_SESSION['user_session'] = $userRow['email'];
-                        //$_SESSION['id'] = $userRow['id'];
-                        //$_SESSION['name'] = $userRow['name'];
-                        //$_SESSION['isLoggedIn'] = true;
                         return true;
                     }
                     else
