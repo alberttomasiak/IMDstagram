@@ -38,40 +38,25 @@ if( !empty( $_POST ) ){
 </head>
 <body>
     <div class="wrapperSignup">
-    <section class="registerForm">
-      <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
-        <form class="loginForm" action="" method="post">
-          <input type="email" class="inputfld" name="email" id="email" placeholder="Email">
+        <section class="registerForm">
+          <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
+            <form class="loginForm" action="" method="post">
+              <input type="email" class="inputfld" name="email" id="email" placeholder="Email">
 
-          <input type="text" class="inputfld"  name="fullName" id="fullName" placeholder="Naam">
+              <input type="text" class="inputfld"  name="fullName" id="fullName" placeholder="Naam">
 
-          <input type="text" class="inputfld"  name="username" id="username" placeholder="Gebruikersnaam">
+              <input type="text" class="inputfld"  name="username" id="username" placeholder="Gebruikersnaam">
 
-          <input type="password" class="inputfld"  name="password" id="password" placeholder="Wachtwoord">
+              <input type="password" class="inputfld"  name="password" id="password" placeholder="Wachtwoord">
 
-          <input type="submit" class="submitButton" value="Sign Up">
-        </form>
-        <div class="register">
-            <p>Heb je al een account? Klik <a href="login.php"> hier </a> om u aan te melden.</p>
-        </div>
+              <input type="submit" class="submitButton" value="Sign Up">
+            </form>
+            <div class="register">
+                <p>Heb je al een account? Klik <a href="login.php"> hier </a> om u aan te melden.</p>
+            </div>
+        </section>
 
-
-    </section>
-  </div>
-    <footer>
-      <div class="footerWrapperSignup">
-      <a href="#">OVER ONS</a>
-      <a href="#">ONDERSTEUNING</a>
-      <a href="#">BLOG</a>
-      <a href="#">PERS</a>
-      <a href="#">API</a>
-      <a href="#">VACATURES</a>
-      <a href="#">PRIVACY</a>
-      <a href="#">VOORWAARDEN</a>
-      <a href="#">TAAL</a>
-      <p>&copy; 2016 IMDSTAGRAM</p>
-      </div>
-    </footer>
-
+        <?php include 'footer.inc.php'; ?>
+    </div>
 </body>
 </html>
