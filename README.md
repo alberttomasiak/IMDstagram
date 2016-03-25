@@ -1,7 +1,7 @@
 
 
 
-![Alt text](images/logo.png)
+![Alt text](public/images/logo.png)
 
 
 Rebuilding instagram in PHP
