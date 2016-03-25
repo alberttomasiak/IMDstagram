@@ -7,7 +7,7 @@ if( !empty( $_POST ) ){
     $user->FullName = $_POST['fullName'];
     $user->Username = $_POST['username'];
     $user->Password = $_POST['password'];
-    if($user->canSignUp()){
+    if($user->register()){
         $feedback = "Account created successfully.";
         $_SESSION['loggedin'] = "yes";
         header("location: login.php");

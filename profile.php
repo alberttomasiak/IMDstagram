@@ -3,7 +3,11 @@
     session_start();
 
     if(isset($_SESSION['loggedin'])){
+        $profile = $_GET['profile'];
 
+        $user = new User();
+        $userData = $user->getAll($profile);
+        //var_dump($userData);
     }else{
         header('location: login.php');
     }
@@ -46,15 +50,15 @@
     </div>
     
     <section>
-        <img src="https://scontent-ams3-1.cdninstagram.com/t51.2885-19/s150x150/12716783_212920045723586_226062489_a.jpg" alt="">
-        <h1>cocacola</h1>
+        <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
+        <h1><?php echo $userData['username']; ?></h1>
         <a href="">Follow</a>
         <div class="about">
-            <h2>Coca-Cola</h2>
+            <h2><?php echo $userData['fullName']; ?></h2>
             <span>
-                Watch our full Big Game ad in the link below.
+                <?php echo $userData['bio']; ?>
             </span>
-            <a href="youtu.be/OlZqBR3yTiw">youtu.be/OlZqBR3yTiw</a>
+            <a href="<?php echo $userData['website']; ?>"><?php echo $userData['website']; ?></a>
         </div>
         <ul>
             <li>
