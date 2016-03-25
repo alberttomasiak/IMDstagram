@@ -23,52 +23,38 @@
 
 ?><!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>IMDStagram</title>
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<head>
+  <meta charset="utf-8">
+  <title>IMDStagram</title>
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="public/css/style.css" media="screen" title="no title" charset="utf-8">
-  </head>
-  <body>
-    <div class="wrapper">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <section class="login">
-      <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
-        <form class="loginForm" action="" method="post">
-          <input type="text" class="inputfld" name="username" placeholder="Gebruikersnaam">
-          <input type="password" class="inputfld" name="password" placeholder="Wachtwoord">
-          <input type="submit" class="submitButton" name="submitLogin" value="Aanmelden">
-        </form>
-        <div class="register">
-          <p>Problemen met het inloggen? Klik <a href="#"> hier </a> om uw inloggegevens aan te vragen.</p>
-            <p>Heb je geen account? Klik <a href="signup.php"> hier </a> om u in te schrijven.</p>
-        </div>
+  <link rel="stylesheet" href="public/css/style.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+  <div class="wrapper">
 
 
-    </section>
-  </div>
-    <footer>
-      <div class="footerWrapper">
-      <a href="#">OVER ONS</a>
-      <a href="#">ONDERSTEUNING</a>
-      <a href="#">BLOG</a>
-      <a href="#">PERS</a>
-      <a href="#">API</a>
-      <a href="#">VACATURES</a>
-      <a href="#">PRIVACY</a>
-      <a href="#">VOORWAARDEN</a>
-      <a href="#">TAAL</a>
-      <p>&copy; 2016 IMDSTAGRAM</p>
+  <section class="login">
+    <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
+      <form class="loginForm" action="" method="post">
+        <input type="text" class="inputfld" name="username" placeholder="Gebruikersnaam">
+        <input type="password" class="inputfld" name="password" placeholder="Wachtwoord">
+        <input type="submit" class="submitButton" name="submitLogin" value="Aanmelden">
+      </form>
+      <div class="register">
+        <p>Problemen met het inloggen? Klik <a href="#"> hier </a> om uw inloggegevens aan te vragen.</p>
+          <p>Heb je geen account? Klik <a href="signup.php"> hier </a> om u in te schrijven.</p>
       </div>
-    </footer>
-  </body>
+  </section>
+
+  <?php include 'footer.inc.php'; ?>
+</div>
+</body>
 </html>

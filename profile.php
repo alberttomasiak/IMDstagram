@@ -33,20 +33,9 @@
     <link rel="stylesheet" href="./public/css/style.css">
 </head>
 <body>
-    <div class="wrapperProfile">
-        <nav class="profileNav">
-            <ul>
-                <li>
-                    <a href="index.php" class="homeLogo">logo</a>
-                </li>
-                <li></li>
-                <li>
-                    <h4><a class="afmelden" href="logout.php">Afmelden</a></h4>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    
+
+    <?php include 'nav.inc.php'; ?>
+
     <section>
         <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture" class="profilePicture">
         <h1><?php echo $userData['username']; ?></h1>
@@ -91,20 +80,7 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
         </article>
     </section>
-    
-    <footer>
-        <div class="footerWrapper">
-            <a href="#">OVER ONS</a>
-            <a href="#">ONDERSTEUNING</a>
-            <a href="#">BLOG</a>
-            <a href="#">PERS</a>
-            <a href="#">API</a>
-            <a href="#">VACATURES</a>
-            <a href="#">PRIVACY</a>
-            <a href="#">VOORWAARDEN</a>
-            <a href="#">TAAL</a>
-            <p>&copy; 2016 IMDSTAGRAM</p>
-        </div>
-    </footer>
+
+    <?php include 'footer.inc.php'; ?>
 </body>
 </html>      
