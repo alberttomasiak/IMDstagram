@@ -27,14 +27,14 @@
             }
         }
 
-        public function canSignUp()
+        public function register()
         {
             try
             {
                 $new_password = password_hash($this->m_sPassword, PASSWORD_DEFAULT);
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("INSERT INTO user(email, fullName, username, password)
-                                                           VALUES(:email, :fullName, :username, :password)");
+                $statement = $conn->prepare("INSERT INTO user(email, fullName, username, password, profilePicture)
+                                                           VALUES(:email, :fullName, :username, :password, 'public/images/defaultprofilepic.jpg')");
 
                 $statement->bindparam(":email", $this->m_sEmail);
                 $statement->bindparam(":fullName", $this->m_sFullName);
@@ -76,6 +76,18 @@
             {
                 echo $e->getMessage();
             }
+        }
+
+        // RETURNS ALL DATA FOR A SPECIFIC USER
+        public function getAll($p_vUsername){
+            $conn = Db::getInstance();
+
+            $statement = $conn->prepare("SELECT * FROM user WHERE username=:username");
+            $statement->bindparam(":username", $p_vUsername);
+            $statement->execute();
+            //$userData = mysql_fetch_array($result);
+            $userData = $statement->fetch(PDO::FETCH_ASSOC);
+            return $userData;
         }
     }
 
