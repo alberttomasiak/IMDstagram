@@ -7,7 +7,6 @@
 
         $user = new User();
         $userData = $user->getAll($profile);
-        //var_dump($userData);
     }else{
         header('location: login.php');
     }
