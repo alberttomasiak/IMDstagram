@@ -17,11 +17,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Real Name | Instagram</title>
+    <title><?php echo $userData['fullName']; ?> | IMDstagram</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="./public/css/reset.css">
     
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -31,7 +29,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    
+
     <link rel="stylesheet" href="./public/css/style.css">
 </head>
 <body>
@@ -50,9 +48,9 @@
     </div>
     
     <section>
-        <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
+        <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture" class="profilePicture">
         <h1><?php echo $userData['username']; ?></h1>
-        <a href="">Follow</a>
+        <a href="#" class="btn btn-primary">Follow</a>
         <div class="about">
             <h2><?php echo $userData['fullName']; ?></h2>
             <span>
@@ -109,16 +107,4 @@
         </div>
     </footer>
 </body>
-</html>
-   
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>IMDStagram</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/reset.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="public/css/style.css" media="screen" title="no title" charset="utf-8">
-
-      
+</html>      
