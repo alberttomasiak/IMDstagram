@@ -105,13 +105,13 @@
             try
             {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE 'user'
-                                              SET 'email' = :email,
-                                                  'fullName' = :fullName,
-                                                  'username' = :username,
-                                                  'bio' = :bio,
-                                                  'website' = :website
-                                              WHERE 'id' = :id");
+                $statement = $conn->prepare("UPDATE user
+                                              SET email = :email,
+                                                  fullName = :fullName,
+                                                  username = :username,
+                                                  bio = :bio,
+                                                  website = :website
+                                              WHERE id = :id");
 
                 $statement->bindparam(":email", $this->m_sEmail);
                 $statement->bindparam(":fullName", $this->m_sFullName);
