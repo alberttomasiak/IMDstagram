@@ -5,6 +5,22 @@
     if(isset($_SESSION['loggedin'])){
         $user = new User();
         $userData = $user->getAll($_SESSION['username']);
+
+        if( !empty( $_POST ) ){
+            $user->Email = $_POST['email'];
+            $user->FullName = $_POST['fullName'];
+            $user->Username = $_POST['username'];
+            $user->Bio = $_POST['biography'];
+            $user->Website = $_POST['website'];
+            if($user->updateProfile($userData['id'])){
+                $feedback = "Account updated successfully.";
+                header("location: logout.php");
+            }else{
+                echo "ERROR";
+            }
+            // zorg ervoor dat je niet opnieuw naar database schrijft wanneer je refresht
+            //header("location: index.php");
+        }
     }else{
         header('location: login.php');
     }
@@ -24,12 +40,15 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="./public/css/style.css">
 </head>
 <body>
+    <?php include 'nav.inc.php' ?>
     <h1>Edit profile</h1>
-    <form action="">
+    <form action="" method="post">
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="<?php echo $userData['fullName']; ?>">
+        <input type="text" id="name" name="fullName" value="<?php echo $userData['fullName']; ?>">
         
         <label for="email">Email</label>
         <input type="email" id="email" name="email" value="<?php echo $userData['email']; ?>">
@@ -45,5 +64,6 @@
         
         <input type="submit" value="Submit">
     </form>
+    <?php include 'footer.inc.php' ?>
 </body>
 </html>

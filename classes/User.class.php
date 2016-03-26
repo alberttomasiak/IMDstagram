@@ -7,6 +7,9 @@
         private $m_sFullName;
         private $m_sUsername;
         private $m_sPassword;
+        // update profile
+        private $m_sBio;
+        private $m_sWebsite;
 
 
         function __SET($p_sProperty, $p_vValue)
@@ -23,6 +26,12 @@
                     break;
                 case "Password":
                     $this->m_sPassword = $p_vValue;
+                    break;
+                case "Bio":
+                    $this->m_sBio = $p_vValue;
+                    break;
+                case "Website":
+                    $this->m_sWebsite = $p_vValue;
                     break;
             }
         }
@@ -88,6 +97,36 @@
             //$userData = mysql_fetch_array($result);
             $userData = $statement->fetch(PDO::FETCH_ASSOC);
             return $userData;
+        }
+
+        // USED FOR UPDATING A USERS PROFILE IN EDIT-PROFILE.PHP
+        public function updateProfile($p_iUserID)
+        {
+            try
+            {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("UPDATE 'user'
+                                              SET 'email' = :email,
+                                                  'fullName' = :fullName,
+                                                  'username' = :username,
+                                                  'bio' = :bio,
+                                                  'website' = :website
+                                              WHERE 'id' = :id");
+
+                $statement->bindparam(":email", $this->m_sEmail);
+                $statement->bindparam(":fullName", $this->m_sFullName);
+                $statement->bindparam(":username", $this->m_sUsername);
+                $statement->bindparam(":bio", $this->m_sBio);
+                $statement->bindparam(":website", $this->m_sWebsite);
+                $statement->bindparam(":id", $p_iUserID);
+                if($statement->execute()){
+                    return true;
+                }
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }
         }
     }
 
