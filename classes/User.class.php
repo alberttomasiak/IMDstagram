@@ -40,18 +40,35 @@
         {
             try
             {
-                $new_password = password_hash($this->m_sPassword, PASSWORD_DEFAULT);
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("INSERT INTO user(email, fullName, username, password, profilePicture)
+
+                // check if fields are not empty and username is 4 characters min
+                if(strlen($this->m_sUsername) > 3 && !empty($this->m_sEmail) && !empty($this->m_sPassword)){
+                    $stmt = $conn->prepare("SELECT * FROM user WHERE username=:username OR email=:email");
+                    $stmt->bindparam(":username", $this->m_sUsername);
+                    $stmt->bindparam(":email", $this->m_sEmail);
+                    $stmt->execute();
+                    // check if username or email isn't in use already
+                    if($stmt->rowCount() > 0) {
+                        return false;
+                    }else{
+                        // write to database
+                        $new_password = password_hash($this->m_sPassword, PASSWORD_DEFAULT);
+                        $statement = $conn->prepare("INSERT INTO user(email, fullName, username, password, profilePicture)
                                                            VALUES(:email, :fullName, :username, :password, 'public/images/defaultprofilepic.jpg')");
 
-                $statement->bindparam(":email", $this->m_sEmail);
-                $statement->bindparam(":fullName", $this->m_sFullName);
-                $statement->bindparam(":username", $this->m_sUsername);
-                $statement->bindparam(":password", $new_password);
-                if($statement->execute()){
-                    return true;
+                        $statement->bindparam(":email", $this->m_sEmail);
+                        $statement->bindparam(":fullName", $this->m_sFullName);
+                        $statement->bindparam(":username", $this->m_sUsername);
+                        $statement->bindparam(":password", $new_password);
+                        if ($statement->execute()) {
+                            return true;
+                        }
+                    }
+                }else{
+                    return false;
                 }
+
             }
             catch(PDOException $e)
             {
