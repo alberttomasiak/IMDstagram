@@ -25,7 +25,9 @@ if( !empty( $_POST ) ){
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <!-- Optional theme -->
@@ -36,37 +38,7 @@ if( !empty( $_POST ) ){
     
     <link rel="stylesheet" href="public/css/style.css" media="screen" title="no title" charset="utf-8">
 
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#username").on("keyup", function(e){
-                // username ophalen uit het textvak
-                var inputUsername = $("#username").val();
-
-                // display feedback div als de textbox niet leeg is
-                if($("#username").val() == ""){
-                    $( ".usernameFeedback" ).hide();
-                }else{
-                    $( ".usernameFeedback" ).show();
-                }
-
-
-                // AJAX call, verzenden naar php file om query uit te voeren
-                $.post( "ajax/realtimeUsernameCheck.php", { username: inputUsername })
-                    .done(function( availability ) {
-
-                        if(availability.status == 'available'){
-                            // feedback geven
-                            $(".usernameFeedback").text( "Username available" );
-                        }else{
-                            $(".usernameFeedback").text( "Username taken" );
-                        }
-
-                    });
-
-            });
-        });
-    </script>
+    <script type="text/javascript" src="public/js/realtimeUsernameCheck.js"></script>
 </head>
 <body>
     <div class="wrapperSignup">

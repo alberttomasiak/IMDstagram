@@ -32,6 +32,8 @@
     <meta charset="UTF-8">
     <title>Edit your profile</title>
 
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -42,6 +44,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="./public/css/style.css">
+
+    <script type="text/javascript" src="public/js/realtimeUsernameCheck.js"></script>
 </head>
 <body>
     <?php include 'nav.inc.php' ?>
@@ -55,7 +59,8 @@
         
         <label for="username">Username</label>
         <input type="text" id="username" name="username" value="<?php echo $userData['username']; ?>">
-        
+        <div class="usernameFeedback" style="display: none;"></div>
+
         <label for="biography">Biography</label>
         <textarea name="biography" id="biography" cols="30" rows="10"><?php echo $userData['bio']; ?></textarea>
         
