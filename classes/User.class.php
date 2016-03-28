@@ -128,7 +128,27 @@
                 echo $e->getMessage();
             }
         }
+
+        public function UsernameAvailable()
+        {
+            //include("Connection.php"); //open connection to Dbase
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM user WHERE username=:username");
+            $stmt->bindparam(":username", $this->m_sUsername);
+            $stmt->execute();
+            if($stmt->rowCount() > 0){
+                // username taken
+                return false;
+            } else{
+                // still available
+                return true;
+            }
+        }
+
+
+
     }
+
 
 
 

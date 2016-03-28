@@ -44,9 +44,9 @@
   <section class="login">
     <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
       <form class="loginForm" action="" method="post">
-        <input type="text" class="inputfld" name="username" placeholder="Gebruikersnaam">
-        <input type="password" class="inputfld" name="password" placeholder="Wachtwoord">
-        <input type="submit" class="submitButton" name="submitLogin" value="Aanmelden">
+        <input type="text" class="inputfld" name="username" placeholder="Username">
+        <input type="password" class="inputfld" name="password" placeholder="Password">
+        <input type="submit" class="submitButton" name="submitLogin" value="Log in">
       </form>
       <div class="register">
         <p>Problemen met het inloggen? Klik <a href="#"> hier </a> om uw inloggegevens aan te vragen.</p>
