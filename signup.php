@@ -12,7 +12,7 @@ if( !empty( $_POST ) ){
         $_SESSION['loggedin'] = "yes";
         header("location: login.php");
     }else{
-      echo "FOUT";
+      echo "ERROR";
     }
     // zorg ervoor dat je niet opnieuw naar database schrijft wanneer je refresht
     //header("location: index.php");
