@@ -35,6 +35,38 @@ if( !empty( $_POST ) ){
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="public/css/style.css" media="screen" title="no title" charset="utf-8">
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#username").on("keyup", function(e){
+                // username ophalen uit het textvak
+                var inputUsername = $("#username").val();
+
+                // display feedback div als de textbox niet leeg is
+                if($("#username").val() == ""){
+                    $( ".usernameFeedback" ).hide();
+                }else{
+                    $( ".usernameFeedback" ).show();
+                }
+
+
+                // AJAX call, verzenden naar php file om query uit te voeren
+                $.post( "ajax/realtimeUsernameCheck.php", { username: inputUsername })
+                    .done(function( availability ) {
+
+                        if(availability.status == 'available'){
+                            // feedback geven
+                            $(".usernameFeedback").text( "Username available" );
+                        }else{
+                            $(".usernameFeedback").text( "Username taken" );
+                        }
+
+                    });
+
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="wrapperSignup">
@@ -43,11 +75,12 @@ if( !empty( $_POST ) ){
             <form class="loginForm" action="" method="post">
               <input type="email" class="inputfld" name="email" id="email" placeholder="Email">
 
-              <input type="text" class="inputfld"  name="fullName" id="fullName" placeholder="Naam">
+              <input type="text" class="inputfld"  name="fullName" id="fullName" placeholder="Name">
 
-              <input type="text" class="inputfld"  name="username" id="username" placeholder="Gebruikersnaam">
+              <input type="text" class="inputfld"  name="username" id="username" placeholder="Username">
+                <div class="usernameFeedback"></div>
 
-              <input type="password" class="inputfld"  name="password" id="password" placeholder="Wachtwoord">
+              <input type="password" class="inputfld"  name="password" id="password" placeholder="Password">
 
               <input type="submit" class="submitButton" value="Sign Up">
             </form>
