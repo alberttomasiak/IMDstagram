@@ -4,6 +4,7 @@
 //
 */
 
+
 .profilePicture{
     width: 150px;
     height: 150px;
@@ -17,6 +18,45 @@
 */
 
 
+#searchResults {
+    display: none;
+    top:40px;
+    position: relative;;
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    width: 200px;
+    border-radius: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-indent: -30px;
+    margin-top: 0px;
+}
+#searchResults:after,
+#searchResults:before {
+    bottom: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+
+}
+
+#searchResults:after {
+    border-color: rgba(196, 196, 196, 0);
+    border-bottom-color: #ffffff;
+    border-width: 14px;
+    left: 50%;
+    margin-left: -14px;
+}
+#searchResults:before {
+    border-color: rgba(196, 196, 196, 0);
+    border-bottom-color: #c4c4c4;
+    border-width: 15px;
+    left: 50%;
+    margin-left: -15px;
+}
 /*
 //
 //      LOGIN PAGE + SIGN UP PAGE
