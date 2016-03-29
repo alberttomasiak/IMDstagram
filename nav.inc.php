@@ -2,7 +2,8 @@
 include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 
-?><nav class="navbar navbar-default">
+?><script src="public/js/searchForContent.js" type="text/javascript"></script>
+<nav class="navbar navbar-default">
 
     <div class="container-fluid">
         <div class="navbar-header">
@@ -27,9 +28,8 @@ include_once("classes/User.class.php");
 
 </nav>
 
-<link rel="stylesheet" href="public/css/style.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script>
+<script src="public/js/searchForContent.js" type="text/javascript"></script>
+<!--<script>
 $(document).ready(function(){
 		$("#searchBox").keyup(function(){
 			var searchQuery = $(this).val();
@@ -51,17 +51,4 @@ $(document).ready(function(){
 		});
 	});
 
-</script>
-
-<!--
-<nav class="navbar navbar-default">
-
-    <ul>
-        <li>
-            <a href="index.php" class="homeLogo">logo</a>
-        </li>
-        <li>
-            <h4><a class="Log Out" href="logout.php"><a class="username" href="profile.php?profile=<?php echo $_SESSION['username']; ?>"><?php if($_SESSION['loggedin']==true){ echo $_SESSION['username']; } ?></a></a></h4>
-        </li>
-    </ul>
-</nav>-->
+</script>-->
