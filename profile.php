@@ -17,8 +17,8 @@
 <head>
     <meta charset="UTF-8">
     <title><?php echo $userData['fullName']; ?> | IMDstagram</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
     
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -38,7 +38,18 @@
     <section>
         <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture" class="profilePicture">
         <h1><?php echo $userData['username']; ?></h1>
-        <a href="#" class="btn btn-primary">Follow</a>
+
+        <?php
+            // SHOW EDIT PROFILE INSTEAD OF FOLLOW WHEN IT'S YOUR OWN PROFILE
+            if(isset($_SESSION['loggedin'])){
+                if($userData['username'] == $_SESSION['username']){
+                   echo "<a href='edit-profile.php' class='btn btn-primary'>Edit profile</a>";
+                }else{
+                    echo "<a href='#' class='btn btn-primary'>Follow</a>";
+                }
+            }
+        ?>
+
         <div class="about">
             <h2><?php echo $userData['fullName']; ?></h2>
             <span>
@@ -48,17 +59,28 @@
         </div>
         <ul>
             <li>
-                <span>506</span> berichten
+                <span>506</span> posts
             </li>
             <li>
-                <span>2000</span> volgers
+                <a href="followers.php?profile=<?php echo $userData["username"] ?>">
+                    <span>2000</span> followers
+                </a>
             </li>
             <li>
-                <span>692</span> volgend
+                <a href="following.php?profile=<?php echo $userData["username"] ?>">
+                    <span>692</span> following
+                </a>
             </li>
         </ul>
     </section>
-    
+
+    <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE-->
+    <?php if(isset($_SESSION['loggedin']) && $userData['username'] == $_SESSION['username']): ?>
+        <section>
+            <a href="#">Upload a picture</a>
+        </section>
+    <?php endif; ?>
+
     <section>
         <article>
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
