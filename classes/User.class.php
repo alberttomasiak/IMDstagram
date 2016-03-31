@@ -36,6 +36,30 @@
             }
         }
 
+        function __get($p_sProperty)
+        {
+            switch( $p_sProperty){
+                case "Email":
+                    return $this->m_sEmail;
+                    break;
+                case "FullName":
+                    return $this->m_sFullName;
+                    break;
+                case "Username":
+                    return $this->m_sUsername;
+                    break;
+                case "Password":
+                    return $this->m_sPassword;
+                    break;
+                case "Bio":
+                    return $this->m_sBio;
+                    break;
+                case "Website":
+                    return $this->m_sWebsite;
+                    break;
+            }
+        }
+
         public function register()
         {
             try
