@@ -77,7 +77,7 @@
     <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE-->
     <?php if(isset($_SESSION['loggedin']) && $userData['username'] == $_SESSION['username']): ?>
         <section>
-            <a href="#">Upload a picture</a>
+            <a href="uploadpost.php">Upload a picture</a>
         </section>
     <?php endif; ?>
 
