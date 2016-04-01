@@ -10,7 +10,7 @@
         $userData = $user->getAll($profile);
 
         $post = new Post();
-        $userPosts = $post->getAll($userData['id']);
+        $userPosts = $post->getAllForUser($userData['id']);
         //var_dump($userPosts);
     }else{
         header('location: login.php');
@@ -48,13 +48,45 @@
             // SHOW EDIT PROFILE INSTEAD OF FOLLOW WHEN IT'S YOUR OWN PROFILE
             if(isset($_SESSION['loggedin'])){
                 if($userData['username'] == $_SESSION['username']){
-                   echo "<a href='edit-profile.php' class='btn btn-primary'>Edit profile</a>";
+                   echo "<a href='edit-profile.php' class='btn'>Edit profile</a>";
+                }else if($user->isFollowing($userData['id']) == false){
+                    //echo "<button class='btn btn-primary' data-id='" . $userData['id'] . "' id='btnFollow'>Follow</button>";
+                    echo "<input type='submit' class='btn btn-primary' data-action='follow' data-id='" . $userData['id'] . "' id='btnFollow' value='follow'>";
                 }else{
-                    echo "<a href='#' class='btn btn-primary'>Follow</a>";
+                    echo "<input type='submit' class='btn btn-primary active' data-action='stopfollowing' data-id='" . $userData['id'] . "' id='btnFollow' value='Following'>";
                 }
             }
         ?>
+        <script>
+            // FOLLOW BUTTON SCRIPT
+            $(document).ready(function() {
+                $("#btnFollow").on("click", function(e){
+                    var followingID = $(this).attr("data-id");
+                    var action = $(this).attr("data-action");
+                    console.log(followingID, action)
+                    $.post( "ajax/follow.php", {followingID:followingID, action:action} )
+                        .done(function( response ) {
 
+                            if(response.status == 'success'){
+                                console.log('Success');
+                                if(response.action == 'following'){
+                                    $("#btnFollow").val('Following');
+                                    $("#btnFollow").toggleClass("active");
+                                    $("#btnFollow").attr('data-action', 'stopfollowing');
+                                }else if(response.action == 'notfollowing'){
+                                    $("#btnFollow").val('Follow');
+                                    $("#btnFollow").toggleClass("active");
+                                    $("#btnFollow").attr('data-action', 'follow');
+                                }
+                            }else{
+                                console.log('Fail');
+                            }
+
+                        });
+                    //e.preventDefault();
+                });
+            });
+        </script>
         <div class="about">
             <h2><?php echo $userData['fullName']; ?></h2>
             <span>

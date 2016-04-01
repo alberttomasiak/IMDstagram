@@ -171,6 +171,7 @@
             }
         }
 
+        // CHECK IF A SPECIFIC USERNAME IS STILL AVAILABLE
         public function UsernameAvailable()
         {
             //include("Connection.php"); //open connection to Dbase
@@ -184,6 +185,45 @@
             } else{
                 // still available
                 return true;
+            }
+        }
+
+        // FOLLOW ANOTHER USER
+        public function follow($p_iFollowingID){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("INSERT INTO follow(followerID, followingID, accepted, blocked)
+                                                           VALUES(:followerID, :followingID, '1', '0')");
+
+            $statement->bindparam(":followerID", $_SESSION['userID']);
+            $statement->bindparam(":followingID", $p_iFollowingID);
+            if ($statement->execute()) {
+                return true;
+            }
+        }
+
+        // STOP FOLLOWING A USER
+        public function stopFollowing($p_iFollowingID){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("DELETE FROM follow WHERE followerID=:followerID AND followingID=:followingID");
+
+            $statement->bindparam(":followerID", $_SESSION['userID']);
+            $statement->bindparam(":followingID", $p_iFollowingID);
+            if ($statement->execute()) {
+                return true;
+            }
+        }
+
+        // ChECK IF LOGGED IN USER IS FOLLOWING A SPECIFIC USER
+        public function isFollowing($p_iFollowingID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND followingID=:followingID");
+            $stmt->bindparam(":followerID", $_SESSION['userID']);
+            $stmt->bindparam(":followingID", $p_iFollowingID);
+            $stmt->execute();
+            if($stmt->rowCount() > 0){
+                return true;
+            } else{
+                return false;
             }
         }
 
