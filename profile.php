@@ -1,5 +1,6 @@
 <?php
     include_once 'classes/User.class.php';
+    include_once 'classes/Post.class.php';
     session_start();
 
     if(isset($_SESSION['loggedin'])){
@@ -7,6 +8,10 @@
 
         $user = new User();
         $userData = $user->getAll($profile);
+
+        $post = new Post();
+        $userPosts = $post->getAll($userData['id']);
+        //var_dump($userPosts);
     }else{
         header('location: login.php');
     }
@@ -74,7 +79,7 @@
         </ul>
     </section>
 
-    <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE-->
+    <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE -->
     <?php if(isset($_SESSION['loggedin']) && $userData['username'] == $_SESSION['username']): ?>
         <section>
             <a href="uploadpost.php">Upload a picture</a>
@@ -82,24 +87,22 @@
     <?php endif; ?>
 
     <section>
-        <article>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-        </article>
-        <article>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-        </article>
-        <article>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-        </article>
-        <article>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-        </article>
-        <article>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-        </article>
-        <article>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-        </article>
+        <!-- SHOW POSTS OR SHOW MESSAGE WHEN THERE ARE NO POSTS -->
+        <?php if($userPosts == false): ?>
+            <p>No posts yet.</p>
+        <?php else: ?>
+            <?php foreach( $userPosts as $key => $userPost ): ?>
+                <article>
+                    <a href="post.php?id=<?php echo $userPost['id'] ?>">
+                        <img src="<?php echo $userPost['path'] ?>" alt="">
+                    </a>
+                </article>
+            <?php endforeach; ?>
+
+            <!--<article>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
+            </article>-->
+        <?php endif; ?>
     </section>
 
     <?php include 'footer.inc.php'; ?>
