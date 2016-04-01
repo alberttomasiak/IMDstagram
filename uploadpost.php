@@ -4,10 +4,8 @@ if(!empty($_POST)){
 	include_once('classes/Db.class.php');
 	include_once('classes/User.class.php');
 	session_start();
-	$user = new User();
-	$userData = $user->getAll($_SESSION['username']);
 	$uploadReady = 1;
-	$file_name = $userData['id']."-".time().".jpg";
+	$file_name = $_SESSION['userID']."-".time().".jpg";
 	$file_tmp_name = $_FILES['postImage']['tmp_name'];
 	$file_path = "img/".$file_name;
 	$imageFileType = pathinfo($file_path, PATHINFO_EXTENSION);
@@ -46,7 +44,7 @@ if(!empty($_POST)){
 		if($file_name){
 			$db = Db::getInstance();
 			$statement = $db->prepare("insert into post (userID, path, description) values (:userID, :path, :description)");
-			$statement->bindValue(":userID", $userData['id']);
+			$statement->bindValue(":userID", $_SESSION['userID']);
 			$statement->bindValue(":path", $file_path);
 			$statement->bindValue(":description", $_POST['description']);
 			$result = $statement->execute();
