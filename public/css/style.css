@@ -80,3 +80,24 @@
 .navbar-brand img{
     height: 35px;
 }
+
+
+/*
+//
+//      DETAIL POST PAGE
+//
+*/
+
+#btnLike{
+    display: block;
+    height: 44px;
+    width: 48px;
+    text-indent: -9999px;
+    background-image: url('../images/heart-sprite.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.liked{
+    background: url('../images/heart-sprite.png') -50px 0
+}
