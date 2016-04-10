@@ -39,9 +39,56 @@
         }
 
         // LIKE A POST
-        public function like(){
+        public function like($p_iPostID){
+			$conn = Db::getInstance();
+			$statement = $conn->prepare("INSERT INTO likes(postID, userID)
+                                                           VALUES(:postID, :userID)");
 
+			$statement->bindparam(":postID", $p_iPostID);
+			$statement->bindparam(":userID", $_SESSION['userID']);
+			if ($statement->execute()) {
+				return true;
+			}
         }
+
+		// STOP LIKING A POST
+		public function dislike($p_iPostID){
+			$conn = Db::getInstance();
+			$statement = $conn->prepare("DELETE FROM likes WHERE postID=:postID AND userID=:userID");
+
+			$statement->bindparam(":postID", $p_iPostID);
+			$statement->bindparam(":userID", $_SESSION['userID']);
+			if ($statement->execute()) {
+				return true;
+			}
+		}
+
+		// CHECK IF A USER LIKED A POST
+		public function checkIfLiked($p_iPostID){
+			$conn = Db::getInstance();
+			$stmt = $conn->prepare("SELECT * FROM likes WHERE postID=:postID AND userID=:userID");
+			$stmt->bindparam(":postID", $p_iPostID);
+			$stmt->bindparam(":userID", $_SESSION['userID']);
+			$stmt->execute();
+			if($stmt->rowCount() > 0){
+				return true;
+			} else{
+				return false;
+			}
+		}
+
+		// RETURNS HOW MUCH LIKES A POST HAS
+		public function countLikes($p_iPostID){
+			$conn = Db::getInstance();
+			$stmt = $conn->prepare("SELECT * FROM likes WHERE postID=:postID");
+			$stmt->bindparam(":postID", $p_iPostID);
+			$stmt->execute();
+			if($stmt->execute()){
+				return $stmt->rowCount();
+			} else{
+				return false;
+			}
+		}
 		
 		public function checkIfImage(){
 			$file_name = $_SESSION['userID']."-".time().".jpg";
