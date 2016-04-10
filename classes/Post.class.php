@@ -1,9 +1,21 @@
 <?php
     include_once "Db.class.php";
-	include_once "./uploadpost.php";
 
     class Post{
 		public $uploadReady = 1;
+
+		// RETURNS ALL THE DATA FOR A SINGLE POST
+		public function getAllPost($p_iPostID){
+			$conn = Db::getInstance();
+
+			$statement = $conn->prepare("SELECT * FROM post WHERE id=:postID");
+			$statement->bindparam(":postID", $p_iPostID);
+			$statement->execute();
+
+			$result = $statement->fetch(PDO::FETCH_ASSOC);
+			return $result;
+		}
+
         // RETURNS ALL POSTS FOR A SPECIFIC USER (used on profile page)
         public function getAllForUser($p_iUserID){
             $conn = Db::getInstance();
@@ -110,6 +122,15 @@
 				MOVE_UPLOADED_FILE($file_tmp_name, "img/$file_name");
 				echo "Post succesfully made.";				}
 			}
+		}
+
+		// RETURNS DESCRIPTION WITH HASHTAGS AS LINKS
+		public function tagPostDescription($p_vDescription){
+			preg_match_all('/#(\w+)/',$p_vDescription,$matches);
+			foreach ($matches[1] as $match) {
+				$p_vDescription = str_replace("#$match", "<a href='tag.php/?tag=$match'>#$match</a>", "$p_vDescription");
+			}
+			return $p_vDescription;
 		}
 	}
 ?>
