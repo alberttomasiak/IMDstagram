@@ -19,8 +19,11 @@ if(!empty($_POST)){
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<title>Upload post</title>
+	<script src="public/js/jquery-2.2.3.min.js"></script>
+	<link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
+	<script src="public/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="public/css/style.css" type="text/css">
 </head>
 <body>
 <script type="application/javascript" src="public/js/uploadPostCheck.js"></script>
