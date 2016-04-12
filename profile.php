@@ -31,9 +31,13 @@
 <body>
 
     <?php include 'nav.inc.php'; ?>
-
-    <section>
-        <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture" class="profilePicture">
+<div class="container">
+    <header id="profileheader" class="row">
+        <div class="profilepic col-xs-3">
+            <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
+        </div>
+        <div class="col-xs-9 col-md-6">
+        <div id="usernamewrap">
         <h1><?php echo $userData['username']; ?></h1>
 
         <?php
@@ -79,14 +83,17 @@
                 });
             });
         </script>
+        </div>
         <div class="about">
-            <h2><?php echo $userData['fullName']; ?></h2>
+            <p>
+            <h2 id="fullname"><?php echo $userData['fullName']; ?></h2>
             <span>
                 <?php echo $userData['bio']; ?>
             </span>
             <a href="<?php echo $userData['website']; ?>"><?php echo $userData['website']; ?></a>
+            </p>
         </div>
-        <ul>
+        <ul class="profilestats">
             <li>
                 <span>506</span> posts
             </li>
@@ -101,7 +108,8 @@
                 </a>
             </li>
         </ul>
-    </section>
+        </div>
+    </header>
 
     <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE -->
     <?php if(isset($_SESSION['loggedin']) && $userData['username'] == $_SESSION['username']): ?>
@@ -130,5 +138,6 @@
     </section>
 
     <?php include 'footer.inc.php'; ?>
+</div>
 </body>
 </html>      
