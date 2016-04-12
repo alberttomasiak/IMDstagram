@@ -1,5 +1,7 @@
 <?php
     include_once('classes/User.class.php');
+    include_once("config.php");
+    include_once("includes/functions.php");
 
     if(isset($user)){
         if($user->is_loggedin()!=""){
@@ -20,6 +22,8 @@
         $feedback = "Wrong email or password. Try again";
       }
     }
+
+
 
 ?><!DOCTYPE html>
 <html>
@@ -43,20 +47,27 @@
   <div class="wrapper">
 
 
-  <section class="login">
-    <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
+  <div class="row" id="logo">
+    <div class="col-xs-6">
+    <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>"><img src="public/images/logo.png" width="420px"/></a>
+  </div>
+  <div class="col-xs-6" id="login">
+      <h1>Inloggen</h1>
       <form class="loginForm" action="" method="post">
         <input type="text" class="inputfld" name="username" placeholder="Username">
         <input type="password" class="inputfld" name="password" placeholder="Password">
         <input type="submit" class="submitButton" name="submitLogin" value="Log in">
       </form>
       <div class="register">
-        <p>Problemen met het inloggen? Klik <a href="#"> hier </a> om uw inloggegevens aan te vragen.</p>
-          <p>Heb je geen account? Klik <a href="signup.php"> hier </a> om u in te schrijven.</p>
+        <p>Inloggen met <a href="indexfb.php">FACEBOOK</a></br>
+        Ik kan niet inloggen? Klik <a href="#"> hier </a> om uw inloggegevens aan te vragen. </br>
+        Heb je geen account? Klik <a href="signup.php"> hier </a> om u in te schrijven.
+          
       </div>
-  </section>
+  </div>
 
-  <?php include 'footer.inc.php'; ?>
+  
 </div>
+<?php include 'footer.inc.php'; ?>
 </body>
 </html>

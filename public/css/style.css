@@ -1,3 +1,13 @@
+body{
+   background-image: url("../images/achtergrond.jpg");
+   background-repeat: no-repeat;
+
+
+}
+
+
+
+
 /*
 //
 //      PROFILE PAGE
@@ -61,7 +71,72 @@
 //
 //      LOGIN PAGE + SIGN UP PAGE
 //
+*/.wrapper{
+    width: 900px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 150px;
+
+
+}
+
+#login{
+    background-color: #31618b;
+    padding: 20px;
+       border-radius: 5px;
+}
+
+#login h1{
+    color: white;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.logo img{
+    padding-top: 70px;
+
+}
+
+.register{
+    color: black;
+    padding-top: 30px;
+    font-weight: normal;
+}
+
+.register a{
+    color: black;
+    font-weight: bold;
+}
+
+.register p{
+    font-size: 10px;
+}
+
+
+/*
+//
+//      EDIT PROFILE PAGE
+//
 */
+
+
+/*
+//
+//      NAVIGATION
+//
+*/
+
+.navbar-brand img{
+    height: 35px;
+}
+
+
+
+footer{
+    text-align: center;
+    margin-top: 200px;
+
+}
 
 
 /*
