@@ -1,12 +1,6 @@
 <?php
     include_once('classes/User.class.php');
 
-    if(isset($user)){
-        if($user->is_loggedin()!=""){
-          header('Location: index.php');
-        }
-    }
-
     if(!empty($_POST)){
       $user = new User();
       $username = $_POST['username'];
