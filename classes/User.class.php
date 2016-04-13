@@ -36,7 +36,7 @@
             }
         }
 
-        function __get($p_sProperty)
+        function __GET($p_sProperty)
         {
             switch( $p_sProperty){
                 case "Email":
@@ -129,17 +129,67 @@
             }
         }
 
-        // RETURNS ALL DATA FOR A SPECIFIC USER
+        // RETURNS ALL DATA FOR A SPECIFIC USER BY USERNAME
         public function getAll($p_vUsername){
             $conn = Db::getInstance();
 
             $statement = $conn->prepare("SELECT * FROM user WHERE username=:username");
             $statement->bindparam(":username", $p_vUsername);
             $statement->execute();
-            //$userData = mysql_fetch_array($result);
             $userData = $statement->fetch(PDO::FETCH_ASSOC);
             return $userData;
         }
+
+        // RETURNS ALL DATA FOR A SPECIFIC USER BY USERID
+        public function getAllByUserID($p_iUserID){
+            $conn = Db::getInstance();
+
+            $statement = $conn->prepare("SELECT * FROM user WHERE id=:userID");
+            $statement->bindparam(":userID", $p_iUserID);
+            $statement->execute();
+            $userData = $statement->fetch(PDO::FETCH_ASSOC);
+            return $userData;
+        }
+        /*
+        // RETURNS THE USERNAME FOR A SPECIFIC USERID
+        public function getUsernameByUserID($p_iUserID){
+            $conn = Db::getInstance();
+
+            $statement = $conn->prepare("SELECT username FROM user WHERE id=:userID");
+            $statement->bindparam(":userID", $p_iUserID);
+            $statement->execute();
+            $username = $statement->fetch(PDO::FETCH_ASSOC);
+            return $username;
+        }
+        */
+        /*
+        // RETURNS ALL DATA FOR A SPECIFIC USER ACCEPTS USERNAME OR USERID
+        // how to use:
+        // $user= new User(); $user.getAll('userID', SESSION['userID']; or $user.getAll('username', SESSION['username'];
+        public function getAll($p_sProperty, $p_vValue){
+            try
+            {
+                $conn = Db::getInstance();
+                if($p_sProperty == "username"){
+                    $statement = $conn->prepare("SELECT * FROM user WHERE username=:username");
+                    $statement->bindparam(":username", $p_vValue);
+                    $statement->execute();
+                    $userData = $statement->fetch(PDO::FETCH_ASSOC);
+                    return $userData;
+                }else if($p_sProperty == "userID"){
+                    $statement = $conn->prepare("SELECT * FROM user WHERE id=:userID");
+                    $statement->bindparam(":userID", $p_vValue);
+                    $statement->execute();
+                    $userData = $statement->fetch(PDO::FETCH_ASSOC);
+                    return $userData;
+                }
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }
+        }
+        */
 
         // USED FOR UPDATING A USERS PROFILE IN EDIT-PROFILE.PHP
         public function updateProfile($p_iUserID)
