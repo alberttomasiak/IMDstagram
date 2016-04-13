@@ -24,7 +24,7 @@ if( !empty( $_POST ) ){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up</title>
+    <title>Sign up | IMDstagram</title>
 
     <script src="public/js/jquery-2.2.3.min.js"></script>
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
@@ -34,27 +34,37 @@ if( !empty( $_POST ) ){
     <script type="text/javascript" src="public/js/realtimeUsernameCheck.js"></script>
 </head>
 <body>
-    <div class="wrapperSignup">
-        <section class="registerForm">
-          <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
-            <form class="loginForm" action="" method="post">
-              <input type="email" class="inputfld" name="email" id="email" placeholder="Email">
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-5">
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                </div>
 
-              <input type="text" class="inputfld"  name="fullName" id="fullName" placeholder="Name">
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="fullName" id="fullName" placeholder="Full name">
+                </div>
 
-              <input type="text" class="inputfld"  name="username" id="username" placeholder="Username">
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="username" id="username" placeholder="Username">
                 <div class="usernameFeedback"></div>
+                </div>
 
-              <input type="password" class="inputfld"  name="password" id="password" placeholder="Password">
+                <div class="form-group">
+                    <input type="password" class="form-control"  name="password" id="password" placeholder="Password">
+                </div>
 
-              <input type="submit" class="submitButton" value="Sign Up">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Sign Up">
+                </div>
             </form>
-            <div class="register">
-                <p>Heb je al een account? Klik <a href="login.php"> hier </a> om u aan te melden.</p>
-            </div>
-        </section>
 
-        <?php include 'footer.inc.php'; ?>
+            <p>Already a member? <a href="login.php">Log in here</a></p>
+        </div>
+        </div>
+
+    <?php include 'footer.inc.php'; ?>
     </div>
 </body>
 </html>

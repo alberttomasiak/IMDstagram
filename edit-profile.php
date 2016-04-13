@@ -41,26 +41,42 @@
 </head>
 <body>
     <?php include 'nav.inc.php' ?>
+    <div class="container">
+    <div class="row">
     <h1>Edit profile</h1>
+    <div class="col-sm-7 col-md-5">
     <form action="" method="post">
+        <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" id="name" name="fullName" value="<?php echo $userData['fullName']; ?>">
-        
+        <input type="text" id="name" name="fullName" value="<?php echo $userData['fullName']; ?>" class="form-control">
+        </div>
+
+        <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="<?php echo $userData['email']; ?>">
-        
+        <input type="email" id="email" name="email" value="<?php echo $userData['email']; ?>" class="form-control">
+        </div>
+
+        <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="<?php echo $userData['username']; ?>">
+        <input type="text" id="username" name="username" value="<?php echo $userData['username']; ?>" class="form-control">
+        </div>
         <div class="usernameFeedback" style="display: none;"></div>
 
+        <div class="form-group">
         <label for="biography">Biography</label>
-        <textarea name="biography" id="biography" cols="30" rows="10"><?php echo $userData['bio']; ?></textarea>
-        
+        <textarea name="biography" id="biography" cols="30" rows="5" class="form-control"><?php echo $userData['bio']; ?></textarea>
+        </div>
+
+        <div class="form-group">
         <label for="website">Website</label>
-        <input type="text" id="website" name="website" value="<?php echo $userData['website']; ?>">
-        
-        <input type="submit" value="Submit">
+        <input type="text" id="website" name="website" value="<?php echo $userData['website']; ?>" class="form-control">
+        </div>
+
+        <input type="submit" value="Submit" class="btn btn-primary">
     </form>
+    </div>
+    </div>
     <?php include 'footer.inc.php' ?>
+    </div>
 </body>
 </html>

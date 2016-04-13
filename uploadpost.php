@@ -27,14 +27,25 @@ if(!empty($_POST)){
 </head>
 <body>
 <script type="application/javascript" src="public/js/uploadPostCheck.js"></script>
-	
-	<p id="postFeedback"></p>
-	<form action="uploadpost.php" id="postForm" method="POST" enctype="multipart/form-data">
-		<label for="postImage">Upload image</label>
-		<input type="file" id="fileToUpload" name="postImage">
-		<label for="description">Write a caption</label>
-		<textarea name="description" id="postMessage" cols="30" rows="10"></textarea>
-		<input type="submit" id="postSubmit" value="Create post" name="upload_image">
-	</form>
+	<div class="container">
+	<div class="row">
+		<h1>Make a post</h1>
+		<div class="col-sm-7 col-md-5">
+		<p id="postFeedback"></p>
+		<form action="uploadpost.php" id="postForm" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="postImage">Upload image</label>
+				<input type="file" id="fileToUpload" name="postImage" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="description">Write a caption</label>
+				<textarea name="description" id="postMessage" cols="30" rows="5" class="form-control"></textarea>
+			</div>
+			<input type="submit" id="postSubmit" value="Create post" name="upload_image" class="btn btn-primary">
+		</form>
+		</div>
+	</div>
+	</div>
 </body>
 </html>
