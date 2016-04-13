@@ -19,7 +19,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>IMDStagram</title>
+    <title>Log in | IMDStagram</title>
 
     <script src="public/js/jquery-2.2.3.min.js"></script>
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
@@ -28,23 +28,30 @@
 
 </head>
 <body>
-  <div class="wrapper">
+    <div class="container">
 
 
-  <section class="login">
-    <a class="logo" href="<?php echo $_SERVER['PHP_SELF']; ?>">HOME</a>
-      <form class="loginForm" action="" method="post">
-        <input type="text" class="inputfld" name="username" placeholder="Username">
-        <input type="password" class="inputfld" name="password" placeholder="Password">
-        <input type="submit" class="submitButton" name="submitLogin" value="Log in">
-      </form>
-      <div class="register">
-        <p>Problemen met het inloggen? Klik <a href="#"> hier </a> om uw inloggegevens aan te vragen.</p>
-          <p>Heb je geen account? Klik <a href="signup.php"> hier </a> om u in te schrijven.</p>
-      </div>
-  </section>
+        <div class="row">
+            <div class="col-sm-5">
 
-  <?php include 'footer.inc.php'; ?>
-</div>
+                <form action="" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" name="submitLogin" value="Log in">
+                    </div>
+                </form>
+
+                <p>Not a member? <a href="signup.php">Sign up now</a></p>
+
+            </div>
+        </div>
+
+        <?php include 'footer.inc.php'; ?>
+    </div>
 </body>
 </html>
