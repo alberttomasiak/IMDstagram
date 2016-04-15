@@ -31,7 +31,7 @@
 </head>
 <body>
 
-    <?php include 'nav.inc.php'; ?>
+<?php include 'nav.inc.php'; ?>
 <div class="container">
     <header id="profileheader" class="row">
         <div class="profilepic col-xs-3">
