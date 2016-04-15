@@ -1,13 +1,23 @@
 <?php
     include_once 'classes/User.class.php';
+	include_once 'classes/Post.class.php';
     session_start();
 
     if(isset($_SESSION['loggedin'])){
-
+		$username = $_SESSION['username'];
+		
+        $user = new User();
+		$userData = $user->getUserDetailsByUsername($username); 
+		
+		$post = new Post();
+		$timelinePosts = $post->getAllTimeline();
+		$timestamp = $post->getTimestamp();
+		$convTime = $post->timeAgo($timestamp);
+		//var_dump($timelinePosts);
+        //var_dump($username);
     }else{
       header('location: login.php');
     }
-
 
 ?><!DOCTYPE html>
 <html>
@@ -22,7 +32,45 @@
 </head>
 <body>
     <?php include 'nav.inc.php'; ?>
-
+    <?php if ($timelinePosts == false): ?>
+    	<p>There are no posts to display yet.</p>
+    <?php else: ?>
+    <?php foreach($timelinePosts as $key => $timelinePost): ?>
+        <article class="postTimeline">
+          <div class="postHeader">
+          <div class="postUser">
+           <!-- Profile picture -->
+           <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
+            
+            <!-- Username link -->
+            <a href="profile.php?profile=<?php echo $timelinePost['username']; ?>"><?php echo $timelinePost['username']; ?></a>
+            </div>
+            <!-- Timestamp -->
+            <p class="postTimestamp"><?php echo $post->timeAgo($timelinePost['timestamp']); ?></p>
+            </div>
+            
+            
+            <!-- Image met link naar de bijhorende post pagina -->
+            <a class="postImage" href="post.php?p=<?php echo $timelinePost['userID'] ?>&u=<?php echo $timelinePost['username'] ?>">
+            <img src="<?php echo $timelinePost['path']; ?>" alt="">
+        	</a>
+        	
+        	
+        	<!-- wrapper voor comments en like -->
+        	<div class="commentsWrapper">
+				
+       	
+        	<!-- Hier komen de comments voor elke post -->
+        	<div class="commentsPost">
+        		<ul>
+        			<!-- comments in li => username + comment -->
+        		</ul>
+        	</div>
+        	</div>
+        	
+        </article>
+    <?php endforeach; ?>
+    <?php endif; ?>
     <?php include 'footer.inc.php'; ?>
 </body>
 </html>
