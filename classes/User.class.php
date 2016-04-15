@@ -263,7 +263,7 @@
             }
         }
 
-        // ChECK IF LOGGED IN USER IS FOLLOWING A SPECIFIC USER
+        // CHECK IF LOGGED IN USER IS FOLLOWING A SPECIFIC USER
         public function isFollowing($p_iFollowingID){
             $conn = Db::getInstance();
             $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND followingID=:followingID");

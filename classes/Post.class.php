@@ -33,6 +33,21 @@
 
         }
 
+		public function getPostsByTag($p_vTag){
+			$conn = Db::getInstance();
+			$hashtag = "%#" . $p_vTag . " %";
+			$statement = $conn->prepare("SELECT * FROM post WHERE description LIKE :tag ORDER BY timestamp DESC");
+			$statement->bindparam(":tag", $hashtag);
+			$statement->execute();
+
+			if($statement->rowCount() > 0){
+				$result = $statement -> fetchAll(PDO::FETCH_ASSOC);
+				return $result;
+			}else{
+				return false;
+			}
+		}
+
         // RETURNS ALL POSTS FROM USERS YOU FOLLOW
         public function getAllTimeline($p_iCurrentUserID){
 
@@ -175,7 +190,7 @@
 		public function tagPostDescription($p_vDescription){
 			preg_match_all('/#(\w+)/',$p_vDescription,$matches);
 			foreach ($matches[1] as $match) {
-				$p_vDescription = str_replace("#$match", "<a href='tag.php/?tag=$match'>#$match</a>", "$p_vDescription");
+				$p_vDescription = str_replace("#$match", "<a href='tag.php?tag=$match'>#$match</a>", "$p_vDescription");
 			}
 			return $p_vDescription;
 		}

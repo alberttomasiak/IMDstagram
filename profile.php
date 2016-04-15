@@ -97,7 +97,7 @@
         <?php else: ?>
             <?php foreach( $userPosts as $key => $userPost ): ?>
                 <article>
-                    <a href="post.php?p=<?php echo $userPost['id'] ?>&u=<?php echo $userData['username'] ?>">
+                    <a href="post.php?p=<?php echo $userPost['id'] ?>&u=<?php echo $userData['id'] ?>">
                         <img src="<?php echo $userPost['path'] ?>" alt="">
                     </a>
                 </article>
