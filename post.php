@@ -4,13 +4,13 @@
     session_start();
 
     $getPost = $_GET['p'];
-    $getUsername = $_GET['u'];
+    $getUserID = $_GET['u'];
 
     $post = new Post();
     $postData = $post->getAllPost($getPost);
 
     $user = new User();
-    $userData = $user->getUserDetailsByUsername($getUsername);
+    $userData = $user->getUserDetailsByUserID($getUserID);
 
 ?><!doctype html>
 <html lang="en">

@@ -1,5 +1,6 @@
 body{
     background-color: #FAFAFA;
+    color: #4b4f54;
 }
 
 /*
@@ -176,5 +177,20 @@ body{
     display: flex;
     justify-content: space-between;
     margin: 20px 0 20px 0;
+    font-weight: bold;
+}
+
+
+/*
+//
+//      TAG
+//
+*/
+
+.tagpageHeader{
+    text-align: center;
+}
+
+.tagpageHeader span{
     font-weight: bold;
 }
