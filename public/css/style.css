@@ -131,8 +131,8 @@ body{
 
 #btnLike{
     display: block;
-    height: 44px;
-    width: 48px;
+    height: 34px;
+    width: 38px;
     text-indent: -9999px;
     background-image: url('../images/heart-sprite.png');
     background-repeat: no-repeat;
@@ -140,7 +140,7 @@ body{
 }
 
 .liked{
-    background: url('../images/heart-sprite.png') -50px 0
+    background: url('../images/heart-sprite.png') -38px 0
 }
 
 #singlePostImg{
@@ -160,17 +160,21 @@ body{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 20px 0 20px 0;
+    margin: 0 0 20px 0;
 }
 
 .detailpostRow{
     max-width: 640px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
     background-color: #fff;
+    padding: 20px 0 20px 0
 }
 
 .detailpostLikesAndTime{
     display: flex;
     justify-content: space-between;
+    margin: 20px 0 20px 0;
+    font-weight: bold;
 }

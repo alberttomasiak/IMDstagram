@@ -35,9 +35,9 @@
         </a>
     </header>
 
-    <div class="col-xs-12">
+    <!--<div class="col-xs-12">-->
         <img src="<?php echo $postData['path'] ?>" alt="" id="singlePostImg">
-    </div>
+    <!--</div>-->
 
     <div class="col-xs-12 detailpostLikesAndTime">
         <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
@@ -48,7 +48,7 @@
         <p><?php echo $post->tagPostDescription($postData['description']) ?></p>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-1">
     <?php
     // CHECK IF YOU LIKED THE POST ALREADY
     if(isset($_SESSION['loggedin'])){
@@ -63,13 +63,12 @@
     ?>
     </div>
 
-
-    <form action="" class="col-xs-12">
-        <div class="form-group">
-            <input type="text" placeholder="Add a comment..." class="form-control">
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Submit" class="btn btn-primary">
+    <form action="" class="col-xs-11">
+        <div class="input-group">
+        <input type="text" class="form-control" placeholder="Add a comment...">
+        <span class="input-group-btn">
+            <input type="submit" value="Submit" class="btn btn-default">
+        </span>
         </div>
     </form>
 </div>
