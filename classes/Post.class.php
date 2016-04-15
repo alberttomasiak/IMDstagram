@@ -49,8 +49,25 @@
 		}
 
         // RETURNS ALL POSTS FROM USERS YOU FOLLOW
-        public function getAllTimeline($p_iCurrentUserID){
+        public function getAllTimeline(){
+			$conn = Db::getInstance();
+			$activeUser = $_SESSION['userID'];
+			
+			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.userID, post.path, post.location, post.timestamp
+ 											FROM post
+ 											INNER JOIN user
+ 											ON post.userID=user.id
+ 											INNER JOIN follow
+ 											ON user.id=follow.followingID
+ 											WHERE follow.followerID = '$activeUser'");
+			//$statement->bindparam(":sessionID", $_SESSION['userID']);
+            //SELECT * FROM post WHERE userID IN ( SELECT followingID FROM follow WHERE followerID=:followerID)
+			$statement->execute();
 
+			if($statement->rowCount() > 0){
+				$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+				return $result;
+			}
         }
 
         // LIKE A POST
@@ -193,6 +210,88 @@
 				$p_vDescription = str_replace("#$match", "<a href='tag.php?tag=$match'>#$match</a>", "$p_vDescription");
 			}
 			return $p_vDescription;
+		}
+		
+		// GET A SINGLE TIMESTAMP
+		public function getTimestamp(){
+			$conn = Db::getInstance();
+			
+			$statement = $conn->prepare("SELECT TOP 1 timestamp FROM post");;
+			$statement->execute();
+
+			if($statement->rowCount() > 0){
+				$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+				return $result;
+			}
+		}
+		
+		// CONVERT POST TIME FROM TIMESTAMP TO .. AGO
+		public function timeAgo($timestamp){
+			date_default_timezone_set('Europe/Brussels');
+			
+			
+			$time_ago = strtotime($timestamp);
+			
+			
+			$currentTime = time();
+			$differenceInTime = $currentTime - $time_ago;
+			$seconds = $differenceInTime;
+			
+			// tijdseenheden declareren
+			$minutes = round($seconds / 60); 		// 60 seconden
+			$hours = round($seconds / 3600);		// 60 x 60
+			$days = round($seconds / 86400);		// 24 x 60 x 60
+			$weeks = round($seconds / 604800);		// 7 x 24 x 60 x 60
+			$months = round($seconds / 2629440);	// ((365+365+365+365+366))/5/12) x 24 x 60 x 60
+			$years = round($seconds / 31553280);	// (365+365+365+365+366)/5 x 24 x 60 x 60
+			
+			if($seconds <= 60){
+				return "Less than a minute ago.";
+			}
+			else if ($minutes <= 60){
+				if($minutes==1){
+					return "1 minute ago";
+				}
+				else{
+					return "$minutes minutes ago";
+				}
+			}
+			else if($hours <= 24){
+				if($hours == 1){
+					return "1 hour ago";
+				}else{
+					return "$hours hours ago";
+				}
+			}
+			else if($days <= 7){
+				if($days == 1){
+					return "Yesterday";
+				}else{
+					return "$days days ago";
+				}
+			}
+			else if ($weeks <= 4.3){
+				//4.3 ----> 52/12
+				if($weeks == 1){
+					return "Last week";
+				}else{
+					return "$weeks weeks ago";
+				}
+			}
+			else if($months <= 12){
+				if($months == 1){
+					return "Last month";
+				}else{
+					return "$months months ago";
+				}
+			}
+			else{
+				if($years == 1){
+					return "Last year";
+				}else{
+					return "$years years ago";
+				}
+			}
 		}
 	}
 ?>
