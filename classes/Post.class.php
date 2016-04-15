@@ -36,8 +36,10 @@
 		public function getPostsByTag($p_vTag){
 			$conn = Db::getInstance();
 			$hashtag = "%#" . $p_vTag . " %";
-			$statement = $conn->prepare("SELECT * FROM post WHERE description LIKE :tag ORDER BY timestamp DESC");
+			$hashtagEnd = "%#" . $p_vTag;
+			$statement = $conn->prepare("SELECT * FROM post WHERE description LIKE :tag OR description LIKE :tagEnd ORDER BY timestamp DESC");
 			$statement->bindparam(":tag", $hashtag);
+			$statement->bindparam(":tagEnd", $hashtagEnd);
 			$statement->execute();
 
 			if($statement->rowCount() > 0){
@@ -53,7 +55,7 @@
 			$conn = Db::getInstance();
 			$activeUser = $_SESSION['userID'];
 			
-			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.userID, post.path, post.location, post.timestamp
+			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp
  											FROM post
  											INNER JOIN user
  											ON post.userID=user.id
@@ -211,9 +213,10 @@
 			}
 			return $p_vDescription;
 		}
-		
+
+		// niet in gebruik de functie hieronder is voldoende
 		// GET A SINGLE TIMESTAMP
-		public function getTimestamp(){
+		/*public function getTimestamp(){
 			$conn = Db::getInstance();
 			
 			$statement = $conn->prepare("SELECT TOP 1 timestamp FROM post");;
@@ -223,14 +226,14 @@
 				$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 				return $result;
 			}
-		}
+		}*/
 		
 		// CONVERT POST TIME FROM TIMESTAMP TO .. AGO
-		public function timeAgo($timestamp){
+		public function timeAgo($p_vTimestamp){
 			date_default_timezone_set('Europe/Brussels');
 			
 			
-			$time_ago = strtotime($timestamp);
+			$time_ago = strtotime($p_vTimestamp);
 			
 			
 			$currentTime = time();

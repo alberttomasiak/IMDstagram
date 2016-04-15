@@ -10,7 +10,12 @@
 
         $post = new Post();
         $taggedPosts = $post->getPostsByTag($hashtag);
-        $resultCount = count($taggedPosts);
+
+        $resultCount = 0;
+        if($taggedPosts != false){
+            $resultCount = count($taggedPosts);
+        }
+
     }else{
         header('location: login.php');
     }
