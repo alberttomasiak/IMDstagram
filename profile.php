@@ -7,7 +7,7 @@
         $profile = $_GET['profile'];
 
         $user = new User();
-        $userData = $user->getAll($profile);
+        $userData = $user->getUserDetailsByUsername($profile);
 
         $post = new Post();
         $userPosts = $post->getAllForUser($userData['id']);
@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
+    <script src="public/js/interaction.js"></script>
 </head>
 <body>
 
@@ -53,36 +54,7 @@
                 }
             }
         ?>
-        <script>
-            // FOLLOW BUTTON SCRIPT
-            $(document).ready(function() {
-                $("#btnFollow").on("click", function(e){
-                    var followingID = $(this).attr("data-id");
-                    var action = $(this).attr("data-action");
-                    console.log(followingID, action)
-                    $.post( "ajax/follow.php", {followingID:followingID, action:action} )
-                        .done(function( response ) {
 
-                            if(response.status == 'success'){
-                                console.log('Success');
-                                if(response.action == 'following'){
-                                    $("#btnFollow").val('Following');
-                                    $("#btnFollow").toggleClass("active");
-                                    $("#btnFollow").attr('data-action', 'stopfollowing');
-                                }else if(response.action == 'notfollowing'){
-                                    $("#btnFollow").val('Follow');
-                                    $("#btnFollow").toggleClass("active");
-                                    $("#btnFollow").attr('data-action', 'follow');
-                                }
-                            }else{
-                                console.log('Fail');
-                            }
-
-                        });
-                    //e.preventDefault();
-                });
-            });
-        </script>
         </div>
         <div class="about">
             <p>

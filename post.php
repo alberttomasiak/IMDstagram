@@ -10,7 +10,7 @@
     $postData = $post->getAllPost($getPost);
 
     $user = new User();
-    $userData = $user->getAll($getUsername);
+    $userData = $user->getUserDetailsByUsername($getUsername);
 
 ?><!doctype html>
 <html lang="en">
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
-    <script src="public/js/like.js"></script>
+    <script src="public/js/interaction.js"></script>
 </head>
 <body>
 
