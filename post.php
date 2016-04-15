@@ -10,7 +10,7 @@
     $postData = $post->getAllPost($getPost);
 
     $user = new User();
-    $userData = $user->getAll($getUsername);
+    $userData = $user->getUserDetailsByUsername($getUsername);
 
 ?><!doctype html>
 <html lang="en">
@@ -22,19 +22,33 @@
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
-    <script src="public/js/like.js"></script>
+    <script src="public/js/interaction.js"></script>
 </head>
 <body>
+<?php include 'nav.inc.php'; ?>
+<div class="container">
+<div class="row detailpostRow">
+    <header class="col-xs-12 detailpostHeader">
+        <a href="profile.php?profile=<?php echo $userData['username'] ?>">
+        <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
+        <?php echo $userData['username'] ?>
+        </a>
+    </header>
 
+    <div class="col-xs-12">
+        <img src="<?php echo $postData['path'] ?>" alt="" id="singlePostImg">
+    </div>
 
-    <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
-    <a href="profile.php?profile=<?php echo $userData['username'] ?>"><?php echo $userData['username'] ?></a>
-    <img src="<?php echo $postData['path'] ?>" alt="">
-    <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
-    <span><?php echo $postData['timestamp'] ?></span>
-    <p><?php echo $post->tagPostDescription($postData['description']) ?></p>
-    <!--<a href="#" id="btnLike" role="button" class="" data-action="liked" data-postid="<?php echo $postData['id'] ?>">Like</a>-->
+    <div class="col-xs-12 detailpostLikesAndTime">
+        <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
+        <span><?php echo $postData['timestamp'] ?></span>
+    </div>
 
+    <div class="col-xs-12">
+        <p><?php echo $post->tagPostDescription($postData['description']) ?></p>
+    </div>
+
+    <div class="col-xs-12">
     <?php
     // CHECK IF YOU LIKED THE POST ALREADY
     if(isset($_SESSION['loggedin'])){
@@ -47,11 +61,18 @@
         }
     }
     ?>
+    </div>
 
 
-    <form action="">
-        <input type="text" placeholder="Add a comment...">
-        <input type="submit" value="Submit">
+    <form action="" class="col-xs-12">
+        <div class="form-group">
+            <input type="text" placeholder="Add a comment..." class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
     </form>
+</div>
+</div>
 </body>
 </html>

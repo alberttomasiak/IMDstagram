@@ -1,3 +1,7 @@
+body{
+    background-color: #FAFAFA;
+}
+
 /*
 //
 //      PROFILE PAGE
@@ -109,6 +113,11 @@
 //
 */
 
+.navbar{
+    background-color: #fff;
+    border-radius: 0;
+}
+
 .navbar-brand img{
     height: 35px;
 }
@@ -132,4 +141,36 @@
 
 .liked{
     background: url('../images/heart-sprite.png') -50px 0
+}
+
+#singlePostImg{
+    display: block;
+    max-width: 100%;
+}
+
+.detailpostHeader img{
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.detailpostHeader{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 20px 0 20px 0;
+}
+
+.detailpostRow{
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+}
+
+.detailpostLikesAndTime{
+    display: flex;
+    justify-content: space-between;
 }

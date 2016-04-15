@@ -30,8 +30,7 @@ if( !empty( $_POST ) ){
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
-
-    <script type="text/javascript" src="public/js/realtimeUsernameCheck.js"></script>
+    <script src="public/js/interaction.js"></script>
 </head>
 <body>
     <div class="container">

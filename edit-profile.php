@@ -4,7 +4,7 @@
 
     if(isset($_SESSION['loggedin'])){
         $user = new User();
-        $userData = $user->getAll($_SESSION['username']);
+        $userData = $user->getUserDetailsByUsername($_SESSION['username']);
 
         if( !empty( $_POST ) ){
             $user->Email = $_POST['email'];

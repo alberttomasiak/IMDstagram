@@ -130,7 +130,7 @@
         }
 
         // RETURNS ALL DATA FOR A SPECIFIC USER BY USERNAME
-        public function getAll($p_vUsername){
+        public function getUserDetailsByUsername($p_vUsername){
             $conn = Db::getInstance();
 
             $statement = $conn->prepare("SELECT * FROM user WHERE username=:username");
@@ -141,7 +141,7 @@
         }
 
         // RETURNS ALL DATA FOR A SPECIFIC USER BY USERID
-        public function getAllByUserID($p_iUserID){
+        public function getUserDetailsByUserID($p_iUserID){
             $conn = Db::getInstance();
 
             $statement = $conn->prepare("SELECT * FROM user WHERE id=:userID");
