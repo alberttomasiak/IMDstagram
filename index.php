@@ -11,8 +11,10 @@
 		
 		$post = new Post();
 		$timelinePosts = $post->getAllTimeline();
-		$timestamp = $post->getTimestamp();
-		$convTime = $post->timeAgo($timestamp);
+
+        // niet nodig
+		//$timestamp = $post->getTimestamp();
+		//$convTime = $post->timeAgo($timestamp);
 		//var_dump($timelinePosts);
         //var_dump($username);
     }else{
@@ -51,7 +53,7 @@
             
             
             <!-- Image met link naar de bijhorende post pagina -->
-            <a class="postImage" href="post.php?p=<?php echo $timelinePost['userID'] ?>&u=<?php echo $timelinePost['username'] ?>">
+            <a class="postImage" href="post.php?p=<?php echo $timelinePost['id'] ?>&u=<?php echo $timelinePost['userID'] ?>">
             <img src="<?php echo $timelinePost['path']; ?>" alt="">
         	</a>
         	

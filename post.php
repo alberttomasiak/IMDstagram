@@ -8,7 +8,7 @@
 
     $post = new Post();
     $postData = $post->getAllPost($getPost);
-
+    var_dump($postData);
     $user = new User();
     $userData = $user->getUserDetailsByUserID($getUserID);
 
@@ -41,7 +41,7 @@
 
     <div class="col-xs-12 detailpostLikesAndTime">
         <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
-        <span><?php echo $postData['timestamp'] ?></span>
+        <span><?php echo $post->timeAgo($postData['timestamp']); ?></span>
     </div>
 
     <div class="col-xs-12">
