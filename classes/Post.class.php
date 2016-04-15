@@ -36,8 +36,10 @@
 		public function getPostsByTag($p_vTag){
 			$conn = Db::getInstance();
 			$hashtag = "%#" . $p_vTag . " %";
-			$statement = $conn->prepare("SELECT * FROM post WHERE description LIKE :tag ORDER BY timestamp DESC");
+			$hashtagEnd = "%#" . $p_vTag;
+			$statement = $conn->prepare("SELECT * FROM post WHERE description LIKE :tag OR description LIKE :tagEnd ORDER BY timestamp DESC");
 			$statement->bindparam(":tag", $hashtag);
+			$statement->bindparam(":tagEnd", $hashtagEnd);
 			$statement->execute();
 
 			if($statement->rowCount() > 0){
