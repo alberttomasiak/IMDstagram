@@ -67,16 +67,16 @@
         </div>
         <ul class="profilestats">
             <li>
-                <span>506</span> posts
+                <span><?php echo $user->countPosts($userData['id']); ?></span> posts
             </li>
             <li>
                 <a href="followers.php?profile=<?php echo $userData["username"] ?>">
-                    <span>2000</span> followers
+                    <span><?php echo $user->countFollowers($userData['id']); ?></span> followers
                 </a>
             </li>
             <li>
                 <a href="following.php?profile=<?php echo $userData["username"] ?>">
-                    <span>692</span> following
+                    <span><?php echo $user->countFollowing($userData['id']); ?></span> following
                 </a>
             </li>
         </ul>

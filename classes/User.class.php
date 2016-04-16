@@ -276,5 +276,44 @@
                 return false;
             }
         }
+
+        // RETURNS HOW MUCH POSTS SOMEONE HAS
+        public function countPosts($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM post WHERE userID=:userID");
+            $stmt->bindparam(":userID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS THE NUMBER OF FOLLOWERS A USER HAS
+        public function countFollowers($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followingID=:followingID AND accepted='1'");
+            $stmt->bindparam(":followingID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS THE NUMBER OF PEOPLE THE USER IS FOLLOWING
+        public function countFollowing($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND accepted='1'");
+            $stmt->bindparam(":followerID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
     }
 ?>
