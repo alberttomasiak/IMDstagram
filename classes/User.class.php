@@ -315,5 +315,39 @@
                 return false;
             }
         }
+
+        // RETURNS ALL FOLLOWERS FOR A USER
+        public function getFollowers($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT follow.followerID, user.id, user.username, user.fullName, user.profilePicture
+                                    FROM follow
+                                    INNER JOIN user
+                                    ON follow.followerID=user.id
+                                    WHERE followingID=:followingID AND accepted='1'");
+            $stmt->bindparam(":followingID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS ALL ACCOUNTS A USER IS FOLLOWING
+        public function getFollowing($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT follow.followingID, user.id, user.username, user.fullName, user.profilePicture
+                                    FROM follow
+                                    INNER JOIN user
+                                    ON follow.followingID=user.id
+                                    WHERE followerID=:followerID AND accepted='1'");
+            $stmt->bindparam(":followerID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else{
+                return false;
+            }
+        }
     }
 ?>
