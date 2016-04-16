@@ -114,6 +114,8 @@
                     if(password_verify($p_password, $userRow['password']))
                     {
                         session_start();
+                        $_SESSION['loggedin'] = "yes";
+                        $_SESSION['username'] = $p_username;
                         $_SESSION['userID'] = $userRow['id'];
                         return true;
                     }
@@ -272,6 +274,79 @@
             $stmt->execute();
             if($stmt->rowCount() > 0){
                 return true;
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS HOW MUCH POSTS SOMEONE HAS
+        public function countPosts($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM post WHERE userID=:userID");
+            $stmt->bindparam(":userID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS THE NUMBER OF FOLLOWERS A USER HAS
+        public function countFollowers($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followingID=:followingID AND accepted='1'");
+            $stmt->bindparam(":followingID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS THE NUMBER OF PEOPLE THE USER IS FOLLOWING
+        public function countFollowing($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND accepted='1'");
+            $stmt->bindparam(":followerID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS ALL FOLLOWERS FOR A USER
+        public function getFollowers($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT follow.followerID, user.id, user.username, user.fullName, user.profilePicture
+                                    FROM follow
+                                    INNER JOIN user
+                                    ON follow.followerID=user.id
+                                    WHERE followingID=:followingID AND accepted='1'");
+            $stmt->bindparam(":followingID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS ALL ACCOUNTS A USER IS FOLLOWING
+        public function getFollowing($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT follow.followingID, user.id, user.username, user.fullName, user.profilePicture
+                                    FROM follow
+                                    INNER JOIN user
+                                    ON follow.followingID=user.id
+                                    WHERE followerID=:followerID AND accepted='1'");
+            $stmt->bindparam(":followerID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else{
                 return false;
             }

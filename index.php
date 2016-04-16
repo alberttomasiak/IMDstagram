@@ -35,7 +35,7 @@
 <body>
     <?php include 'nav.inc.php'; ?>
     <?php if ($timelinePosts == false): ?>
-    	<p>There are no posts to display yet.</p>
+    	<p>There are no posts to display yet. Try following some people.</p>
     <?php else: ?>
     <?php foreach($timelinePosts as $key => $timelinePost): ?>
         <article class="postTimeline">
