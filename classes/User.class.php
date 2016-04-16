@@ -114,6 +114,8 @@
                     if(password_verify($p_password, $userRow['password']))
                     {
                         session_start();
+                        $_SESSION['loggedin'] = "yes";
+                        $_SESSION['username'] = $p_username;
                         $_SESSION['userID'] = $userRow['id'];
                         return true;
                     }
