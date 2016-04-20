@@ -80,7 +80,7 @@
                 </a>
             </li>
             <li>
-                <a href="following.php?profile=<?php echo $userData["username"] ?>">
+                <a href="following.php?profile=<?php echo $userData["username"] ?>" data-toggle="modal" data-target="#followingModal">
                     <span><?php echo $user->countFollowing($userData['id']); ?></span> following
                 </a>
             </li>
@@ -116,7 +116,7 @@
 
     <?php include 'footer.inc.php'; ?>
 
-    <!-- POPUP FOR FOLLOWERS -->
+    <!-- POPUP FOR FOLLOWERS - not visible -->
     <div id="followersModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -129,9 +129,35 @@
                         <?php foreach($followers as $key => $follower): ?>
                         <li>
                             <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
-                            <a href="profile.php?=profile<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
+                            <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
                             <span><?php echo $follower['fullName']; ?></span>
                         </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- POPUP FOR FOLLOWING - not visible -->
+    <div id="followingModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Following</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <?php foreach($following as $key => $follower): ?>
+                            <li>
+                                <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
+                                <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
+                                <span><?php echo $follower['fullName']; ?></span>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
