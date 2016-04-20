@@ -7,17 +7,25 @@
         $userData = $user->getUserDetailsByUsername($_SESSION['username']);
 
         if( !empty( $_POST['btnSubmitEdit'] ) ){
-            $user->Email = $_POST['email'];
-            $user->FullName = $_POST['fullName'];
-            $user->Username = $_POST['username'];
-            $user->Bio = $_POST['biography'];
-            $user->Website = $_POST['website'];
-            $user->Private = $_POST['radioPrivate'];
-            if($user->updateProfile($userData['id'])){
+            try {
+                $user->Email = $_POST['email'];
+                $user->FullName = $_POST['fullName'];
+                $user->Username = $_POST['username'];
+                $user->Bio = $_POST['biography'];
+                $user->Website = $_POST['website'];
+                $user->Private = $_POST['radioPrivate'];
+                $user->updateProfile($userData['id']);
                 $feedback = "Account updated successfully.";
                 header("location: logout.php");
-            }else{
-                echo "ERROR";
+                /*
+                if ($user->updateProfile($userData['id'])) {
+                    $feedback = "Account updated successfully.";
+                    header("location: logout.php");
+                } else {
+                    echo "ERROR";
+                }*/
+            }catch(Exception $e){
+                $feedback = $e->getMessage();
             }
             // zorg ervoor dat je niet opnieuw naar database schrijft wanneer je refresht
             //header("location: index.php");
@@ -47,6 +55,9 @@
     <h1>Edit profile</h1>
     <div class="col-sm-7 col-md-5">
     <form action="" method="post">
+        <?php if(isset($feedback)): ?>
+            <div class="alert alert-danger" role="alert"><?php echo $feedback; ?></div>
+        <?php endif; ?>
         <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" name="fullName" value="<?php echo $userData['fullName']; ?>" class="form-control">

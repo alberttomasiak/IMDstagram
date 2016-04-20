@@ -198,7 +198,7 @@
         */
 
         // USED FOR UPDATING A USERS PROFILE IN EDIT-PROFILE.PHP
-        public function updateProfile($p_iUserID)
+        /*public function updateProfile($p_iUserID)
         {
             try
             {
@@ -226,6 +226,54 @@
             catch(PDOException $e)
             {
                 echo $e->getMessage();
+            }
+        }*/
+
+        // dit is de nieuwe update profile die mogelijk niet werkt
+        // to do: check of email al in db zit && check username op lowercase/uppercase
+        public function updateProfile($p_iUserID)
+        {
+            if (strlen($this->m_sUsername) > 3 && !empty($this->m_sEmail)) {
+                // username lang genoeg en mail niet leeg
+                // check of username van jezelf is
+                $conn = Db::getInstance();
+                $stmt = $conn->prepare("SELECT id, username FROM user WHERE username=:username");
+                $stmt->bindparam(":username", $this->m_sUsername);
+                $stmt->execute();
+                $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($stmt->rowCount() > 0 && $userRow['id'] != $_SESSION['userID']) {
+                    // als de naam bezet is en het is niet je eigen naam
+                    // verandering niet doorvoeren
+                    throw new Exception("Username already taken");
+                } else {
+                    // naam niet in gebruik - verandering doorvoeren
+                    $conn = Db::getInstance();
+                    $statement = $conn->prepare("UPDATE user
+                                              SET email = :email,
+                                                  fullName = :fullName,
+                                                  username = :username,
+                                                  bio = :bio,
+                                                  website = :website,
+                                                  private = :private
+                                              WHERE id = :id");
+
+                    $statement->bindparam(":email", $this->m_sEmail);
+                    $statement->bindparam(":fullName", $this->m_sFullName);
+                    $statement->bindparam(":username", $this->m_sUsername);
+                    $statement->bindparam(":bio", $this->m_sBio);
+                    $statement->bindparam(":website", $this->m_sWebsite);
+                    $statement->bindparam(":id", $p_iUserID);
+                    $statement->bindparam(":private", $this->m_iPrivate);
+                    if ($statement->execute()) {
+                        return true;
+                    } else {
+                        return false;
+                        throw new Exception("Something went wrong");
+                    }
+                }
+            } else {
+                // username of email zijn leeg of niet lang genoeg
+                throw new Exception("Username has to be 6 characters or longer and email cannot bo empty");
             }
         }
 
