@@ -10,6 +10,7 @@
         // update profile
         private $m_sBio;
         private $m_sWebsite;
+        private $m_iPrivate;
 
 
         function __SET($p_sProperty, $p_vValue)
@@ -32,6 +33,9 @@
                     break;
                 case "Website":
                     $this->m_sWebsite = $p_vValue;
+                    break;
+                case "Private":
+                    $this->m_iPrivate = $p_vValue;
                     break;
             }
         }
@@ -204,7 +208,8 @@
                                                   fullName = :fullName,
                                                   username = :username,
                                                   bio = :bio,
-                                                  website = :website
+                                                  website = :website,
+                                                  private = :private
                                               WHERE id = :id");
 
                 $statement->bindparam(":email", $this->m_sEmail);
@@ -213,6 +218,7 @@
                 $statement->bindparam(":bio", $this->m_sBio);
                 $statement->bindparam(":website", $this->m_sWebsite);
                 $statement->bindparam(":id", $p_iUserID);
+                $statement->bindparam(":private", $this->m_iPrivate);
                 if($statement->execute()){
                     return true;
                 }

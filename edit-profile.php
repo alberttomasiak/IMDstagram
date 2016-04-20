@@ -6,12 +6,13 @@
         $user = new User();
         $userData = $user->getUserDetailsByUsername($_SESSION['username']);
 
-        if( !empty( $_POST ) ){
+        if( !empty( $_POST['btnSubmitEdit'] ) ){
             $user->Email = $_POST['email'];
             $user->FullName = $_POST['fullName'];
             $user->Username = $_POST['username'];
             $user->Bio = $_POST['biography'];
             $user->Website = $_POST['website'];
+            $user->Private = $_POST['radioPrivate'];
             if($user->updateProfile($userData['id'])){
                 $feedback = "Account updated successfully.";
                 header("location: logout.php");
@@ -72,8 +73,43 @@
         <input type="text" id="website" name="website" value="<?php echo $userData['website']; ?>" class="form-control">
         </div>
 
-        <input type="submit" value="Submit" class="btn btn-primary">
+        <?php if($userData['private'] == "0"): ?>
+            <div class="form-group control-group">
+                <label class="radio control-label">Make my profile:</label>
+                <label class="radio-inline"><input type="radio" name="radioPrivate" value="1">Private</label>
+                <label class="radio-inline"><input checked type="radio" name="radioPrivate" value="0">Public</label>
+            </div>
+        <?php endif; ?>
+        <?php if($userData['private'] == "1"): ?>
+            <div class="form-group control-group">
+                <label class="radio control-label">Make my profile:</label>
+                <label class="radio-inline"><input checked type="radio" name="radioPrivate" value="1">Private</label>
+                <label class="radio-inline"><input type="radio" name="radioPrivate" value="0">Public</label>
+            </div>
+        <?php endif; ?>
+
+        <input type="submit" name="btnSubmitEdit" value="Submit" class="btn btn-primary">
     </form>
+
+        <form action="" method="post">
+            <h2>Change password</h2>
+            <div class="form-group">
+                <label for="oldPassword">Old password</label>
+                <input type="password" id="oldPassword" name="oldPassword" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="newPassword">New password</label>
+                <input type="password" id="newPassword" name="newPassword" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="newPasswordAgain">Old password</label>
+                <input type="password" id="newPasswordAgain" name="newPasswordAgain" class="form-control">
+            </div>
+
+            <input type="submit" name="btnSubmitPassword" value="Submit" class="btn btn-primary">
+        </form>
     </div>
     </div>
     <?php include 'footer.inc.php' ?>
