@@ -1,6 +1,7 @@
 <?php
     include_once 'classes/User.class.php';
     include_once 'classes/Post.class.php';
+    include_once 'classes/Comment.class.php';
     session_start();
 
     $getPost = $_GET['p'];
@@ -11,6 +12,25 @@
     var_dump($postData);
     $user = new User();
     $userData = $user->getUserDetailsByUserID($getUserID);
+
+    $comment = new Comment();
+    
+    //controleer of er een update wordt verzonden
+    if(!empty($_POST['activitymessage']))
+    {
+        $cmmment->Comment = $_POST['activitymessage'];
+        try 
+        {
+            $comment->Save();
+        } 
+        catch (Exception $e) 
+        {
+            $feedback = $e->getMessage();
+        }
+    }
+    
+    //altijd alle laatste activiteiten ophalen
+    $recentActivities = $comment->GetRecentActivities();
 
 ?><!doctype html>
 <html lang="en">
@@ -23,6 +43,29 @@
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <script src="public/js/interaction.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#btnSubmit").on("click", function(e){
+            
+            var message = $("#activitymessage").val();
+
+            $.ajax({
+              type: "POST",
+              url: "ajax/comment.php",
+              data: { activitymessage: message }
+            })
+            .done(function( msg ) {
+                //alert( "Data Saved: " + msg );
+                var li = "<li style='display:none;'><strong><?php echo $userData['username'] ?>: </strong> " + message  + "</li>";
+                $("#listupdates").prepend(li);
+                $("#listupdates li").first().slideDown();
+            });
+
+            e.preventDefault();
+            
+        });
+    });
+</script>
 </head>
 <body>
 <?php include 'nav.inc.php'; ?>
@@ -63,14 +106,17 @@
     ?>
     </div>
 
-    <form action="" class="col-xs-11">
-        <div class="input-group">
-        <input type="text" class="form-control" placeholder="Add a comment...">
-        <span class="input-group-btn">
-            <input type="submit" value="Submit" class="btn btn-default">
-        </span>
+    
+    <form method="post" action="">
+        <div class="statusupdates">
+
+        <input type="text" placeholder="Comment" id="activitymessage" name="activitymessage" />
+        <input id="btnSubmit" type="submit" value="Place comment" />  
         </div>
     </form>
+
+     <ul id="listupdates"></ul>
+
 </div>
 </div>
 </body>
