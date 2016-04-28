@@ -1,5 +1,10 @@
 <?php
     include_once('classes/User.class.php');
+    session_start();
+
+    if(isset($_SESSION['loggedin'])){
+        header('location: index.php');
+    }
 
     if(!empty($_POST)){
       $user = new User();
@@ -8,10 +13,10 @@
 
       if($user->canLogin($username, $password)){
             $_SESSION['loggedin'] = "yes";
-            $_SESSION['username'] = $_POST['username'];
+            //$_SESSION['username'] = $_POST['username'];
             header('location: index.php');
       }else{
-        $feedback = "Wrong email or password. Try again";
+        $feedback = "Wrong username or password. Try again.";
       }
     }
 
@@ -35,6 +40,7 @@
             <div class="col-sm-5">
 
                 <form action="" method="post">
+                    <?php if(isset($feedback)){ echo "<div class='alert alert-danger' role='alert'>".$feedback."</div>";}?>
                     <div class="form-group">
                         <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>

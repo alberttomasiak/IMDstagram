@@ -10,6 +10,7 @@
         // update profile
         private $m_sBio;
         private $m_sWebsite;
+        private $m_iPrivate;
 
 
         function __SET($p_sProperty, $p_vValue)
@@ -32,6 +33,9 @@
                     break;
                 case "Website":
                     $this->m_sWebsite = $p_vValue;
+                    break;
+                case "Private":
+                    $this->m_iPrivate = $p_vValue;
                     break;
             }
         }
@@ -114,6 +118,8 @@
                     if(password_verify($p_password, $userRow['password']))
                     {
                         session_start();
+                        $_SESSION['loggedin'] = "yes";
+                        $_SESSION['username'] = $p_username;
                         $_SESSION['userID'] = $userRow['id'];
                         return true;
                     }
@@ -192,7 +198,7 @@
         */
 
         // USED FOR UPDATING A USERS PROFILE IN EDIT-PROFILE.PHP
-        public function updateProfile($p_iUserID)
+        /*public function updateProfile($p_iUserID)
         {
             try
             {
@@ -202,7 +208,8 @@
                                                   fullName = :fullName,
                                                   username = :username,
                                                   bio = :bio,
-                                                  website = :website
+                                                  website = :website,
+                                                  private = :private
                                               WHERE id = :id");
 
                 $statement->bindparam(":email", $this->m_sEmail);
@@ -211,6 +218,7 @@
                 $statement->bindparam(":bio", $this->m_sBio);
                 $statement->bindparam(":website", $this->m_sWebsite);
                 $statement->bindparam(":id", $p_iUserID);
+                $statement->bindparam(":private", $this->m_iPrivate);
                 if($statement->execute()){
                     return true;
                 }
@@ -218,6 +226,54 @@
             catch(PDOException $e)
             {
                 echo $e->getMessage();
+            }
+        }*/
+
+        // dit is de nieuwe update profile die mogelijk niet werkt
+        // to do: check of email al in db zit && check username op lowercase/uppercase
+        public function updateProfile($p_iUserID)
+        {
+            if (strlen($this->m_sUsername) > 3 && !empty($this->m_sEmail)) {
+                // username lang genoeg en mail niet leeg
+                // check of username van jezelf is
+                $conn = Db::getInstance();
+                $stmt = $conn->prepare("SELECT id, username FROM user WHERE username=:username");
+                $stmt->bindparam(":username", $this->m_sUsername);
+                $stmt->execute();
+                $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($stmt->rowCount() > 0 && $userRow['id'] != $_SESSION['userID']) {
+                    // als de naam bezet is en het is niet je eigen naam
+                    // verandering niet doorvoeren
+                    throw new Exception("Username already taken");
+                } else {
+                    // naam niet in gebruik - verandering doorvoeren
+                    $conn = Db::getInstance();
+                    $statement = $conn->prepare("UPDATE user
+                                              SET email = :email,
+                                                  fullName = :fullName,
+                                                  username = :username,
+                                                  bio = :bio,
+                                                  website = :website,
+                                                  private = :private
+                                              WHERE id = :id");
+
+                    $statement->bindparam(":email", $this->m_sEmail);
+                    $statement->bindparam(":fullName", $this->m_sFullName);
+                    $statement->bindparam(":username", $this->m_sUsername);
+                    $statement->bindparam(":bio", $this->m_sBio);
+                    $statement->bindparam(":website", $this->m_sWebsite);
+                    $statement->bindparam(":id", $p_iUserID);
+                    $statement->bindparam(":private", $this->m_iPrivate);
+                    if ($statement->execute()) {
+                        return true;
+                    } else {
+                        return false;
+                        throw new Exception("Something went wrong");
+                    }
+                }
+            } else {
+                // username of email zijn leeg of niet lang genoeg
+                throw new Exception("Username has to be 6 characters or longer and email cannot bo empty");
             }
         }
 
@@ -263,7 +319,7 @@
             }
         }
 
-        // ChECK IF LOGGED IN USER IS FOLLOWING A SPECIFIC USER
+        // CHECK IF LOGGED IN USER IS FOLLOWING A SPECIFIC USER
         public function isFollowing($p_iFollowingID){
             $conn = Db::getInstance();
             $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND followingID=:followingID");
@@ -272,6 +328,79 @@
             $stmt->execute();
             if($stmt->rowCount() > 0){
                 return true;
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS HOW MUCH POSTS SOMEONE HAS
+        public function countPosts($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM post WHERE userID=:userID");
+            $stmt->bindparam(":userID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS THE NUMBER OF FOLLOWERS A USER HAS
+        public function countFollowers($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followingID=:followingID AND accepted='1'");
+            $stmt->bindparam(":followingID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS THE NUMBER OF PEOPLE THE USER IS FOLLOWING
+        public function countFollowing($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND accepted='1'");
+            $stmt->bindparam(":followerID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->rowCount();
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS ALL FOLLOWERS FOR A USER
+        public function getFollowers($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT follow.followerID, user.id, user.username, user.fullName, user.profilePicture
+                                    FROM follow
+                                    INNER JOIN user
+                                    ON follow.followerID=user.id
+                                    WHERE followingID=:followingID AND accepted='1'");
+            $stmt->bindparam(":followingID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else{
+                return false;
+            }
+        }
+
+        // RETURNS ALL ACCOUNTS A USER IS FOLLOWING
+        public function getFollowing($p_iUserID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT follow.followingID, user.id, user.username, user.fullName, user.profilePicture
+                                    FROM follow
+                                    INNER JOIN user
+                                    ON follow.followingID=user.id
+                                    WHERE followerID=:followerID AND accepted='1'");
+            $stmt->bindparam(":followerID", $p_iUserID);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else{
                 return false;
             }
