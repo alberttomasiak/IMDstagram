@@ -14,7 +14,7 @@ include_once("classes/User.class.php");
         </div>
         <form class="navbar-form navbar-left" action="" method="post" role="search">
             <div class="form-group">
-                <input type="text" id="searchBox" name="search" class="searchid form-control" placeholder="Search">
+                <input type="text" id="searchBox" autocomplete="off" name="search" class="searchid form-control" placeholder="Search">
                 <ul id="searchResults"></ul>
             </div>
         </form>
