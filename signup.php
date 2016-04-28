@@ -1,5 +1,10 @@
 <?php
 include_once "classes/User.class.php";
+session_start();
+
+if(isset($_SESSION['loggedin'])){
+    header('location: index.php');
+}
 
 if( !empty( $_POST ) ){
     $user = new User();
@@ -8,11 +13,15 @@ if( !empty( $_POST ) ){
     $user->Username = $_POST['username'];
     $user->Password = $_POST['password'];
     if($user->register()){
-        $feedback = "Account created successfully.";
-        $_SESSION['loggedin'] = "yes";
-        header("location: login.php");
+        //$feedback = "Account created successfully.";
+        //$_SESSION['loggedin'] = "yes";
+        //header("location: login.php");
+        if($user->canLogin($_POST['username'], $_POST['password'])){
+            //$_SESSION['loggedin'] = "yes";
+            header("location: index.php");
+        }
     }else{
-      echo "ERROR";
+        $feedback = "Something went wrong. Try again.";
     }
     // zorg ervoor dat je niet opnieuw naar database schrijft wanneer je refresht
     //header("location: index.php");
@@ -37,6 +46,7 @@ if( !empty( $_POST ) ){
         <div class="row">
         <div class="col-sm-5">
             <form action="" method="post">
+                <?php if(isset($feedback)){ echo "<div class='alert alert-danger' role='alert'>".$feedback."</div>";}?>
                 <div class="form-group">
                     <input type="email" class="form-control" name="email" id="email" placeholder="Email">
                 </div>
