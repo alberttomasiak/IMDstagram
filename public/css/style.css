@@ -129,7 +129,10 @@ body{
     margin-top: 0px;
 	margin-bottom: 0;
     text-align: left; /* enkel nodig als zoekbox in het midden staat */
+<<<<<<< HEAD
 	z-index: 999;
+=======
+>>>>>>> origin/master
 }
 
 #searchResults img{
