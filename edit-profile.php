@@ -41,6 +41,7 @@
     <meta charset="UTF-8">
     <title>Edit your profile</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="public/js/jquery-2.2.3.min.js"></script>
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <script src="public/js/bootstrap.min.js"></script>
@@ -52,9 +53,15 @@
     <?php include 'nav.inc.php' ?>
     <div class="container">
     <div class="row">
-    <h1>Edit profile</h1>
-    <div class="col-sm-7 col-md-5">
+        <div class="col-sm-12">
+            <h1>Edit profile</h1>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-7 col-md-6">
+
     <form action="" method="post">
+        <h3>Profile information</h3>
         <?php if(isset($feedback)): ?>
             <div class="alert alert-danger" role="alert"><?php echo $feedback; ?></div>
         <?php endif; ?>
@@ -101,26 +108,28 @@
 
         <input type="submit" name="btnSubmitEdit" value="Submit" class="btn btn-primary">
     </form>
+    </div>
+    <div class="col-sm-7 col-md-6"
+    <form action="" method="post">
+        <h3>Change password</h3>
+        <div class="form-group">
+            <label for="oldPassword">Old password</label>
+            <input type="password" id="oldPassword" name="oldPassword" class="form-control">
+        </div>
 
-        <form action="" method="post">
-            <h2>Change password</h2>
-            <div class="form-group">
-                <label for="oldPassword">Old password</label>
-                <input type="password" id="oldPassword" name="oldPassword" class="form-control">
-            </div>
+        <div class="form-group">
+            <label for="newPassword">New password</label>
+            <input type="password" id="newPassword" name="newPassword" class="form-control">
+        </div>
 
-            <div class="form-group">
-                <label for="newPassword">New password</label>
-                <input type="password" id="newPassword" name="newPassword" class="form-control">
-            </div>
+        <div class="form-group">
+            <label for="newPasswordAgain">New password, again</label>
+            <input type="password" id="newPasswordAgain" name="newPasswordAgain" class="form-control">
+        </div>
 
-            <div class="form-group">
-                <label for="newPasswordAgain">Old password</label>
-                <input type="password" id="newPasswordAgain" name="newPasswordAgain" class="form-control">
-            </div>
-
-            <input type="submit" name="btnSubmitPassword" value="Submit" class="btn btn-primary">
-        </form>
+        <input type="submit" name="btnSubmitPassword" value="Change password" class="btn btn-primary">
+    </form>
+    </div>
     </div>
     </div>
     <?php include 'footer.inc.php' ?>
