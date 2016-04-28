@@ -20,6 +20,8 @@ if(!empty($_POST)){
 <head>
 	<meta charset="UTF-8">
 	<title>Upload post</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="public/js/jquery-2.2.3.min.js"></script>
 	<link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
 	<script src="public/js/bootstrap.min.js"></script>
