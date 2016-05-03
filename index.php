@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
+    <link rel="stylesheet" href="public/css/cssgram.min.css">
 </head>
 <body>
     <?php include 'nav.inc.php'; ?>
@@ -54,7 +55,7 @@
             
             <!-- Image met link naar de bijhorende post pagina -->
             <a class="postImage" href="post.php?p=<?php echo $timelinePost['id'] ?>&u=<?php echo $timelinePost['userID'] ?>">
-            <img src="<?php echo $timelinePost['path']; ?>" alt="">
+            <img src="<?php echo $timelinePost['path']; ?>" class="<?php echo $timelinePost['filter']; ?>" alt="">
         	</a>
         	
         	

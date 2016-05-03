@@ -55,12 +55,53 @@ body{
     margin: 0 20px 0 0;
 }
 
+.profilePosts{
+	width: 600px;
+	display: block;
+	margin-bottom: 25px;
+}
+
+/* 
+//
+//		Image upload
+//
+*/
+
+.filterSelection{
+	display: none;
+	width: 600px;
+	margin-top: 25px;
+}
+
+.filterPreview{
+	width: 80px;
+}
+
+.filterSelection ul{
+	width: 600px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+	justify-content: space-between;
+}
+
+.filterSelection ul li{
+	text-indent: -9999px;
+	display: block;
+	margin: 0;
+	padding: 0;
+	width: 80px;
+	list-style-type: none;
+	margin-bottom: 25px;
+}
+
 /*
 //
 //      HOMEPAGE
 //
 */
-
 
 .postTimeline{
 	display: block;
@@ -129,12 +170,8 @@ body{
     margin-top: 0px;
 	margin-bottom: 0;
     text-align: left; /* enkel nodig als zoekbox in het midden staat */
-<<<<<<< HEAD
 	z-index: 999;
-=======
->>>>>>> origin/master
 }
-
 #searchResults img{
 	width: 30px;
 	height: 30px;
@@ -179,6 +216,7 @@ body{
 //      LOGIN PAGE + SIGN UP PAGE
 //
 */
+
 
 
 /*

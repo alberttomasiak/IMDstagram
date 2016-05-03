@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-sm-5">
 
-                <form action="" method="post">
+                <form action="" class="login__form" method="post">
                     <?php if(isset($feedback)){ echo "<div class='alert alert-danger' role='alert'>".$feedback."</div>";}?>
                     <div class="form-group">
                         <input type="text" class="form-control" name="username" placeholder="Username">
