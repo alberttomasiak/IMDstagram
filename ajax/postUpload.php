@@ -11,6 +11,7 @@ if(!empty($_POST)){
 	$post->checkFileSize();
 	$post->checkFileFormat();
 	$post->checkAspectRatio();
+	$post->checkFileDimensions();
 	
 	if(!$post->checkIfImage()){
 		$uploadStatus['image'] = "false";
@@ -28,7 +29,11 @@ if(!empty($_POST)){
 		$uploadStatus['ratio'] = "false";
 	}
 	
-	if($post->checkIfImage() && $post->checkFileSize() && $post->checkFileFormat() && $post->checkAspectRatio() && $_POST['description']){
+	if(!$post->checkFileDimensions()){
+		$uploadStatus['dimensions'] = "false";
+	}
+	
+	if($post->checkIfImage() && $post->checkFileSize() && $post->checkFileFormat() && $post->checkAspectRatio() && $_POST['description'] && $post->checkFileDimensions()){
 		$result = $post->createPost($file_tmp_name);
 		$uploadStatus['check'] = "success";
 	}else{

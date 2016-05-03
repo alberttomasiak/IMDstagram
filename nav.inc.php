@@ -2,7 +2,7 @@
 include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 
-?><script src="public/js/searchForContent.js" type="text/javascript"></script>
+?><script src="public/js/interaction.js" type="text/javascript"></script>
 <nav class="navbar navbar-default">
 
     <div class="container-fluid">

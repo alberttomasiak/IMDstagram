@@ -54,7 +54,7 @@
 			$conn = Db::getInstance();
 			$activeUser = $_SESSION['userID'];
 			
-			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp
+			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp, post.filter
  											FROM post
  											INNER JOIN user
  											ON post.userID=user.id
@@ -140,7 +140,7 @@
 		}
 		
 		public function checkFileSize(){
-			if($_FILES["postImage"]["size"] > 2000000){
+			if($_FILES["postImage"]["size"] > 2097152){
 				$uploadReady = 0;
 				return $uploadReady;
 			}else{
@@ -180,7 +180,23 @@
 					return $uploadReady;
 				}
 			}
+		}
+		
+		public function checkFileDimensions(){
+			$file = $_FILES['postImage']['tmp_name'];
+			$post = new Post();
 			
+			if($post->checkIfImage()){
+				list($width, $height) = getimagesize($file);
+				
+				if($width >= 600 && $height >= 338){
+					$uploadReady = 1;
+					return $uploadReady;
+				}else{
+					$uploadReady = 0;
+					return $uploadReady;
+				}
+			}
 		}
 		
 		public function createPost($p_file_tmp_name){
@@ -201,9 +217,10 @@
 			$post->checkFileSize();
 			$post->checkFileFormat();
 			$post->checkAspectRatio();
+			$post->checkFileDimensions();
 				
 			// uploadReady op 1 zetten als alles goed gaat bij functies hier boven vermeld.
-			if ($post->checkIfImage() && $post->checkFileSize() && $post->checkFileFormat() && $post->checkAspectRatio()){
+			if ($post->checkIfImage() && $post->checkFileSize() && $post->checkFileFormat() && $post->checkAspectRatio() && $post->checkFileDimensions()){
 				$uploadReady = 1;
 			}
 			
@@ -214,10 +231,11 @@
 			// als er een bestand is, stuur het naar het img/ mapje + schrijf path en description naar DB.
 				if($file_name){
 				$db = Db::getInstance();
-				$statement = $db->prepare("insert into post (userID, path, description) values (:userID, :path, :description)");
+				$statement = $db->prepare("insert into post (userID, path, description, filter) values (:userID, :path, :description, :filter)");
 				$statement->bindValue(":userID", $_SESSION['userID']);
 				$statement->bindValue(":path", $file_path);
 				$statement->bindValue(":description", $_POST['description']);
+				$statement->bindValue(":filter", $_POST['filter']);
 				$result = $statement->execute();
 				MOVE_UPLOADED_FILE($p_file_tmp_name, "../img/$file_name");
 				//echo "Post succesfully made.";				
