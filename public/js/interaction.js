@@ -96,5 +96,42 @@ $(document).ready(function() {
             });
         //e.preventDefault();
     }
+	
+	// SEARCH FUNCTION
+	$("#searchBox").keyup(function(){
+        var searchQuery = $(this).val();
+
+        $.post('ajax/searchForContent.php', {searchQuery: searchQuery}, function(data){
+            if(data == ""){
+                $("#searchResults").html("No relevant items found.");
+                $('#searchResults').css('display','block');
+            }
+            else if($('#searchBox').val() == ""){
+                $("#searchResults").html("");
+                $('#searchResults').css('display','none');
+            }else if ($('#searchBox').val() != ""){
+                $('#searchResults').css('display', 'block');
+                $('#searchResults').html(data);
+            }
+
+        });
+    });
+	
+	// UPLOAD POST CHECK
+	$("#postForm").submit(function(e){
+		var $inputFile = $("#fileToUpload").val();
+			
+		if($inputFile == "" || $("#postMessage").val() == ""){
+			$("#postFeedback").html("The fields cannot be empty.");
+			e.preventDefault();
+		}else if($inputFile != "" && $("#postMessage") != ""){
+			$("#postForm").submit();
+			$("#postFeedback").html("");
+		}
+	});
+	
+	// UPLOAD POST + FILTER
+	
+	
 
 });

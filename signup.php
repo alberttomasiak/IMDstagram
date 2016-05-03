@@ -46,7 +46,7 @@ if( !empty( $_POST ) ){
     <div class="container">
         <div class="row">
         <div class="col-sm-5">
-            <form action="" method="post">
+            <form action="" class="login__form login__form--register" method="post">
                 <?php if(isset($feedback)){ echo "<div class='alert alert-danger' role='alert'>".$feedback."</div>";}?>
                 <div class="form-group">
                     <input type="email" class="form-control" name="email" id="email" placeholder="Email">

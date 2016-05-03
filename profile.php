@@ -34,6 +34,7 @@
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <script src="public/js/interaction.js"></script>
+    <link rel="stylesheet" href="public/css/cssgram.min.css">
 </head>
 <body>
 
@@ -104,7 +105,7 @@
             <?php foreach( $userPosts as $key => $userPost ): ?>
                 <article>
                     <a href="post.php?p=<?php echo $userPost['id'] ?>&u=<?php echo $userData['id'] ?>">
-                        <img src="<?php echo $userPost['path'] ?>" alt="">
+                        <img src="<?php echo $userPost['path'] ?>" class="<?php echo $userPost['filter']; ?> profilePosts" alt="">
                     </a>
                 </article>
             <?php endforeach; ?>
