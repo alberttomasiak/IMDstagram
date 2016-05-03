@@ -1,7 +1,7 @@
 <?php
     include_once 'classes/User.class.php';
     include_once 'classes/Post.class.php';
-    include_once 'classes/Comment.class.php';
+    //include_once 'classes/Comment.class.php';
     session_start();
 
     $getPost = $_GET['p'];
@@ -9,11 +9,12 @@
 
     $post = new Post();
     $postData = $post->getAllPost($getPost);
-    var_dump($postData);
+    //var_dump($postData);
     $user = new User();
     $userData = $user->getUserDetailsByUserID($getUserID);
 
-    $comment = new Comment();
+    // CODE BRENT
+    /*$comment = new Comment();
     
     //controleer of er een update wordt verzonden
     if(!empty($_POST['activitymessage']))
@@ -30,7 +31,7 @@
     }
     
     //altijd alle laatste activiteiten ophalen
-    $recentActivities = $comment->GetRecentActivities();
+    $recentActivities = $comment->GetRecentActivities();*/
 
 ?><!doctype html>
 <html lang="en">
@@ -107,7 +108,16 @@
     ?>
     </div>
 
-    
+    <form action="" class="col-xs-11">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Add a comment...">
+        <span class="input-group-btn">
+            <input type="submit" value="Submit" class="btn btn-default">
+        </span>
+        </div>
+    </form>
+
+    <!--
     <form method="post" action="">
         <div class="statusupdates">
 
@@ -117,6 +127,7 @@
     </form>
 
      <ul id="listupdates"></ul>
+     -->
 
 </div>
 </div>
