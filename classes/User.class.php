@@ -231,6 +231,7 @@
 
         // dit is de nieuwe update profile die mogelijk niet werkt
         // to do: check of email al in db zit && check username op lowercase/uppercase
+        // parameter $p_iUserID mag  weg want wordt niet gebruikt
         public function updateProfile($p_iUserID)
         {
             if (strlen($this->m_sUsername) > 3 && !empty($this->m_sEmail)) {
