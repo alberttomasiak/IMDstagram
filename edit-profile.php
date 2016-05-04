@@ -79,7 +79,6 @@
     </div>
     <div class="row">
     <div class="col-sm-7 col-md-6">
-
     <form action="" method="post">
         <h3>Profile information</h3>
         <?php if(isset($feedback)): ?>
@@ -130,38 +129,46 @@
     </form>
     </div>
     <div class="col-sm-7 col-md-6">
-        <form action="" method="post">
-            <h3>Change password</h3>
-
-            <?php echo $feedbackPassword; ?>
-
+        <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-            <label for="currentPass">Current password</label>
-            <input type="password" name="currentPass" id="currentPass" class="form-control">
+                <h3>Profile picture</h3>
+                <img src="<?php echo $userData['profilePicture']; ?>" alt="" style="border-radius: 100%">
+                <div class="form-group">
+                    <label for="avatarUpload">Choose profile picture</label>
+                    <input type="file" name="fileToUpload" class="form-control" id="avatarUpload">
+                </div>
             </div>
-
-            <div class="form-group">
-            <label for="newPass">New password</label>
-            <input type="password" name="newPass" id="newPass" class="form-control">
-            </div>
-
-            <div class="form-group">
-            <label for="newPassConfirm">Confirm new password</label>
-            <input type="password" name="newPassConfirm" id="newPassConfirm" class="form-control">
-            </div>
-
-            <input type="submit" value="Change password" name="btnChangePassword" class="btn btn-primary">
+            <input type="submit" name="btnChangeProfilePicture" value="Change profile picture" class="btn btn-primary">
         </form>
     </div>
     </div>
     <div class="row">
+        <div class="col-sm-12">
+            <h1>Account settings</h1>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-7 col-md-6">
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="" method="post">
+                <h3>Change password</h3>
+                <?php echo $feedbackPassword; ?>
+
                 <div class="form-group">
-                    <label for="newPassword">Choose profile picture</label>
-                    <input type="file" name="fileToUpload" class="form-control">
+                    <label for="currentPass">Current password</label>
+                    <input type="password" name="currentPass" id="currentPass" class="form-control">
                 </div>
-                <input type="submit" name="btnChangeProfilePicture" value="Change profile picture" class="btn btn-primary">
+
+                <div class="form-group">
+                    <label for="newPass">New password</label>
+                    <input type="password" name="newPass" id="newPass" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassConfirm">Confirm new password</label>
+                    <input type="password" name="newPassConfirm" id="newPassConfirm" class="form-control">
+                </div>
+
+                <input type="submit" value="Change password" name="btnChangePassword" class="btn btn-primary">
             </form>
         </div>
     </div>
