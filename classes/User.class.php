@@ -406,5 +406,102 @@
                 return false;
             }
         }
+
+        public  function changePassword($p_sOldPassword, $p_sNewPassword, $p_sNewPasswordConfirm){
+            if(empty($p_sOldPassword) || empty($p_sNewPassword) || empty($p_sNewPasswordConfirm)){
+                // echo: vul alle velden in
+                throw new Exception("Please fill in all the fields.");
+            }else{
+                if(strlen($p_sNewPassword) > 5){
+                    // lang genoeg
+                    $conn = Db::getInstance();
+                    $statement = $conn->prepare("SELECT * FROM user WHERE id=:userID");
+                    $statement->bindparam(":userID", $_SESSION['userID']);
+                    $statement->execute();
+                    $userRow=$statement->fetch(PDO::FETCH_ASSOC);
+
+                    if(password_verify($p_sOldPassword, $userRow['password']))
+                    {
+                        // OldPassword is juist
+                        if($p_sNewPassword == $p_sNewPasswordConfirm){
+                            $newPassword = password_hash($p_sNewPassword, PASSWORD_DEFAULT);
+                            $stmt = $conn->prepare("UPDATE user
+                                                    SET password=:password
+                                                    WHERE id=:userID");
+                            $stmt->bindparam(":password", $newPassword);
+                            $stmt->bindparam(":userID", $_SESSION['userID']);
+                            if ($stmt->execute()) {
+                                // password changed
+                                return true;
+                            }else{
+                                throw new Exception("Something went wrong whilst updating our database. Your password has not been changed.");
+                            }
+                        }else{
+                            // echo: nieuwe passwoorden niet hetzelfde
+                            throw new Exception("New password confirmation isn't right.");
+                        }
+                    }
+                    else
+                    {
+                        //echo old password fout
+                        throw new Exception("Your current password isn't right.");
+                    }
+                }else{
+                    throw new Exception("New password has to be 6 characters or longer.");
+                }
+            }
+        }
+
+        public function echoMe(){
+            echo "Here's your echo";
+        }
+
+        /*
+        public function setProfilePicture(){
+            $target_dir = "../img/";
+            $file_name = "pp-".$_SESSION['userID']."-".time().".jpg";
+            $target_file = $target_dir . $file_name;
+            $uploadOk = 1;
+            $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+                $check = getimagesize($_FILES[$p_file]["tmp_name"]);
+                if($check !== false) {
+                    echo "File is an image - " . $check["mime"] . ".";
+                    $uploadOk = 1;
+                } else {
+                    echo "File is not an image.";
+                    $uploadOk = 0;
+                }
+            }
+            // Check if file already exists
+            if (file_exists($target_file)) {
+                echo "Sorry, file already exists.";
+                $uploadOk = 0;
+            }
+            // Check file size
+            if ($_FILES[$p_file]["size"] > 500000) {
+                echo "Sorry, your file is too large.";
+                $uploadOk = 0;
+            }
+            // Allow certain file formats
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" ) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                $uploadOk = 0;
+            }
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == 0) {
+                echo "Sorry, your file was not uploaded.";
+            // if everything is ok, try to upload file
+            } else {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            }
+
+        }*/
     }
 ?>
