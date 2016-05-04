@@ -89,33 +89,28 @@
         </ul>
         </div>
     </header>
+</div>
 
-    <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE -->
-    <?php if(isset($_SESSION['loggedin']) && $userData['username'] == $_SESSION['username']): ?>
-        <section>
-            <a href="uploadpost.php">Upload a picture</a>
-        </section>
-    <?php endif; ?>
+    <section class="ownContainer">
+        <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE -->
+        <?php if(isset($_SESSION['loggedin']) && $userData['username'] == $_SESSION['username']): ?>
+            <section>
+                <a href="uploadpost.php">Upload a picture</a>
+            </section>
+        <?php endif; ?>
 
-    <section>
         <!-- SHOW POSTS OR SHOW MESSAGE WHEN THERE ARE NO POSTS -->
         <?php if($userPosts == false): ?>
             <p>No posts yet.</p>
         <?php else: ?>
+            <div class="gallery">
             <?php foreach( $userPosts as $key => $userPost ): ?>
-                <article>
-                    <a href="post.php?p=<?php echo $userPost['id'] ?>&u=<?php echo $userData['id'] ?>">
-                        <img src="<?php echo $userPost['path'] ?>" class="<?php echo $userPost['filter']; ?> profilePosts" alt="">
-                    </a>
-                </article>
-            <?php endforeach; ?>
+<a href="post.php?p=<?php echo $userPost['id'] .'&u='. $userData['id'] ?>" style="background-image: url(<?php echo "'".$userPost['path']."'" ?>)" class="gallery__item <?php echo $userPost['filter']; ?>"></a>
 
-            <!--<article>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-            </article>-->
+            <?php endforeach; ?>
+            </div>
         <?php endif; ?>
     </section>
-
     <?php include 'footer.inc.php'; ?>
 
     <!-- POPUP FOR FOLLOWERS - not visible -->
@@ -170,6 +165,6 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-</div>
+
 </body>
 </html>      

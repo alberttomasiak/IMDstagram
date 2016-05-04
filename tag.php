@@ -30,6 +30,7 @@
     <script src="public/js/jquery-2.2.3.min.js"></script>
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <script src="public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="public/css/cssgram.min.css">
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <script src="public/js/interaction.js"></script>
 </head>
@@ -42,30 +43,29 @@
                 <span><span><?php echo $resultCount; ?></span> posts</span>
             </div>
         </header>
-        <section class="row">
-            <div class="col-xs-12">
-                <h4>Most recent</h4>
-
-                <?php if($taggedPosts == false): ?>
-                    <p>No posts tagged with <?php echo '#' . $_GET['tag'];?>.</p>
-                <?php else: ?>
-                    <?php foreach( $taggedPosts as $key => $taggedPost ): ?>
-                        <article>
-                            <a href="post.php?p=<?php echo $taggedPost['id'] ?>&u=<?php echo $taggedPost['userID'] ?>">
-                                <img src="<?php echo $taggedPost['path'] ?>" alt="">
-                            </a>
-                        </article>
-                    <?php endforeach; ?>
-
-                    <!--<article>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
-                    </article>-->
-                <?php endif; ?>
-
-            </div>
-        </section>
-        <?php include 'footer.inc.php'; ?>
     </div>
+    <section class="ownContainer">
+        <h4>Most recent</h4>
+
+        <?php if($taggedPosts == false): ?>
+            <p>No posts tagged with <?php echo '#' . $_GET['tag'];?>.</p>
+        <?php else: ?>
+            <div class="gallery">
+            <?php foreach( $taggedPosts as $key => $taggedPost ): ?>
+
+<a href="post.php?p=<?php echo $taggedPost['id'] .'&u='.$taggedPost['userID'] ?>" style="background-image: url(<?php echo "'".$taggedPost['path']."'" ?>)" class="gallery__item <?php echo $taggedPost['filter']; ?>"></a>
+
+            <?php endforeach; ?>
+            </div>
+
+            <!--<article>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
+            </article>-->
+        <?php endif; ?>
+
+    </section>
+    <?php include 'footer.inc.php'; ?>
+
 
 </body>
 </html>
