@@ -14,7 +14,7 @@ $notificationNumber = $user->countPendingRequests();
 
         <div class="nav__links">
             <?php if($notificationNumber > 0): ?>
-            <a href="#" class="nav__links__item" aria-label="Notifications" title="Notifications">
+            <a href="notifications.php" class="nav__links__item" aria-label="Notifications" title="Notifications">
                 <span class="glyphicon glyphicon-bell blink" aria-hidden="true"></span>
             </a>
             <?php endif; ?>
