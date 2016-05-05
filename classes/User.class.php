@@ -295,21 +295,10 @@
             }
         }
 
+
         // FOLLOW ANOTHER USER
-        /*public function follow($p_iFollowingID){
-            $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO follow(followerID, followingID, accepted, blocked)
-                                                           VALUES(:followerID, :followingID, '1', '0')");
-
-            $statement->bindparam(":followerID", $_SESSION['userID']);
-            $statement->bindparam(":followingID", $p_iFollowingID);
-            if ($statement->execute()) {
-                return true;
-            }
-        }*/
-
         public function follow($p_iFollowingID){
-            $private = $this->isPrivate(); // true or false
+            $private = $this->isPrivate($p_iFollowingID); // true or false
             $conn = Db::getInstance();
             if($private == false){
                 $statement = $conn->prepare("INSERT INTO follow(followerID, followingID, accepted, blocked)
