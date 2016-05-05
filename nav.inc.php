@@ -1,7 +1,8 @@
 <?php
 include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
-
+$user = new User();
+$notificationNumber = $user->countPendingRequests();
 ?><script src="public/js/interaction.js" type="text/javascript"></script>
 <nav class="navbar navbar-default">
 
@@ -21,7 +22,10 @@ include_once("classes/User.class.php");
 
         <ul class="nav navbar-nav navbar-right">
             <li><a href="uploadpost.php" aria-label="Make a post" title="Post"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></a></li>
-            <li><a href="friendrequests.php" aria-label="Notifications" title="Notifications"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span><span class="badge">5</span></a></li>
+            <?php if($notificationNumber > 0): ?>
+            <li><a href="notifications.php" aria-label="Notifications" title="Notifications"><span class="
+glyphicon glyphicon-bell blink" aria-hidden="true"></span></a></li>
+            <?php endif; ?>
             <li><a href="profile.php?profile=<?php echo $_SESSION['username']; ?>" aria-label="Your profile" title="<?php echo $_SESSION['username']; ?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
             <li><a href="logout.php" aria-label="Log out" title="Log out"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></li>
             <!--<li><a href="profile.php?profile=<?php echo $_SESSION['username']; ?>"><?php if($_SESSION['loggedin']==true){ echo $_SESSION['username']; } ?></a></li>

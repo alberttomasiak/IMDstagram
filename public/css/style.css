@@ -443,3 +443,32 @@ nav .navbar-form{
 	background-repeat: no-repeat;
 	background-position: center;
 }
+
+
+/*
+//
+//      BLINKING NOTIFICATION
+//
+*/
+
+
+@-moz-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Firefox */
+@-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Webkit */
+@-ms-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* IE */
+@keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Opera and prob css3 final iteration */
+.glyphicon-bell{
+	color: #3a6ff5;
+}
+.blink {
+	color: #2a63f4;
+	-moz-transition:all 1s ease-in-out;
+	-webkit-transition:all 2s ease-in-out;
+	-o-transition:all 1s ease-in-out;
+	-ms-transition:all 1s ease-in-out;
+	transition:all 2s ease-in-out;
+	/* order: name, direction, duration, iteration-count, timing-function */
+	-moz-animation:blink normal 2s infinite ease-in-out; /* Firefox */
+	-webkit-animation:blink normal 2s infinite ease-in-out; /* Webkit */
+	-ms-animation:blink normal 2s infinite ease-in-out; /* IE */
+	animation:blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+}​

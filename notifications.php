@@ -11,7 +11,7 @@
             try{
                 $user->acceptFriend($requestID);
                 $pendingRequests = $user->getPendingRequests();
-                //header('location: friendrequests.php');
+                header('Location: '.$_SERVER['REQUEST_URI']);
             }catch(Exception $e){
                 echo "accept error";
             }
@@ -21,7 +21,7 @@
             try{
                 $user->declineFriend($requestID);
                 $pendingRequests = $user->getPendingRequests();
-                //header('location: friendrequests.php');
+                header('Location: '.$_SERVER['REQUEST_URI']);
             }catch(Exception $e){
                 echo "decline error";
             }
@@ -35,7 +35,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Friend Requests</title>
+    <title>IMDstagram | Notifications</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="public/js/jquery-2.2.3.min.js"></script>
@@ -49,7 +49,8 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h1>Friend requests</h1>
+                <h1>Notifications</h1>
+                <h4>These users want to follow you</h4>
                 <ul>
                     <?php foreach($pendingRequests as $key => $request): ?>
                         <li>

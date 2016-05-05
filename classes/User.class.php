@@ -468,6 +468,21 @@
             }
         }
 
+        public function countPendingRequests(){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT *
+                                    FROM follow
+                                    WHERE followingID=:followingID AND accepted='0'");
+            $stmt->bindparam(":followingID", $_SESSION['userID']);
+            if($stmt->execute()){
+                $result = count($stmt->fetchAll());
+                return $result;
+
+            } else{
+                return false;
+            }
+        }
+
         // RETURNS HOW MUCH POSTS SOMEONE HAS
         public function countPosts($p_iUserID){
             $conn = Db::getInstance();
