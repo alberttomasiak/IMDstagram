@@ -5,6 +5,7 @@
     if(isset($_SESSION['loggedin'])){
         $user = new User();
         $userData = $user->getUserDetailsByUsername($_SESSION['username']);
+        $feedbackPassword = "";
 
         if( !empty( $_POST['btnSubmitEdit'] ) ){
             try {
@@ -27,8 +28,27 @@
             }catch(Exception $e){
                 $feedback = $e->getMessage();
             }
-            // zorg ervoor dat je niet opnieuw naar database schrijft wanneer je refresht
-            //header("location: index.php");
+        }
+
+        if( !empty( $_POST['btnChangePassword'] ) ) {
+            $currentPass = $_POST['currentPass'];
+            $newPass = $_POST['newPass'];
+            $newPassConfirm = $_POST['newPassConfirm'];
+            try{
+                $user->changePassword($currentPass, $newPass, $newPassConfirm);
+                $feedbackPassword = "<div class='alert alert-success' role='alert'>Password changed</div>";
+            }catch(Exception $e){
+                $feedbackPassword = "<div class='alert alert-danger' role='alert'>".$e->getMessage()."</div>";
+            }
+
+        }
+
+        if( !empty( $_POST['btnChangeProfilePicture'] ) ){
+            try {
+                $user->setProfilePicture($_FILES["fileToUpload"]["name"]);
+            }catch(Exception $e){
+                $feedback = $e->getMessage();
+            }
         }
     }else{
         header('location: login.php');
@@ -59,7 +79,6 @@
     </div>
     <div class="row">
     <div class="col-sm-7 col-md-6">
-
     <form action="" method="post">
         <h3>Profile information</h3>
         <?php if(isset($feedback)): ?>
@@ -109,27 +128,49 @@
         <input type="submit" name="btnSubmitEdit" value="Submit" class="btn btn-primary">
     </form>
     </div>
-    <div class="col-sm-7 col-md-6"
-    <form action="" method="post">
-        <h3>Change password</h3>
-        <div class="form-group">
-            <label for="oldPassword">Old password</label>
-            <input type="password" id="oldPassword" name="oldPassword" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="newPassword">New password</label>
-            <input type="password" id="newPassword" name="newPassword" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="newPasswordAgain">New password, again</label>
-            <input type="password" id="newPasswordAgain" name="newPasswordAgain" class="form-control">
-        </div>
-
-        <input type="submit" name="btnSubmitPassword" value="Change password" class="btn btn-primary">
-    </form>
+    <div class="col-sm-7 col-md-6">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <h3>Profile picture</h3>
+                <img src="<?php echo $userData['profilePicture']; ?>" alt="" style="border-radius: 100%">
+                <div class="form-group">
+                    <label for="avatarUpload">Choose profile picture</label>
+                    <input type="file" name="fileToUpload" class="form-control" id="avatarUpload">
+                </div>
+            </div>
+            <input type="submit" name="btnChangeProfilePicture" value="Change profile picture" class="btn btn-primary">
+        </form>
     </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Account settings</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-7 col-md-6">
+            <form action="" method="post">
+                <h3>Change password</h3>
+                <?php echo $feedbackPassword; ?>
+
+                <div class="form-group">
+                    <label for="currentPass">Current password</label>
+                    <input type="password" name="currentPass" id="currentPass" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="newPass">New password</label>
+                    <input type="password" name="newPass" id="newPass" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassConfirm">Confirm new password</label>
+                    <input type="password" name="newPassConfirm" id="newPassConfirm" class="form-control">
+                </div>
+
+                <input type="submit" value="Change password" name="btnChangePassword" class="btn btn-primary">
+            </form>
+        </div>
     </div>
     </div>
     <?php include 'footer.inc.php' ?>
