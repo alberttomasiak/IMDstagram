@@ -17,6 +17,13 @@
         //var_dump($followers);
         $following = $user->getFollowing($userData['id']);
         //var_dump($following);
+
+        // START DEBUG RELATIONSHIPS
+
+        $relation = $user->checkRelationship($userData['id']);
+        var_dump($relation);
+        // STOP DEBUG RELATIONSHIPS
+
     }else{
         header('location: login.php');
     }
