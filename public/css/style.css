@@ -268,14 +268,17 @@ footer{
 
 .nav__container{
 	width: 97%;
-	margin: auto;
 	max-width: 1150px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	max-height: 50px;
 	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
 }
+
 .nav__logo{
 	display: block;
 	text-indent: -9999px;
