@@ -442,13 +442,13 @@
                 }else{
                     // public profile
                     if($following == true){
-                        echo "You are FOLLOWING this PUBLIC profile";
+                        //echo "You are FOLLOWING this PUBLIC profile";
                     }else{
-                        echo "You are NOT FOLLOWING this PUBLIC profile";
+                        //echo "You are NOT FOLLOWING this PUBLIC profile";
                     }
                 }
             }else{
-                echo "This is your own profile";
+                //echo "This is your own profile";
             }
         }
 
