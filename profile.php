@@ -93,20 +93,23 @@
                 if($user->isFollowing($userData['id'])){
                     // toon following
                     echo "<form action='' method='post'>
-                                <input type='submit' class='btn' name='btnUnfollow' value='Following'>
+                                <input type='submit' id='btnFollow' class='btn btn-success' name='btnUnfollow' value='Following'
+                                data-id='".$userData['id']."' data-action='stopfollowing'>
                                 <input type='hidden' name='profileID' value='".$userData['id']."'>
                                 </form>";
                 }else{
                     if($user->isPending($userData['id'])){
                         // toon pending
                         echo "<form action='' method='post'>
-                                <input type='submit' class='btn' value='Pending'>
+                                <input type='submit' id='btnFollow' class='btn btn-default' value='Pending'
+                                data-id='".$userData['id']."' data-action='pending'>
                                 <input type='hidden' name='profileID' value='".$userData['id']."'>
                                 </form>";
                     }else{
                         // toon follow
                         echo "<form action='' method='post'>
-                                <input type='submit' class='btn' name='btnFollow' value='Follow'>
+                                <input type='submit' id='btnFollow' class='btn btn-primary' name='btnFollow' value='Follow'
+                                data-id='".$userData['id']."' data-action='follow'>
                                 <input type='hidden' name='profileID' value='".$userData['id']."'>
                                 </form>";
                     }

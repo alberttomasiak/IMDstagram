@@ -515,3 +515,24 @@ footer{
 	-ms-animation:blink normal 2s infinite ease-in-out; /* IE */
 	animation:blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
 }​
+
+
+ /*
+ //
+ //      FOLLOW BUTTONS
+ //
+ */
+/*
+.btn__follow--follow{
+	 background-color: blue;
+	color: green;
+	font-size: 3em;
+ }
+
+.btn__follow--following{
+	background-color: green;
+}
+
+.btn__follow--pending{
+	background-color: yellow;
+}*/

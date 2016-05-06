@@ -28,4 +28,3 @@ $notificationNumber = $user->countPendingRequests();
         </div>
     </div>
 </nav>
-<script src="public/js/interaction.js" type="text/javascript"></script>
