@@ -19,7 +19,7 @@
         //var_dump($following);
 
         // START DEBUG RELATIONSHIPS
-        $relation = $user->checkRelationship($userData['id']);
+        //$relation = $user->checkRelationship($userData['id']);
         //var_dump($relation);
         // STOP DEBUG RELATIONSHIPS
 
@@ -33,6 +33,15 @@
             }
         }
         if( !empty( $_POST['btnUnfollow'] ) ) {
+            $profileID = $_POST['requestID'];
+            try{
+                $user->stopFollowing($_POST['profileID']);
+                header('Location: '.$_SERVER['REQUEST_URI']);
+            }catch(Exception $e){
+                echo "follow error";
+            }
+        }
+        if( !empty( $_POST['btnPending'] ) ) {
             $profileID = $_POST['requestID'];
             try{
                 $user->stopFollowing($_POST['profileID']);
@@ -101,8 +110,8 @@
                     if($user->isPending($userData['id'])){
                         // toon pending
                         echo "<form action='' method='post'>
-                                <input type='submit' id='btnFollow' class='btn btn-default' value='Pending'
-                                data-id='".$userData['id']."' data-action='pending'>
+                                <input type='submit' id='btnFollow' class='btn btn-default' name='btnPending' value='Pending'
+                                data-id='".$userData['id']."' data-action='stopfollowing'>
                                 <input type='hidden' name='profileID' value='".$userData['id']."'>
                                 </form>";
                     }else{
@@ -153,71 +162,92 @@
             </section>
         <?php endif; ?>
 
-        <!-- SHOW POSTS OR SHOW MESSAGE WHEN THERE ARE NO POSTS -->
-        <?php if($userPosts == false): ?>
-            <p>No posts yet.</p>
-        <?php else: ?>
-            <div class="gallery">
-            <?php foreach( $userPosts as $key => $userPost ): ?>
-<a href="post.php?p=<?php echo $userPost['id'] .'&u='. $userData['id'] ?>" style="background-image: url(<?php echo "'".$userPost['path']."'" ?>)" class="gallery__item <?php echo $userPost['filter']; ?>"></a>
 
-            <?php endforeach; ?>
-            </div>
+        <?php if(($user->isPrivate($userData['id']) == false)
+            || ($user->isFollowing($userData['id']) == true)
+            || ($userData['id'] == $_SESSION['userID'])): ?>
+            <!-- SHOW POSTS -->
+
+            <!-- SHOW POSTS OR SHOW MESSAGE WHEN THERE ARE NO POSTS -->
+            <?php if($userPosts == false): ?>
+                <p>No posts yet.</p>
+            <?php else: ?>
+                <div class="gallery">
+                    <?php foreach( $userPosts as $key => $userPost ): ?>
+                        <a href="post.php?p=<?php echo $userPost['id'] .'&u='. $userData['id'] ?>" style="background-image: url(<?php echo "'".$userPost['path']."'" ?>)" class="gallery__item <?php echo $userPost['filter']; ?>"></a>
+
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+        <?php else: ?>
+            <!-- HIDE POSTS -->
+            <h4>This account is private</h4>
+            <p>Request to follow <?php echo $userData['username']?> to see their photos.</p>
         <?php endif; ?>
+
     </section>
     <?php include 'footer.inc.php'; ?>
 
-    <!-- POPUP FOR FOLLOWERS - not visible -->
-    <div id="followersModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Followers</h4>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <?php foreach($followers as $key => $follower): ?>
-                        <li>
-                            <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
-                            <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
-                            <span><?php echo $follower['fullName']; ?></span>
-                        </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
-    <!-- POPUP FOR FOLLOWING - not visible -->
-    <div id="followingModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Following</h4>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <?php foreach($following as $key => $follower): ?>
-                            <li>
-                                <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
-                                <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
-                                <span><?php echo $follower['fullName']; ?></span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    <?php if(($user->isPrivate($userData['id']) == false)
+        || ($user->isFollowing($userData['id']) == true)
+        || ($userData['id'] == $_SESSION['userID'])): ?>
+
+        <!-- POPUP FOR FOLLOWERS - not visible -->
+        <div id="followersModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Followers</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <?php foreach($followers as $key => $follower): ?>
+                                <li>
+                                    <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
+                                    <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
+                                    <span><?php echo $follower['fullName']; ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+      <!-- POPUP FOR FOLLOWING - not visible -->
+        <div id="followingModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Following</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <?php foreach($following as $key => $follower): ?>
+                                <li>
+                                    <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
+                                    <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
+                                    <span><?php echo $follower['fullName']; ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+    <?php endif; ?>
+
 
 
 </body>
