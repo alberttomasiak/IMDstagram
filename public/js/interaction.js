@@ -9,7 +9,7 @@ $(document).ready(function() {
     // REALTIME USERNAME CHECK EVENT
     $("#username").on("keyup", realtimeUsernameCheck);
     // FOLLOW EVENT
-    $("#btnFollow").on("click", follow);
+    //$("#btnFollow").on("click", follow);
 
 
     //

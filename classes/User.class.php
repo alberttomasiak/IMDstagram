@@ -295,15 +295,62 @@
             }
         }
 
+
         // FOLLOW ANOTHER USER
         public function follow($p_iFollowingID){
+            $private = $this->isPrivate($p_iFollowingID); // true or false
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO follow(followerID, followingID, accepted, blocked)
+            if($private == false){
+                $statement = $conn->prepare("INSERT INTO follow(followerID, followingID, accepted, blocked)
                                                            VALUES(:followerID, :followingID, '1', '0')");
 
-            $statement->bindparam(":followerID", $_SESSION['userID']);
-            $statement->bindparam(":followingID", $p_iFollowingID);
+                $statement->bindparam(":followerID", $_SESSION['userID']);
+                $statement->bindparam(":followingID", $p_iFollowingID);
+                if ($statement->execute()) {
+                    // following
+                    // record 1 0 0
+                    return true;
+                }
+            }elseif($private == true){
+                $statement = $conn->prepare("INSERT INTO follow(followerID, followingID, accepted, blocked)
+                                                           VALUES(:followerID, :followingID, '0', '0')");
+
+                $statement->bindparam(":followerID", $_SESSION['userID']);
+                $statement->bindparam(":followingID", $p_iFollowingID);
+                if ($statement->execute()) {
+                    // send friend request
+                    // record 0 0 0
+                    return true;
+                }
+            }
+        }
+
+        // ACCEPT A FOLLOW REQUEST
+        public function acceptFriend($p_iProfileID){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("UPDATE follow
+                                        SET accepted='1'
+                                        WHERE followerID=:followerID AND followingID=:followingID");
+
+            $statement->bindparam(":followerID", $p_iProfileID);
+            $statement->bindparam(":followingID", $_SESSION['userID']);
             if ($statement->execute()) {
+                // accept request
+                // record 1 0 0
+                return true;
+            }
+        }
+
+        // DECLINE A FOLLOW REQUEST
+        public function declineFriend($p_iProfileID){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("DELETE FROM follow WHERE followerID=:followerID AND followingID=:followingID");
+
+            $statement->bindparam(":followerID", $p_iProfileID);
+            $statement->bindparam(":followingID", $_SESSION['userID']);
+            if ($statement->execute()) {
+                // decline request
+                // delete record
                 return true;
             }
         }
@@ -316,6 +363,8 @@
             $statement->bindparam(":followerID", $_SESSION['userID']);
             $statement->bindparam(":followingID", $p_iFollowingID);
             if ($statement->execute()) {
+                // delete record
+                // you stopped following this person
                 return true;
             }
         }
@@ -323,12 +372,112 @@
         // CHECK IF LOGGED IN USER IS FOLLOWING A SPECIFIC USER
         public function isFollowing($p_iFollowingID){
             $conn = Db::getInstance();
-            $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND followingID=:followingID");
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND followingID=:followingID AND accepted='1'");
             $stmt->bindparam(":followerID", $_SESSION['userID']);
             $stmt->bindparam(":followingID", $p_iFollowingID);
             $stmt->execute();
             if($stmt->rowCount() > 0){
+                // you are following this person
                 return true;
+            } else{
+                // you are not following this user but you may be waiting till he accepts you
+                return false;
+            }
+        }
+
+        // CHECK IF LOGGED IN USER HAS A PENDING REQUEST WITH ANOTHER USER
+        public function isPending($p_iFollowingID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM follow WHERE followerID=:followerID AND followingID=:followingID AND accepted='0'");
+            $stmt->bindparam(":followerID", $_SESSION['userID']);
+            $stmt->bindparam(":followingID", $p_iFollowingID);
+            $stmt->execute();
+            if($stmt->rowCount() > 0){
+                // you requested to follow this person
+                return true;
+            } else{
+                // you didn't request to follow this person
+                return false;
+            }
+        }
+
+        // CHECK IF A PROFILE IS PRIVATE
+        public function isPrivate($p_iProfileID){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT private FROM user WHERE id=:userID");
+            $stmt->bindparam(":userID", $p_iProfileID);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $private = $result['private'];
+            if($private == 1){
+                // private account
+                return true;
+            }else if($private == 0){
+                // public account
+                return false;
+            }
+        }
+
+        // RETURNS THE RELATIONSHIP BETWEEN 2 USERS
+        public function checkRelationship($p_iProfileID){
+            // currentUserID == logged in user, $p_iProfileID == other user
+            $currentUserID = $_SESSION['userID'];
+
+            if($currentUserID != $p_iProfileID){
+                $private = $this->isPrivate($p_iProfileID); // true or false
+                $following = $this->isFollowing($p_iProfileID); // true or false
+                $pending = $this->isPending($p_iProfileID);
+                if($private == true){
+                    // private profile
+                    if($following == true){
+                        echo "You are FOLLOWING this PRIVATE profile";
+                    }else{
+                        if($pending == true){
+                            echo "You ASKED TO FOLLOW this PRIVATE profile";
+                        }else{
+                            echo "You are NOT FOLLOWING this PRIVATE profile";
+                        }
+                    }
+
+                }else{
+                    // public profile
+                    if($following == true){
+                        echo "You are FOLLOWING this PUBLIC profile";
+                    }else{
+                        echo "You are NOT FOLLOWING this PUBLIC profile";
+                    }
+                }
+            }else{
+                echo "This is your own profile";
+            }
+        }
+
+        public function getPendingRequests(){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT follow.followerID, user.id, user.username, user.fullName, user.profilePicture
+                                    FROM follow
+                                    INNER JOIN user
+                                    ON follow.followerID=user.id
+                                    WHERE followingID=:followingID AND accepted='0'");
+            $stmt->bindparam(":followingID", $_SESSION['userID']);
+            $stmt->execute();
+            if($stmt->execute()){
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else{
+                return false;
+            }
+        }
+
+        public function countPendingRequests(){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT *
+                                    FROM follow
+                                    WHERE followingID=:followingID AND accepted='0'");
+            $stmt->bindparam(":followingID", $_SESSION['userID']);
+            if($stmt->execute()){
+                $result = count($stmt->fetchAll());
+                return $result;
+
             } else{
                 return false;
             }
@@ -503,5 +652,6 @@
             }
 
         }*/
+
     }
 ?>

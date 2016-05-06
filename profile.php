@@ -17,6 +17,30 @@
         //var_dump($followers);
         $following = $user->getFollowing($userData['id']);
         //var_dump($following);
+
+        // START DEBUG RELATIONSHIPS
+        $relation = $user->checkRelationship($userData['id']);
+        var_dump($relation);
+        // STOP DEBUG RELATIONSHIPS
+
+        if( !empty( $_POST['btnFollow'] ) ) {
+            $profileID = $_POST['requestID'];
+            try{
+                $user->follow($_POST['profileID']);
+                header('Location: '.$_SERVER['REQUEST_URI']);
+            }catch(Exception $e){
+                echo "follow error";
+            }
+        }
+        if( !empty( $_POST['btnUnfollow'] ) ) {
+            $profileID = $_POST['requestID'];
+            try{
+                $user->stopFollowing($_POST['profileID']);
+                header('Location: '.$_SERVER['REQUEST_URI']);
+            }catch(Exception $e){
+                echo "follow error";
+            }
+        }
     }else{
         header('location: login.php');
     }
@@ -50,7 +74,7 @@
 
         <?php
             // SHOW EDIT PROFILE INSTEAD OF FOLLOW WHEN IT'S YOUR OWN PROFILE
-            if(isset($_SESSION['loggedin'])){
+            /*if(isset($_SESSION['loggedin'])){
                 if($userData['username'] == $_SESSION['username']){
                    echo "<a href='edit-profile.php' class='btn'>Edit profile</a>";
                 }else if($user->isFollowing($userData['id']) == false){
@@ -59,9 +83,36 @@
                 }else{
                     echo "<input type='submit' class='btn btn-primary active' data-action='stopfollowing' data-id='" . $userData['id'] . "' id='btnFollow' value='Following'>";
                 }
+            }*/
+        ?>
+        <?php
+            if($userData['id'] == $_SESSION['userID']){
+                // your profile
+                echo "<a href='edit-profile.php' class='btn'>Edit profile</a>";
+            }else{
+                if($user->isFollowing($userData['id'])){
+                    // toon following
+                    echo "<form action='' method='post'>
+                                <input type='submit' class='btn' name='btnUnfollow' value='Following'>
+                                <input type='hidden' name='profileID' value='".$userData['id']."'>
+                                </form>";
+                }else{
+                    if($user->isPending($userData['id'])){
+                        // toon pending
+                        echo "<form action='' method='post'>
+                                <input type='submit' class='btn' value='Pending'>
+                                <input type='hidden' name='profileID' value='".$userData['id']."'>
+                                </form>";
+                    }else{
+                        // toon follow
+                        echo "<form action='' method='post'>
+                                <input type='submit' class='btn' name='btnFollow' value='Follow'>
+                                <input type='hidden' name='profileID' value='".$userData['id']."'>
+                                </form>";
+                    }
+                }
             }
         ?>
-
         </div>
         <div class="about">
             <p>

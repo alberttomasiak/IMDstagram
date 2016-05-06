@@ -247,13 +247,51 @@ footer{
 //
 */
 
-.navbar{
-    background-color: #fff;
-    border-radius: 0;
+.nav{
+	display: block;
+	width: 100%;
+	padding: 5px 0;
+	background-color: #fff;
+	border-bottom: 1px solid #e7e7e7;
 }
 
-.navbar-brand img{
-    height: 35px;
+.nav__container{
+	width: 97%;
+	margin: auto;
+	max-width: 1150px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.nav__logo{
+	display: block;
+	text-indent: -9999px;
+	width: 25%;
+	max-width: 150px;
+	height: 40px;
+	background-image: url(../images/logo.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center left;
+}
+.nav__links{
+	font-size: 1.5em;
+	display: flex;
+	width: 30%;
+	max-width: 190px;
+	justify-content: space-between;
+}
+.nav__links__item{
+	color: #777;
+	//margin-left: 15px;
+}
+.nav__form{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	display: block;
+	width: 40%;
+	max-width: 230px;
 }
 
 .hashtagSearch{
@@ -277,18 +315,7 @@ footer{
 	margin-bottom: 10px;
 }
 
-/* maakt glyphicons groter */
-nav li a{
-    font-size: 1.5em;
-}
 
-/* centers search in nav */
-nav .navbar-form{
-    position: absolute;
-    width: 100%;
-    left: 0;
-    text-align: center;
-}
 
 /*
 //
@@ -443,3 +470,32 @@ nav .navbar-form{
 	background-repeat: no-repeat;
 	background-position: center;
 }
+
+
+/*
+//
+//      BLINKING NOTIFICATION
+//
+*/
+
+
+@-moz-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Firefox */
+@-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Webkit */
+@-ms-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* IE */
+@keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Opera and prob css3 final iteration */
+.glyphicon-bell{
+	color: #3a6ff5;
+}
+.blink {
+	color: #2a63f4;
+	-moz-transition:all 1s ease-in-out;
+	-webkit-transition:all 2s ease-in-out;
+	-o-transition:all 1s ease-in-out;
+	-ms-transition:all 1s ease-in-out;
+	transition:all 2s ease-in-out;
+	/* order: name, direction, duration, iteration-count, timing-function */
+	-moz-animation:blink normal 2s infinite ease-in-out; /* Firefox */
+	-webkit-animation:blink normal 2s infinite ease-in-out; /* Webkit */
+	-ms-animation:blink normal 2s infinite ease-in-out; /* IE */
+	animation:blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+}​
