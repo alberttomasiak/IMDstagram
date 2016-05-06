@@ -242,6 +242,31 @@
 				}
 			}
 		}
+		
+		public function deletePost($p_vPostID){
+			$db = Db::getInstance();
+			
+			$statementComments = $db->prepare("delete c from comment c
+												INNER JOIN post p
+												on p.id = c.postID
+												where c.postID = :postID");
+			$statementComments->bindValue(":postID", $p_vPostID);
+			
+			if($statementComments->execute()){
+				$statementLikes = $db->prepare("delete l from likes l
+												INNER JOIN post p
+												on p.id = l.postID
+												where l.postID = :postID");
+				$statementLikes->bindValue(":postID", $p_vPostID);
+				
+				if($statementLikes->execute()){
+					$statementPost = $db->prepare("delete p from post p where id = :postID");
+					$statementPost->bindValue(":postID", $p_vPostID);
+					$statementPost->execute();
+					return true;
+				}
+			}
+		}
 
 		// RETURNS DESCRIPTION WITH HASHTAGS AS LINKS
 		public function tagPostDescription($p_vDescription){
