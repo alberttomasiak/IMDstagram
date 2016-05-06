@@ -36,6 +36,7 @@
 </head>
 <body>
     <?php include 'nav.inc.php'; ?>
+    <section class="postsWrapper">
     <?php if ($timelinePosts == false): ?>
     	<p>There are no posts to display yet. Try following some people.</p>
     <?php else: ?>
@@ -60,21 +61,28 @@
         	</a>
         	
         	
-        	<!-- wrapper voor comments en like -->
+        	<!-- wrapper voor comments, like & flag-->
         	<div class="commentsWrapper">
+			<div class="commentsLike">
 				
-       	
+			</div>
+       		
         	<!-- Hier komen de comments voor elke post -->
         	<div class="commentsPost">
         		<ul>
         			<!-- comments in li => username + comment -->
         		</ul>
         	</div>
+        	
+        	<div class="commentsFlag">
+        		
+        	</div>
         	</div>
         	
         </article>
     <?php endforeach; ?>
     <?php endif; ?>
+    </section>
     <?php include 'footer.inc.php'; ?>
 </body>
 </html>

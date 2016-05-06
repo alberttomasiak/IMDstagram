@@ -20,7 +20,7 @@
 
         // START DEBUG RELATIONSHIPS
         $relation = $user->checkRelationship($userData['id']);
-        var_dump($relation);
+        //var_dump($relation);
         // STOP DEBUG RELATIONSHIPS
 
         if( !empty( $_POST['btnFollow'] ) ) {

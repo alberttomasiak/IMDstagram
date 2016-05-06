@@ -32,6 +32,14 @@
     
     //altijd alle laatste activiteiten ophalen
     $recentActivities = $comment->GetRecentActivities();*/
+	
+	if(!empty($_POST)){
+		$deletePostID = $_POST['deletePostID'];
+		$post = new Post();
+		$post->deletePost($deletePostID);
+		header('location: profile.php?profile='.$_SESSION['username'].'');
+	}
+
 
 ?><!doctype html>
 <html lang="en">
@@ -79,6 +87,12 @@
         <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
         <?php echo $userData['username'] ?>
         </a>
+        <?php if($_SESSION['username'] == $userData['username']): ?>
+        <form action="" method="POST">
+            	<input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
+			<button type="submit" class="post__delete" name="deletePost"><span class="glyphicon glyphicon-trash"></span></button>
+            </form>
+        <?php endif; ?>
     </header>
 
     <!--<div class="col-xs-12">-->
