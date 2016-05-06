@@ -61,15 +61,21 @@
         	</a>
         	
         	
-        	<!-- wrapper voor comments en like -->
+        	<!-- wrapper voor comments, like & flag-->
         	<div class="commentsWrapper">
+			<div class="commentsLike">
 				
-       	
+			</div>
+       		
         	<!-- Hier komen de comments voor elke post -->
         	<div class="commentsPost">
         		<ul>
         			<!-- comments in li => username + comment -->
         		</ul>
+        	</div>
+        	
+        	<div class="commentsFlag">
+        		
         	</div>
         	</div>
         	
