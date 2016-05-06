@@ -235,6 +235,12 @@ footer{
 	margin-top: 0;
 	padding-top: 0;
 }
+
+.flagged{
+	padding: 5px;
+	background-color: #ddd;
+}
+
 /*
 //
 //      LOGIN PAGE + SIGN UP PAGE
@@ -394,6 +400,18 @@ footer{
 	margin-right: 5px;
 	background-color: transparent;
 	border: 1px solid transparent;
+}
+
+.post__flag{
+	margin-right: 5px;
+	background-color: transparent;
+	border: 1px solid transparent;
+	width: 40px;
+	height: 40px;
+}
+
+.glyphicon-flag{
+	font-size: 30px;
 }
 
 

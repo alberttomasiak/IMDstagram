@@ -21,6 +21,24 @@
       header('location: login.php');
     }
 
+	if(!empty($_POST)){
+		$flagID = $_POST['postID'];
+		$post = new Post();
+		if($post->countFlags($flagID) == true){
+			$post->deletePost($flagID);
+		}
+		
+		if($post->checkIfFlagged($flagID) == false && $post->countFlags($flagID) == false){
+			if($post->countFlags($flagID) == true){
+				$post->deletePost($flagID);
+			}
+			$post->flagPost($flagID);
+		}else{
+			$post->unFlagPost($flagID);
+		}
+		//header('location: profile.php?profile='.$_SESSION['username'].'');
+	}
+
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -35,13 +53,15 @@
     <link rel="stylesheet" href="public/css/cssgram.min.css">
 </head>
 <body>
+
+   
     <?php include 'nav.inc.php'; ?>
     <section class="postsWrapper">
     <?php if ($timelinePosts == false): ?>
     	<p>There are no posts to display yet. Try following some people.</p>
     <?php else: ?>
     <?php foreach($timelinePosts as $key => $timelinePost): ?>
-        <article class="postTimeline">
+        <article class="postTimeline <?php echo $timelinePost['id']; ?>">
           <div class="postHeader">
           <div class="postUser">
            <!-- Profile picture -->
@@ -75,10 +95,42 @@
         	</div>
         	
         	<div class="commentsFlag">
-        		
-        	</div>
+        		<form action="" method="POST">
+        			<input type="hidden" name="postID" class="flagID" value="<?php echo $timelinePost['id']; ?>">
+        			<?php if($post->checkIfFlagged($timelinePost['id']) == true): ?>
+        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon flagged glyphicon-flag"></span></button>
+        			<?php else: ?>
+        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon glyphicon-flag"></span></button>
+        			<?php endif; ?>
+        		</form>
         	</div>
         	
+        	</div>
+        	<script type="text/javascript">
+				$(document).ready(function(){
+					$('.post__flag').on("click", function(e){
+					var flagID = $('.flagID').val();
+				
+						$.ajax({
+							url: "ajax/checkFlagged.php",
+							type: "POST",
+							data: {flagID: flagID},
+							dataType: 'json',
+							cache: false,
+							success: function(status){
+								console.log(status);
+								if(status.flagged == "true"){
+									$('.post__flag').addClass('flagged');
+								}
+							},
+							error: function (request, status, error) {
+								console.log(error);
+						}
+					});
+				//e.preventDefault();
+			});
+		});
+	</script>
         </article>
     <?php endforeach; ?>
     <?php endif; ?>

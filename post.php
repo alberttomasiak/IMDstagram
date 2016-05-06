@@ -91,7 +91,7 @@
         <form action="" method="POST">
             	<input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
 			<button type="submit" class="post__delete" name="deletePost"><span class="glyphicon glyphicon-trash"></span></button>
-            </form>
+        </form>
         <?php endif; ?>
     </header>
 
