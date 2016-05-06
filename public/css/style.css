@@ -84,8 +84,9 @@ footer{
 
 .filterSelection{
 	display: none;
-	width: 600px;
+	width: 100%;
 	margin-top: 25px;
+	height: auto;
 }
 
 .filterPreview{
@@ -93,13 +94,13 @@ footer{
 }
 
 .filterSelection ul{
-	width: 600px;
+	width: 100%;
+	white-space: nowrap;
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
-	margin: 0;
-	padding: 0;
 	justify-content: space-between;
+	margin-left: 0;
+	padding-left: 0;
 }
 
 .filterSelection ul li{
@@ -110,6 +111,7 @@ footer{
 	width: 80px;
 	list-style-type: none;
 	margin-bottom: 25px;
+	margin-right: 25px;
 }
 
 /*
