@@ -6,14 +6,23 @@ $user = new User();
 
 // get posted values
 $action = $_POST['action'];
-$followingID = $_POST['followingID'];
+$profileID = $_POST['profileID'];
 
 if($action == 'follow'){
-    $user->follow($followingID);
-    $response['status'] = 'success';
-    $response['action'] = 'following';
+    if($user->isPrivate($profileID) == true){
+        // private profile - follow request - change button to pending
+        $user->follow($profileID);
+        $response['status'] = 'success';
+        $response['action'] = 'pending';
+    }else if($user->isPrivate($profileID) == false){
+        // public profile - follow - change button to following
+        $user->follow($profileID);
+        $response['status'] = 'success';
+        $response['action'] = 'following';
+    }
+
 }else if($action == 'stopfollowing'){
-    $user->stopFollowing($followingID);
+    $user->stopFollowing($profileID);
     $response['status'] = 'success';
     $response['action'] = 'notfollowing';
 }
@@ -21,4 +30,5 @@ if($action == 'follow'){
 
 header('Content-type: application/json');
 echo json_encode($response);
+
 ?>

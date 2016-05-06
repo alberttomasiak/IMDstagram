@@ -33,6 +33,7 @@
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <link rel="stylesheet" href="public/css/cssgram.min.css">
+    <script src="public/js/interaction.js"></script>
 </head>
 <body>
     <?php include 'nav.inc.php'; ?>
