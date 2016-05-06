@@ -119,10 +119,17 @@ footer{
 //      HOMEPAGE
 //
 */
+.postsWrapper{
+	display: block;
+	width: 100%;
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 .postTimeline{
 	display: block;
-	width: 600px;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: #fff;
@@ -167,7 +174,7 @@ footer{
 }
 
 .postImage img{
-	max-width: 600px;
+	max-width: 100%;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -255,6 +262,8 @@ footer{
 	padding: 5px 0;
 	background-color: #fff;
 	border-bottom: 1px solid #e7e7e7;
+	margin-bottom: 25px;
+	height: 50px;
 }
 
 .nav__container{
@@ -264,12 +273,13 @@ footer{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	max-height: 50px;
+	position: absolute;
 }
 .nav__logo{
 	display: block;
 	text-indent: -9999px;
 	width: 25%;
-	max-width: 150px;
 	height: 40px;
 	background-image: url(../images/logo.png);
 	background-repeat: no-repeat;
@@ -288,10 +298,11 @@ footer{
 	//margin-left: 15px;
 }
 .nav__form{
-	margin-left: auto;
-	margin-right: auto;
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
 	text-align: center;
-	display: block;
 	width: 40%;
 	max-width: 230px;
 }

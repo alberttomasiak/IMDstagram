@@ -36,6 +36,7 @@
 </head>
 <body>
     <?php include 'nav.inc.php'; ?>
+    <section class="postsWrapper">
     <?php if ($timelinePosts == false): ?>
     	<p>There are no posts to display yet. Try following some people.</p>
     <?php else: ?>
@@ -75,6 +76,7 @@
         </article>
     <?php endforeach; ?>
     <?php endif; ?>
+    </section>
     <?php include 'footer.inc.php'; ?>
 </body>
 </html>
