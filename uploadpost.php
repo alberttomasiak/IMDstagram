@@ -40,7 +40,7 @@ if(!empty($_POST)){
 				reader.onload = function(e){
 					$("#previewImage").attr('src', e.target.result);
 					$('.filterPreview').attr('src', e.target.result);
-					$("#previewImage").css('width', 600);
+					$("#previewImage").css('width', '100%');
 					$('.filterPreview').css('width', 80);
 				}
 				reader.readAsDataURL(input.files[0]);
@@ -89,6 +89,8 @@ if(!empty($_POST)){
 					if(data.check == "success"){
 						$("#previewImage").css('display', 'block');
 						$('.filterSelection').css('display', 'block');
+						$('.filterSelection').css('width', '100%');
+						$('.filterSelection').css('overflow-x', 'scroll');
 						$('.filterSelection ul li img').css('display', 'block');
 						$("#postFeedback").html("");
 						previewImage(e.target);
@@ -162,8 +164,8 @@ if(!empty($_POST)){
 	<div class="container">
 	<div class="row">
 		<h1>Make a post</h1>
-		<div class="col-sm-7 col-md-5">
-		<section>
+		<div class="col-sm-9">
+		<section class="filterWrap">
 		<div><img src="" id="previewImage" alt=""></div>
 		<div class="filterSelection">
 			<ul>
