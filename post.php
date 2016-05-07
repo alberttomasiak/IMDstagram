@@ -121,7 +121,7 @@
         <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
         <span><?php echo $post->timeAgo($postData['timestamp']); ?></span>
     </div>
-    
+
     <div class="col-xs-12">
         <p><a href="#"><?php echo $userData['username'] ?></a> <?php echo $post->tagPostDescription($postData['description']) ?></p>
     </div>
