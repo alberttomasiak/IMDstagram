@@ -54,8 +54,6 @@
     <script src="public/js/interaction.js"></script>
 </head>
 <body>
-
-   
     <?php include 'nav.inc.php'; ?>
     <section class="postsWrapper">
     <?php if ($timelinePosts == false): ?>
@@ -99,39 +97,15 @@
         		<form action="" method="POST">
         			<input type="hidden" name="postID" class="flagID" value="<?php echo $timelinePost['id']; ?>">
         			<?php if($post->checkIfFlagged($timelinePost['id']) == true): ?>
-        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon flagged glyphicon-flag"></span></button>
+        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> flagged glyphicon-flag"></span></button>
         			<?php else: ?>
-        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon glyphicon-flag"></span></button>
+        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> glyphicon-flag"></span></button>
         			<?php endif; ?>
         		</form>
         	</div>
-        	
         	</div>
-        	<script type="text/javascript">
-				$(document).ready(function(){
-					$('.post__flag').on("click", function(e){
-					var flagID = $('.flagID').val();
-				
-						$.ajax({
-							url: "ajax/checkFlagged.php",
-							type: "POST",
-							data: {flagID: flagID},
-							dataType: 'json',
-							cache: false,
-							success: function(status){
-								console.log(status);
-								if(status.flagged == "true"){
-									$('.post__flag').addClass('flagged');
-								}
-							},
-							error: function (request, status, error) {
-								console.log(error);
-						}
-					});
-				//e.preventDefault();
-			});
-		});
-	</script>
+        	   
+        	
         </article>
     <?php endforeach; ?>
     <?php endif; ?>
