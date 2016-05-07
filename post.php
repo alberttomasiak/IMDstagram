@@ -109,7 +109,7 @@
         <form action="" method="POST">
             	<input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
 			<button type="submit" class="post__delete" name="deletePost"><span class="glyphicon glyphicon-trash"></span></button>
-            </form>
+        </form>
         <?php endif; ?>
     </header>
 
@@ -139,8 +139,8 @@
     <?php else: ?>
         <ul class="comments__list"></ul>
     <?php endif; ?>
-    </div>
 
+   
     <div class="col-xs-1">
     <?php
     // CHECK IF YOU LIKED THE POST ALREADY
@@ -166,7 +166,21 @@
         <input type="hidden" id="inputPostID" value="<?php echo $postData['id'];?>">
     </form>
 
-</div>
+    </div>
+    <div class="col-xs-2">
+        <div class="row">
+        <div class="col-xs-2 commentsFlag--Individual">
+            <form action="" method="POST">
+                <input type="hidden" name="postID" class="flagID" value="<?php echo $postData['id']; ?>">
+                <?php if($post->checkIfFlagged($postData['id']) == true): ?>
+                    <button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> flagged glyphicon-flag"></span></button>
+                <?php else: ?>
+                    <button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> glyphicon-flag"></span></button>
+                <?php endif; ?>
+            </form>
+        </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
