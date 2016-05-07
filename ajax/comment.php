@@ -1,5 +1,5 @@
-<?php
-
+*<?php
+/*
 	include_once("../classes/Comment.class.php");
 	$comment = new Comment();
 	
@@ -18,5 +18,5 @@
 	}
 
 
-
+*/
 ?>
