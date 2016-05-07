@@ -246,24 +246,29 @@
 		public function deletePost($p_vPostID){
 			$db = Db::getInstance();
 			
-			$statementComments = $db->prepare("delete c from comment c
+			$statementInappropriate = $db->prepare("delete i from inappropriate i INNER JOIN post p on i.id = i.postID where i.postID = :postID");
+			$statementInappropriate->bindValue(":postID", $p_vPostID);
+			
+			if($statementInappropriate->execute()){
+				$statementComments = $db->prepare("delete c from comment c
 												INNER JOIN post p
 												on p.id = c.postID
 												where c.postID = :postID");
-			$statementComments->bindValue(":postID", $p_vPostID);
+				$statementComments->bindValue(":postID", $p_vPostID);
 			
-			if($statementComments->execute()){
-				$statementLikes = $db->prepare("delete l from likes l
+				if($statementComments->execute()){
+					$statementLikes = $db->prepare("delete l from likes l
 												INNER JOIN post p
 												on p.id = l.postID
 												where l.postID = :postID");
-				$statementLikes->bindValue(":postID", $p_vPostID);
+					$statementLikes->bindValue(":postID", $p_vPostID);
 				
-				if($statementLikes->execute()){
-					$statementPost = $db->prepare("delete p from post p where id = :postID");
-					$statementPost->bindValue(":postID", $p_vPostID);
-					$statementPost->execute();
-					return true;
+					if($statementLikes->execute()){
+						$statementPost = $db->prepare("delete p from post p where id = :postID");
+						$statementPost->bindValue(":postID", $p_vPostID);
+						$statementPost->execute();
+						return true;
+					}
 				}
 			}
 		}
@@ -276,6 +281,58 @@
 			}
 			return $p_vDescription;
 		}
+		
+		public function checkIfFlagged($p_vPostID){
+			$db = Db::getInstance();
+			$statement = $db->prepare("SELECT * FROM inappropriate WHERE postID=:postID AND userID=:userID");
+			$statement->bindparam(":postID", $p_vPostID);
+			$statement->bindparam(":userID", $_SESSION['userID']);
+			$statement->execute();
+			if($statement->rowCount() > 0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		public function flagPost($p_vPostID){
+			$db = Db::getInstance();
+			$statement = $db->prepare("INSERT INTO inappropriate (postID, userID) values(:postID, :userID)");
+			$statement->bindparam(":postID", $p_vPostID);
+			$statement->bindparam("userID", $_SESSION['userID']);
+			if ($statement->execute()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		public function unFlagPost($p_vPostID){
+			$db = Db::getInstance();
+			$statement = $db->prepare("DELETE FROM inappropriate WHERE postID=:postID AND userID=:userID");
+			$statement->bindparam(":postID", $p_vPostID);
+			$statement->bindparam(":userID", $_SESSION['userID']);
+			if($statement->execute()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		public function countFlags($p_vPostID){
+			$db = Db::getInstance();
+			$statement = $db->prepare("SELECT * FROM inappropriate WHERE postID=:postID");
+			$statement->bindparam(":postID", $p_vPostID);
+			$statement->execute();
+			if($statement->rowCount() == 3){
+				//$post->deletePost($p_vPostID);
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+
 
 		// niet in gebruik de functie hieronder is voldoende
 		// GET A SINGLE TIMESTAMP

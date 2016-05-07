@@ -235,6 +235,7 @@ footer{
 	margin-top: 0;
 	padding-top: 0;
 }
+
 /*
 //
 //      LOGIN PAGE + SIGN UP PAGE
@@ -367,6 +368,7 @@ footer{
 }
 
 .detailpostRow{
+	margin-top: 25px;
     max-width: 640px;
     margin-left: auto;
     margin-right: auto;
@@ -389,6 +391,42 @@ footer{
 	border: 1px solid transparent;
 }
 
+.post__flag{
+	margin-right: 5px;
+	background-color: transparent;
+	border: 1px solid transparent;
+	width: 40px;
+	height: 40px;
+	padding: 5px;
+	outline: none;
+}
+
+.flagged{
+	background-color: #ddd;
+	position: relative;
+}
+
+
+.glyphicon-flag{
+	font-size: 30px;
+	padding: 5px;
+}
+
+.commentsFlag{
+	display: flex;
+	justify-content: flex-end;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	
+}
+
+.commentsFlag--Individual{
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 15px;
+	margin-top: -10px;
+	margin-bottom: 15px;
+}
 
 /*
 //
