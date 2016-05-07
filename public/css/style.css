@@ -522,6 +522,10 @@ footer{
  //      COMMENT SECTION
  //
  */
+.comments{
+	margin: 0 0 15px 0;
+ }
+
 .comments ul{
 	list-style: none;
  }
@@ -529,7 +533,7 @@ footer{
 .comments__list{
 	list-style: none;
 	padding: 0;
-	margin: 15px 0 0 0;
+	margin: 15px 0 25px 0;
  }
 
  .comments__list__item{

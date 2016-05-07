@@ -136,6 +136,8 @@
             </li>
         <?php endforeach; ?>
     </ul>
+    <?php else: ?>
+        <ul class="comments__list"></ul>
     <?php endif; ?>
     </div>
 
@@ -161,19 +163,8 @@
             <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default">
         </span>
         </div>
+        <input type="hidden" id="inputPostID" value="<?php echo $postData['id'];?>">
     </form>
-
-    <!--
-    <form method="post" action="">
-        <div class="statusupdates">
-
-        <input type="text" placeholder="Comment" id="activitymessage" name="activitymessage" />
-        <input id="btnSubmit" type="submit" value="Place comment" />  
-        </div>
-    </form>
-
-     <ul id="listupdates"></ul>
-     -->
 
 </div>
 </div>

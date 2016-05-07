@@ -103,32 +103,20 @@ $(document).ready(function() {
 
     // PLACE COMMENT
     function placeComment(e){
-        console.log('clicked');
-        /*var profileID = $(this).attr("data-id");
-        var action = $(this).attr("data-action");
-        console.log(profileID, action)
-        $.post( "ajax/follow.php", {profileID:profileID, action:action} )
+        var comment = $("#inputComment").val();
+        var postID = $("#inputPostID").val();
+        $.post( "ajax/comment.php", {comment:comment, postID:postID} )
             .done(function( response ) {
 
                 if(response.status == 'success'){
                     console.log('Success');
-                    if(response.action == 'following'){
-                        $("#btnFollow").val('Following');
-                        $("#btnFollow").attr('class', 'btn btn-success');
-                        $("#btnFollow").attr('data-action', 'stopfollowing');
-                    }else if(response.action == 'notfollowing'){
-                        $("#btnFollow").val('Follow');
-                        $("#btnFollow").attr('class', 'btn btn-primary');
-                        $("#btnFollow").attr('data-action', 'follow');
-                    }else if(response.action == 'pending'){
-                        $("#btnFollow").val('Pending');
-                        $("#btnFollow").attr('class', 'btn btn-default');
-                        $("#btnFollow").attr('data-action', 'stopfollowing');
-                    }
+                    var url = "'profile.php?profile=" + response.username + "'";
+                    var li = "<li class='comments__list__item'><p><a href="+ url +">"+ response.username +"</a> "+ response.text +"</p></li>";
+                    $(".comments__list").append(li);
                 }else{
                     console.log('Fail');
                 }
-            });*/
+            });
         e.preventDefault();
     };
 
