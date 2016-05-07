@@ -4,48 +4,100 @@ include_once "Db.class.php";
 
 class Comment
 {
+	/*
 	private $m_sComment;
-	
+	//private $m_iUserID;
+	private $m_iPostID;
 
-	
-	public function __set($p_sProperty, $p_vValue)
+	function __SET($p_sProperty, $p_vValue)
 	{
-		switch($p_sProperty)
-		{
+		switch ($p_sProperty){
 			case "Comment":
 				$this->m_sComment = $p_vValue;
 				break;
-		}	   
+			case "Author":
+				$this->m_sUserID = $p_vValue;
+				break;
+			case "Post":
+				$this->m_sPostID = $p_vValue;
+				break;
+		}
 	}
-	
-	public function __get($p_sProperty)
+
+	function __GET($p_sProperty)
 	{
-		$vResult = null;
-		switch($p_sProperty)
-		{
-		case "Comment": 
-			$vResult = $this->m_sComment;
-			break;
+		switch( $p_sProperty){
+			case "Comment":
+				return $this->m_sComment;
+				break;
+			case "Author":
+				return $this->m_sUserID;
+				break;
+			case "Post":
+				return $this->m_sPostID;
+				break;
 		}
-		return $vResult;
+	}
+
+	public function Save(){
+		$conn = Db::getInstance();
+		$statement = $conn->prepare("INSERT INTO comment(userID, postID, comment)
+                                                           VALUES(:userID, :postID, :comment)");
+
+		$statement->bindparam(":userID", $_SESSION['userID']);
+		$statement->bindparam(":postID", $this->m_iPostID);
+		$statement->bindparam(":comment", $this->m_sComment);
+		if ($statement->execute()) {
+			return true;
+		}
+	}*/
+
+	public function createComment($p_PostId, $p_vComment){
+		$conn = Db::getInstance();
+		$statement = $conn->prepare("INSERT INTO comment(userID, postID, comment)
+                                                           VALUES(:userID, :postID, :comment)");
+
+		$statement->bindparam(":userID", $_SESSION['userID']);
+		$statement->bindparam(":postID", $p_PostId);
+		$statement->bindparam(":comment", $p_vComment);
+		if ($statement->execute()) {
+			return true;
+		}
+	}
+
+	public function getAllCommentsForPost($p_iPostID){
+		$conn = Db::getInstance();
+		$stmt = $conn->prepare("SELECT user.username, comment.comment
+                                    FROM comment
+                                    INNER JOIN user
+                                    ON comment.userID=user.id
+                                    WHERE postID=:postID
+                                    ORDER BY timestamp ASC");
+		$stmt->bindparam(":postID", $p_iPostID);
+		if($stmt->execute()){
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} else{
+			return false;
+		}
+	}
+
+	public function getLatestCommentsForPost($p_iPostID){
+		$conn = Db::getInstance();
+		$stmt = $conn->prepare("SELECT user.username, comment.comment
+                                    FROM comment
+                                    INNER JOIN user
+                                    ON comment.userID=user.id
+                                    WHERE postID=:postID
+                                    ORDER BY timestamp ASC LIMIT 10");
+		$stmt->bindparam(":postID", $p_iPostID);
+		if($stmt->execute()){
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} else{
+			return false;
+		}
 	}
 
 
-		public function Save() {
-			$conn = Db::getInstance();
-			//$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$statement = $conn->prepare('INSERT INTO comment(comment) VALUES(:comment)');
-			$statement->bindValue(':comment', $this->Comment);
-			$statement->execute();
-		}
-
-		public function GetRecentActivities($p_iPostID) {
-			$conn = Db::getInstance();
-			$allComments = $conn->query("SELECT * FROM comment WHERE postID=:postID ORDER BY id DESC;");
-			//$allComments->bindparam(":userID", $p_iUserID);
-			return $allComments;
-		}
-
-	}
+}
 	
 ?>

@@ -519,20 +519,23 @@ footer{
 
  /*
  //
- //      FOLLOW BUTTONS
+ //      COMMENT SECTION
  //
  */
-/*
-.btn__follow--follow{
-	 background-color: blue;
-	color: green;
-	font-size: 3em;
+.comments{
+	margin: 0 0 15px 0;
  }
 
-.btn__follow--following{
-	background-color: green;
-}
+.comments ul{
+	list-style: none;
+ }
 
-.btn__follow--pending{
-	background-color: yellow;
-}*/
+.comments__list{
+	list-style: none;
+	padding: 0;
+	margin: 15px 0 25px 0;
+ }
+
+ .comments__list__item{
+
+ }

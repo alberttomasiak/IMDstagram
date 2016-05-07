@@ -10,7 +10,7 @@ $(document).ready(function() {
     $("#username").on("keyup", realtimeUsernameCheck);
     // FOLLOW EVENT
     $("#btnFollow").on("click", follow);
-
+    $("#btnPlaceComment").on("click", placeComment);
 
 
     //
@@ -71,33 +71,6 @@ $(document).ready(function() {
             });
     }
 
-    // FOLLOW FUNCTION (follow and stop following a user)
-    /*function follow(e){
-        var followingID = $(this).attr("data-id");
-        var action = $(this).attr("data-action");
-        console.log(followingID, action)
-        $.post( "ajax/follow.php", {followingID:followingID, action:action} )
-            .done(function( response ) {
-
-                if(response.status == 'success'){
-                    console.log('Success');
-                    if(response.action == 'following'){
-                        $("#btnFollow").val('Following');
-                        $("#btnFollow").toggleClass("active");
-                        $("#btnFollow").attr('data-action', 'stopfollowing');
-                    }else if(response.action == 'notfollowing'){
-                        $("#btnFollow").val('Follow');
-                        $("#btnFollow").toggleClass("active");
-                        $("#btnFollow").attr('data-action', 'follow');
-                    }
-                }else{
-                    console.log('Fail');
-                }
-
-            });
-        //e.preventDefault();
-    }*/
-
     function follow(e){
         console.log('clicked');
         var profileID = $(this).attr("data-id");
@@ -127,7 +100,28 @@ $(document).ready(function() {
             });
         e.preventDefault();
     };
-	
+
+    // PLACE COMMENT
+    function placeComment(e){
+        var comment = $("#inputComment").val();
+        var postID = $("#inputPostID").val();
+        $.post( "ajax/comment.php", {comment:comment, postID:postID} )
+            .done(function( response ) {
+
+                if(response.status == 'success'){
+                    console.log('Success');
+                    var url = "'profile.php?profile=" + response.username + "'";
+                    var li = "<li class='comments__list__item'><p><a href="+ url +">"+ response.username +"</a> "+ response.text +"</p></li>";
+                    $(".comments__list").append(li);
+                }else{
+                    console.log('Fail');
+                }
+            });
+        e.preventDefault();
+    };
+
+
+
 	// SEARCH FUNCTION
 	$("#searchBox").keyup(function(){
         var searchQuery = $(this).val();
