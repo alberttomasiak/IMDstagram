@@ -268,27 +268,21 @@ footer{
 	padding: 5px 0;
 	background-color: #fff;
 	border-bottom: 1px solid #e7e7e7;
-	margin-bottom: 25px;
-	height: 50px;
 }
 
 .nav__container{
 	width: 97%;
+	margin: auto;
 	max-width: 1150px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	max-height: 50px;
-	position: absolute;
-	margin: 0 auto;
-	left: 0;
-	right: 0;
 }
-
 .nav__logo{
 	display: block;
 	text-indent: -9999px;
 	width: 25%;
+	max-width: 150px;
 	height: 40px;
 	background-image: url(../images/logo.png);
 	background-repeat: no-repeat;
@@ -304,14 +298,13 @@ footer{
 }
 .nav__links__item{
 	color: #777;
-	//margin-left: 15px;
+//margin-left: 15px;
 }
 .nav__form{
-	position: absolute;
-	margin: 0 auto;
-	left: 0;
-	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 	text-align: center;
+	display: block;
 	width: 40%;
 	max-width: 230px;
 }
@@ -540,3 +533,24 @@ footer{
 	-ms-animation:blink normal 2s infinite ease-in-out; /* IE */
 	animation:blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
 }​
+
+
+ /*
+ //
+ //      FOLLOW BUTTONS
+ //
+ */
+/*
+.btn__follow--follow{
+	 background-color: blue;
+	color: green;
+	font-size: 3em;
+ }
+
+.btn__follow--following{
+	background-color: green;
+}
+
+.btn__follow--pending{
+	background-color: yellow;
+}*/

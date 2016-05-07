@@ -9,7 +9,8 @@ $(document).ready(function() {
     // REALTIME USERNAME CHECK EVENT
     $("#username").on("keyup", realtimeUsernameCheck);
     // FOLLOW EVENT
-    //$("#btnFollow").on("click", follow);
+    $("#btnFollow").on("click", follow);
+
 
 
     //
@@ -71,7 +72,7 @@ $(document).ready(function() {
     }
 
     // FOLLOW FUNCTION (follow and stop following a user)
-    function follow(e){
+    /*function follow(e){
         var followingID = $(this).attr("data-id");
         var action = $(this).attr("data-action");
         console.log(followingID, action)
@@ -95,7 +96,37 @@ $(document).ready(function() {
 
             });
         //e.preventDefault();
-    }
+    }*/
+
+    function follow(e){
+        console.log('clicked');
+        var profileID = $(this).attr("data-id");
+        var action = $(this).attr("data-action");
+        console.log(profileID, action)
+        $.post( "ajax/follow.php", {profileID:profileID, action:action} )
+            .done(function( response ) {
+
+                if(response.status == 'success'){
+                    console.log('Success');
+                    if(response.action == 'following'){
+                        $("#btnFollow").val('Following');
+                        $("#btnFollow").attr('class', 'btn btn-success');
+                        $("#btnFollow").attr('data-action', 'stopfollowing');
+                    }else if(response.action == 'notfollowing'){
+                        $("#btnFollow").val('Follow');
+                        $("#btnFollow").attr('class', 'btn btn-primary');
+                        $("#btnFollow").attr('data-action', 'follow');
+                    }else if(response.action == 'pending'){
+                        $("#btnFollow").val('Pending');
+                        $("#btnFollow").attr('class', 'btn btn-default');
+                        $("#btnFollow").attr('data-action', 'stopfollowing');
+                    }
+                }else{
+                    console.log('Fail');
+                }
+            });
+        e.preventDefault();
+    };
 	
 	// SEARCH FUNCTION
 	$("#searchBox").keyup(function(){
