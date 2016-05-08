@@ -1,7 +1,7 @@
 <?php
     include_once 'classes/User.class.php';
     include_once 'classes/Post.class.php';
-    //include_once 'classes/Comment.class.php';
+    include_once 'classes/Comment.class.php';
     session_start();
 
     $getPost = $_GET['p'];
@@ -32,8 +32,26 @@
     
     //altijd alle laatste activiteiten ophalen
     $recentActivities = $comment->GetRecentActivities();*/
-	
-	if(!empty($_POST)){
+    /*
+    if(!empty($_POST['btnPlaceComment'])){
+        $comment = new Comment();
+        $comment->Post = $postData['id'];
+        $comment->Comment = $_POST['inputComment'];
+        $comment->Save();
+        header('Location: '.$_SERVER['REQUEST_URI']);
+    }*/
+    $comment = new Comment();
+    $allComments = $comment->getAllCommentsForPost($getPost);
+
+    if(!empty($_POST['btnPlaceComment'])){
+        if($comment->createComment($getPost, $_POST['inputComment'])){
+            header('Location: '.$_SERVER['REQUEST_URI']);
+        }else{
+            echo "Error";
+        }
+    }
+
+	if(!empty($_POST['deletePost'])){
 		$deletePostID = $_POST['deletePostID'];
 		$post = new Post();
 		$post->deletePost($deletePostID);
@@ -54,7 +72,7 @@
     <link rel="stylesheet" href="public/css/cssgram.min.css">
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <script src="public/js/interaction.js"></script>
-    <script>
+    <!--<script>
     $(document).ready(function(){
         $("#btnSubmit").on("click", function(e){
             
@@ -76,7 +94,7 @@
             
         });
     });
-</script>
+    </script>-->
 </head>
 <body>
 <?php include 'nav.inc.php'; ?>
@@ -107,20 +125,24 @@
         <span><?php echo $post->timeAgo($postData['timestamp']); ?></span>
     </div>
 
-    <div class="col-xs-10">
-        <p><?php echo $post->tagPostDescription($postData['description']) ?></p>
+    <div class="col-xs-12">
+        <p><a href="#"><?php echo $userData['username'] ?></a> <?php echo $post->tagPostDescription($postData['description']) ?></p>
     </div>
-	
-    <div class="col-xs-2 commentsFlag--Individual">
-       	<form action="" method="POST">
-        	<input type="hidden" name="postID" class="flagID" value="<?php echo $postData['id']; ?>">
-        	<?php if($post->checkIfFlagged($postData['id']) == true): ?>
-        	<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> flagged glyphicon-flag"></span></button>
-        	<?php else: ?>
-        	<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> glyphicon-flag"></span></button>
-        	<?php endif; ?>
-        </form>
-    </div>
+
+    <div class="comments col-xs-12">
+    <?php if(count($allComments) > 0):?>
+    <a href="#">Load all comments</a>
+    <ul class="comments__list">
+        <?php foreach( $allComments as $key => $comment ): ?>
+            <li class="comments__list__item">
+                <p><a href="#"><?php echo $comment['username']?></a> <?php echo $comment['comment']?></p>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php else: ?>
+        <ul class="comments__list"></ul>
+    <?php endif; ?>
+
    
     <div class="col-xs-1">
     <?php
@@ -137,28 +159,31 @@
     ?>
     </div>
 
-    <form action="" class="col-xs-11">
+    <form action="" class="col-xs-11" method="post">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Add a comment...">
+            <input type="text" class="form-control" name="inputComment" id="inputComment" placeholder="Add a comment...">
         <span class="input-group-btn">
-            <input type="submit" value="Submit" class="btn btn-default">
+            <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default">
         </span>
         </div>
+        <input type="hidden" id="inputPostID" value="<?php echo $postData['id'];?>">
     </form>
 
-    <!--
-    <form method="post" action="">
-        <div class="statusupdates">
-
-        <input type="text" placeholder="Comment" id="activitymessage" name="activitymessage" />
-        <input id="btnSubmit" type="submit" value="Place comment" />  
+    </div>
+    <div class="col-xs-2">
+        <div class="row">
+        <div class="col-xs-2 commentsFlag--Individual">
+            <form action="" method="POST">
+                <input type="hidden" name="postID" class="flagID" value="<?php echo $postData['id']; ?>">
+                <?php if($post->checkIfFlagged($postData['id']) == true): ?>
+                    <button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> flagged glyphicon-flag"></span></button>
+                <?php else: ?>
+                    <button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> glyphicon-flag"></span></button>
+                <?php endif; ?>
+            </form>
         </div>
-    </form>
-
-     <ul id="listupdates"></ul>
-     -->
-
-</div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
