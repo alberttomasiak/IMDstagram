@@ -83,10 +83,13 @@
 <div class="container">
 <div class="row detailpostRow">
     <header class="col-xs-12 detailpostHeader">
+       <div>
         <a href="profile.php?profile=<?php echo $userData['username'] ?>">
         <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
-        <?php echo $userData['username'] ?>
         </a>
+        <a href="profile.php?profile=<?php echo $userData['username'] ?>"> <?php echo $userData['username'] ?></a>
+        <p class="postLocation"><?php echo $postData['location']; ?></p>
+        </div>
         <?php if($_SESSION['username'] == $userData['username']): ?>
         <form action="" method="POST">
             	<input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
