@@ -68,6 +68,7 @@
             
             <!-- Username link -->
             <a href="profile.php?profile=<?php echo $timelinePost['username']; ?>"><?php echo $timelinePost['username']; ?></a>
+            <p class="timelineLocation"><?php echo $timelinePost['location']; ?></p>
             </div>
             <!-- Timestamp -->
             <p class="postTimestamp"><?php echo $post->timeAgo($timelinePost['timestamp']); ?></p>
