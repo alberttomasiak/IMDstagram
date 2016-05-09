@@ -85,10 +85,12 @@ $(document).ready(function() {
                         $("#btnFollow").val('Following');
                         $("#btnFollow").attr('class', 'btn btn-success');
                         $("#btnFollow").attr('data-action', 'stopfollowing');
+                        $("#stats--followers").text(+$("#stats--followers").text()+1);
                     }else if(response.action == 'notfollowing'){
                         $("#btnFollow").val('Follow');
                         $("#btnFollow").attr('class', 'btn btn-primary');
                         $("#btnFollow").attr('data-action', 'follow');
+                        $("#stats--followers").text(+$("#stats--followers").text()-1);
                     }else if(response.action == 'pending'){
                         $("#btnFollow").val('Pending');
                         $("#btnFollow").attr('class', 'btn btn-default');

@@ -137,16 +137,16 @@
         </div>
         <ul class="profilestats">
             <li>
-                <span><?php echo $user->countPosts($userData['id']); ?></span> posts
+                <span id="stats--posts"><?php echo $user->countPosts($userData['id']); ?></span> posts
             </li>
             <li>
                 <a href="followers.php?profile=<?php echo $userData["username"] ?>" data-toggle="modal" data-target="#followersModal">
-                    <span><?php echo $user->countFollowers($userData['id']); ?></span> followers
+                    <span id="stats--followers"><?php echo $user->countFollowers($userData['id']); ?></span> followers
                 </a>
             </li>
             <li>
                 <a href="following.php?profile=<?php echo $userData["username"] ?>" data-toggle="modal" data-target="#followingModal">
-                    <span><?php echo $user->countFollowing($userData['id']); ?></span> following
+                    <span id="stats--following"><?php echo $user->countFollowing($userData['id']); ?></span> following
                 </a>
             </li>
         </ul>
