@@ -5,7 +5,7 @@ session_start();
 if(isset($_SESSION['loggedin'])){
     header('location: index.php');
 }
-
+/*
 if( !empty( $_POST ) ){
     $user = new User();
     $user->Email = $_POST['email'];
@@ -25,6 +25,28 @@ if( !empty( $_POST ) ){
     }
     // zorg ervoor dat je niet opnieuw naar database schrijft wanneer je refresht
     //header("location: index.php");
+}*/
+
+if( !empty( $_POST ) ){
+    try{
+        $user = new User();
+        $user->Email = $_POST['email'];
+        $user->FullName = $_POST['fullName'];
+        $user->Username = $_POST['username'];
+        $user->Password = $_POST['password'];
+        $user->register();
+
+        //$feedback = "Account created successfully.";
+        //$_SESSION['loggedin'] = "yes";
+        //header("location: login.php");
+        if($user->canLogin($_POST['username'], $_POST['password'])){
+            //$_SESSION['loggedin'] = "yes";
+            header("location: index.php");
+        }
+    }catch(Exception $e){
+        $feedback = $e->getMessage();
+    }
+
 }
 
 

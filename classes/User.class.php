@@ -66,41 +66,51 @@
 
         public function register()
         {
-            try
-            {
-                $conn = Db::getInstance();
+            $conn = Db::getInstance();
 
-                // check if fields are not empty and username is 4 characters min
-                if(strlen($this->m_sUsername) > 3 && !empty($this->m_sEmail) && !empty($this->m_sPassword)){
-                    $stmt = $conn->prepare("SELECT * FROM user WHERE username=:username OR email=:email");
-                    $stmt->bindparam(":username", $this->m_sUsername);
-                    $stmt->bindparam(":email", $this->m_sEmail);
-                    $stmt->execute();
-                    // check if username or email isn't in use already
-                    if($stmt->rowCount() > 0) {
-                        return false;
-                    }else{
-                        // write to database
-                        $new_password = password_hash($this->m_sPassword, PASSWORD_DEFAULT);
-                        $statement = $conn->prepare("INSERT INTO user(email, fullName, username, password, profilePicture)
-                                                           VALUES(:email, :fullName, :username, :password, 'public/images/defaultprofilepic.jpg')");
+            $email = $this->m_sEmail;
+            $username = $this->m_sUsername;
+            $fullname = htmlspecialchars($this->m_sFullName);
+            $password = $this->m_sPassword;
 
-                        $statement->bindparam(":email", $this->m_sEmail);
-                        $statement->bindparam(":fullName", $this->m_sFullName);
-                        $statement->bindparam(":username", $this->m_sUsername);
-                        $statement->bindparam(":password", $new_password);
-                        if ($statement->execute()) {
-                            return true;
+            if(!empty($email) && !empty($username) && !empty($password)){
+                if($this->UsernameAvailable() == true){
+                    if($this->EmailAvailable($email) == true){
+                        if(strlen($username) > 3 && strlen($username) < 21){
+                            if(preg_match('/^[a-z0-9-_]+$/', $username)){
+                                if(strlen($password) > 5 && strlen($password) < 21){
+                                    if(strlen($fullname) < 31){
+                                        $new_password = password_hash($password, PASSWORD_DEFAULT);
+                                        $statement = $conn->prepare("INSERT INTO user(email, fullName, username, password, profilePicture)
+                                                       VALUES(:email, :fullName, :username, :password, 'public/images/defaultprofilepic.jpg')");
+
+                                        $statement->bindparam(":email", $email);
+                                        $statement->bindparam(":fullName", $fullname);
+                                        $statement->bindparam(":username", $username);
+                                        $statement->bindparam(":password", $new_password);
+                                        if ($statement->execute()) {
+                                            return true;
+                                        }
+                                    }else{
+                                        throw new Exception("Fullname can't be longer than 30 characters.");
+                                    }
+                                }else{
+                                    throw new Exception("Password has to be 6-20 characters long.");
+                                }
+                            }else{
+                                throw new Exception("Username can only contain alphanumerical characters, - and _. Capital letters are not allowed.");
+                            }
+                        }else{
+                            throw new Exception("Username has to be 4-20 characters long.");
                         }
+                    }else{
+                        throw new Exception("This email address is already in use.");
                     }
                 }else{
-                    return false;
+                    throw new Exception("Username already taken.");
                 }
-
-            }
-            catch(PDOException $e)
-            {
-                echo $e->getMessage();
+            }else{
+                throw new Exception("Email, Username and Password are required fields.");
             }
         }
 
@@ -156,78 +166,7 @@
             $userData = $statement->fetch(PDO::FETCH_ASSOC);
             return $userData;
         }
-        /*
-        // RETURNS THE USERNAME FOR A SPECIFIC USERID
-        public function getUsernameByUserID($p_iUserID){
-            $conn = Db::getInstance();
 
-            $statement = $conn->prepare("SELECT username FROM user WHERE id=:userID");
-            $statement->bindparam(":userID", $p_iUserID);
-            $statement->execute();
-            $username = $statement->fetch(PDO::FETCH_ASSOC);
-            return $username;
-        }
-        */
-        /*
-        // RETURNS ALL DATA FOR A SPECIFIC USER ACCEPTS USERNAME OR USERID
-        // how to use:
-        // $user= new User(); $user.getAll('userID', SESSION['userID']; or $user.getAll('username', SESSION['username'];
-        public function getAll($p_sProperty, $p_vValue){
-            try
-            {
-                $conn = Db::getInstance();
-                if($p_sProperty == "username"){
-                    $statement = $conn->prepare("SELECT * FROM user WHERE username=:username");
-                    $statement->bindparam(":username", $p_vValue);
-                    $statement->execute();
-                    $userData = $statement->fetch(PDO::FETCH_ASSOC);
-                    return $userData;
-                }else if($p_sProperty == "userID"){
-                    $statement = $conn->prepare("SELECT * FROM user WHERE id=:userID");
-                    $statement->bindparam(":userID", $p_vValue);
-                    $statement->execute();
-                    $userData = $statement->fetch(PDO::FETCH_ASSOC);
-                    return $userData;
-                }
-            }
-            catch(PDOException $e)
-            {
-                echo $e->getMessage();
-            }
-        }
-        */
-
-        // USED FOR UPDATING A USERS PROFILE IN EDIT-PROFILE.PHP
-        /*public function updateProfile($p_iUserID)
-        {
-            try
-            {
-                $conn = Db::getInstance();
-                $statement = $conn->prepare("UPDATE user
-                                              SET email = :email,
-                                                  fullName = :fullName,
-                                                  username = :username,
-                                                  bio = :bio,
-                                                  website = :website,
-                                                  private = :private
-                                              WHERE id = :id");
-
-                $statement->bindparam(":email", $this->m_sEmail);
-                $statement->bindparam(":fullName", $this->m_sFullName);
-                $statement->bindparam(":username", $this->m_sUsername);
-                $statement->bindparam(":bio", $this->m_sBio);
-                $statement->bindparam(":website", $this->m_sWebsite);
-                $statement->bindparam(":id", $p_iUserID);
-                $statement->bindparam(":private", $this->m_iPrivate);
-                if($statement->execute()){
-                    return true;
-                }
-            }
-            catch(PDOException $e)
-            {
-                echo $e->getMessage();
-            }
-        }*/
 
         // dit is de nieuwe update profile die mogelijk niet werkt
         // to do: check of email al in db zit && check username op lowercase/uppercase
@@ -291,6 +230,22 @@
                 return false;
             } else{
                 // still available
+                return true;
+            }
+        }
+
+        // CHECK IF A SPECIFIC EMAIL IS STILL AVAILABLE
+        public function EmailAvailable($p_vEmail)
+        {
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT * FROM user WHERE email=:email");
+            $stmt->bindparam(":email", $p_vEmail);
+            $stmt->execute();
+            if($stmt->rowCount() > 0){
+                // email in use
+                return false;
+            } else{
+                // email still available
                 return true;
             }
         }
