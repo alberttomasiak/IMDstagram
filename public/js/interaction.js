@@ -115,6 +115,7 @@ $(document).ready(function() {
                     var url = "'profile.php?profile=" + response.username + "'";
                     var li = "<li class='comments__list__item'><p><a href="+ url +">"+ response.username +"</a> "+ response.text +"</p></li>";
                     $(".comments__list").append(li);
+                    $("#inputComment").val("");
                 }else{
                     console.log('Fail');
                 }

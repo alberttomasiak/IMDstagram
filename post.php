@@ -47,7 +47,7 @@
         if($comment->createComment($getPost, $_POST['inputComment'])){
             header('Location: '.$_SERVER['REQUEST_URI']);
         }else{
-            echo "Error";
+            //echo "Error";
         }
     }
 
@@ -72,29 +72,6 @@
     <link rel="stylesheet" href="public/css/cssgram.min.css">
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <script src="public/js/interaction.js"></script>
-    <!--<script>
-    $(document).ready(function(){
-        $("#btnSubmit").on("click", function(e){
-            
-            var message = $("#activitymessage").val();
-
-            $.ajax({
-              type: "POST",
-              url: "ajax/comment.php",
-              data: { activitymessage: message }
-            })
-            .done(function( msg ) {
-                //alert( "Data Saved: " + msg );
-                var li = "<li style='display:none;'><strong><?php echo $userData['username'] ?>: </strong> " + message  + "</li>";
-                $("#listupdates").prepend(li);
-                $("#listupdates li").first().slideDown();
-            });
-
-            e.preventDefault();
-            
-        });
-    });
-    </script>-->
 </head>
 <body>
 <?php include 'nav.inc.php'; ?>
