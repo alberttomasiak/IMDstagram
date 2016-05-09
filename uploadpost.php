@@ -30,6 +30,99 @@ if(!empty($_POST)){
 </head>
 <body>
 <script type="text/javascript"> 
+(function () {
+	'use strict';
+	
+	var App = {
+		APIKEY: $.ajax({url: "apiKey.php?" + new Date().getTime(), cache: false, success:function(result){App.APIKEY = result;}}),
+		lat: "",
+		lng: "",
+		
+		init: function () {
+			App.getLocation();
+		},
+		getLocation: function () {
+			navigator.geolocation.getCurrentPosition(App.foundPosition);
+		},
+		foundPosition: function (pos) {
+			App.lat = pos.coords.latitude;
+			App.lng = pos.coords.longitude;
+			App.coordinatesToCity();
+		},
+		coordinatesToCity: function(){
+			var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+App.lat+","+App.lng+"&key="+App.APIKEY;
+			
+			window.jQuery.ajax({
+				dataType: "json",
+				url: url,
+				cache: false,
+				success: function(data){
+					var city = data.results[2].address_components[1].long_name;
+					$('.location').val(city);
+				}
+			});
+		}
+	}
+	App.init();
+}());
+</script>
+
+ <?php include 'nav.inc.php'; ?>
+
+<script type="application/javascript" src="public/js/interaction.js"></script>
+	<div class="container">
+	<div class="row">
+		<h1>Make a post</h1>
+		<div class="col-sm-9">
+		<section class="filterWrap">
+		<div><img src="" id="previewImage" alt=""></div>
+		<div class="filterSelection">
+			<ul>
+				<li><a href="#" class="filter"><img src="" class="filterPreview _1977" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview aden" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview brooklyn" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview clarendon" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview earlybird" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview gingham" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview hudson" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview inkwell" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview lark" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview lofi" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview mayfair" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview moon" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview nashville" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview perpetua" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview reyes" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview rise" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview slumber" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview toaster" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview walden" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview willow" alt=""/></a></li>
+				<li><a href="#" class="filter"><img src="" class="filterPreview xpro2" alt=""/></a></li>
+			</ul>
+		</div>
+		</section>
+		
+		<p id="postFeedback"></p>
+		<form action="uploadpost.php" id="postForm" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="postImage">Upload image</label>
+				<input type="file" id="fileToUpload" name="postImage" class="form-control">
+				
+			</div>
+				<input type="hidden" class="location" name="location" value="">
+				<input type="hidden" class="selectedFilter" name="filter" value="normal">
+				
+			<div class="form-group">
+				<label for="description">Write a caption</label>
+				<textarea name="description" id="postMessage" cols="30" rows="5" class="form-control"></textarea>
+			</div>
+			<input type="submit" id="postSubmit" value="Create post" name="upload_image" class="btn btn-primary">
+		</form>
+		</div>
+	</div>
+	</div>
+	<script type="text/javascript"> 
 	$(document).ready(function(){
 		
 		function previewImage(input){
@@ -157,61 +250,5 @@ if(!empty($_POST)){
 		});
 	});
 </script>
-
- <?php include 'nav.inc.php'; ?>
-
-<script type="application/javascript" src="public/js/interaction.js"></script>
-	<div class="container">
-	<div class="row">
-		<h1>Make a post</h1>
-		<div class="col-sm-9">
-		<section class="filterWrap">
-		<div><img src="" id="previewImage" alt=""></div>
-		<div class="filterSelection">
-			<ul>
-				<li><a href="#" class="filter"><img src="" class="filterPreview _1977" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview aden" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview brooklyn" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview clarendon" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview earlybird" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview gingham" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview hudson" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview inkwell" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview lark" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview lofi" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview mayfair" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview moon" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview nashville" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview perpetua" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview reyes" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview rise" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview slumber" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview toaster" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview walden" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview willow" alt=""/></a></li>
-				<li><a href="#" class="filter"><img src="" class="filterPreview xpro2" alt=""/></a></li>
-			</ul>
-		</div>
-		</section>
-		
-		<p id="postFeedback"></p>
-		<form action="uploadpost.php" id="postForm" method="POST" enctype="multipart/form-data">
-			<div class="form-group">
-				<label for="postImage">Upload image</label>
-				<input type="file" id="fileToUpload" name="postImage" class="form-control">
-				
-			</div>
-				
-				<input type="hidden" class="selectedFilter" name="filter" value="normal">
-				
-			<div class="form-group">
-				<label for="description">Write a caption</label>
-				<textarea name="description" id="postMessage" cols="30" rows="5" class="form-control"></textarea>
-			</div>
-			<input type="submit" id="postSubmit" value="Create post" name="upload_image" class="btn btn-primary">
-		</form>
-		</div>
-	</div>
-	</div>
 </body>
 </html>

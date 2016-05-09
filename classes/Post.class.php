@@ -54,7 +54,7 @@
 			$conn = Db::getInstance();
 			$activeUser = $_SESSION['userID'];
 			
-			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp, post.filter
+			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp, post.filter, post.location
  											FROM post
  											INNER JOIN user
  											ON post.userID=user.id
@@ -231,10 +231,11 @@
 			// als er een bestand is, stuur het naar het img/ mapje + schrijf path en description naar DB.
 				if($file_name){
 				$db = Db::getInstance();
-				$statement = $db->prepare("insert into post (userID, path, description, filter) values (:userID, :path, :description, :filter)");
+				$statement = $db->prepare("insert into post (userID, path, description, location, filter) values (:userID, :path, :description, :location, :filter)");
 				$statement->bindValue(":userID", $_SESSION['userID']);
 				$statement->bindValue(":path", $file_path);
 				$statement->bindValue(":description", $_POST['description']);
+				$statement->bindValue(":location", $_POST['location']);
 				$statement->bindValue(":filter", $_POST['filter']);
 				$result = $statement->execute();
 				MOVE_UPLOADED_FILE($p_file_tmp_name, "../img/$file_name");

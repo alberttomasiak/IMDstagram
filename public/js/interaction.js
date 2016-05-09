@@ -165,7 +165,6 @@ $(document).ready(function() {
 							dataType: 'json',
 							cache: false,
 							success: function(status){
-								console.log(status);
 								if(status.check == "true"){
 									$('.f'+flagID).addClass('flagged');
 								}else if(status.check != "true"){
