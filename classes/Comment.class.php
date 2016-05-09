@@ -54,14 +54,18 @@ class Comment
 
 	public function createComment($p_PostId, $p_vComment){
 		$conn = Db::getInstance();
-		$statement = $conn->prepare("INSERT INTO comment(userID, postID, comment)
+		if(!empty($p_vComment) && strlen(htmlspecialchars($p_vComment)) < 301){
+			$statement = $conn->prepare("INSERT INTO comment(userID, postID, comment)
                                                            VALUES(:userID, :postID, :comment)");
 
-		$statement->bindparam(":userID", $_SESSION['userID']);
-		$statement->bindparam(":postID", $p_PostId);
-		$statement->bindparam(":comment", $p_vComment);
-		if ($statement->execute()) {
-			return true;
+			$statement->bindparam(":userID", $_SESSION['userID']);
+			$statement->bindparam(":postID", $p_PostId);
+			$statement->bindparam(":comment", htmlspecialchars($p_vComment));
+			if ($statement->execute()) {
+				return true;
+			}
+		}else{
+			return false;
 		}
 	}
 
