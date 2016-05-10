@@ -9,9 +9,18 @@
 
     $post = new Post();
     $postData = $post->getAllPost($getPost);
+	
     //var_dump($postData);
     $user = new User();
     $userData = $user->getUserDetailsByUserID($getUserID);
+
+
+	if(!empty($_POST)){
+		$deletePostID = $_POST['deletePostID'];
+		$post = new Post();
+		$post->deletePost($deletePostID);
+		header('Location: profile.php?profile='.$_SESSION['username'].'');
+	}
 
     // CODE BRENT
     /*$comment = new Comment();
@@ -51,14 +60,6 @@
         }
     }
 
-	if(!empty($_POST['deletePost'])){
-		$deletePostID = $_POST['deletePostID'];
-		$post = new Post();
-		$post->deletePost($deletePostID);
-		header('location: profile.php?profile='.$_SESSION['username'].'');
-	}
-
-
 ?><!doctype html>
 <html lang="en">
 <head>
@@ -72,6 +73,29 @@
     <link rel="stylesheet" href="public/css/cssgram.min.css">
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <script src="public/js/interaction.js"></script>
+    <!--<script>
+    $(document).ready(function(){
+        $("#btnSubmit").on("click", function(e){
+            
+            var message = $("#activitymessage").val();
+
+            $.ajax({
+              type: "POST",
+              url: "ajax/comment.php",
+              data: { activitymessage: message }
+            })
+            .done(function( msg ) {
+                //alert( "Data Saved: " + msg );
+                var li = "<li style='display:none;'><strong>: </strong> " + message  + "</li>";
+                $("#listupdates").prepend(li);
+                $("#listupdates li").first().slideDown();
+            });
+
+            e.preventDefault();
+            
+        });
+    });
+    </script>-->
 </head>
 <body>
 <?php include 'nav.inc.php'; ?>
