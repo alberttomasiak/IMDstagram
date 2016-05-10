@@ -247,30 +247,33 @@
 		public function deletePost($p_vPostID){
 			$db = Db::getInstance();
 			
-			$statementInappropriate = $db->prepare("delete i from inappropriate i INNER JOIN post p on i.id = i.postID where i.postID = :postID");
+			$statementInappropriate = $db->prepare("DELETE i FROM inappropriate i WHERE i.postID = :postID");
 			$statementInappropriate->bindValue(":postID", $p_vPostID);
 			
 			if($statementInappropriate->execute()){
-				$statementComments = $db->prepare("delete c from comment c
-												INNER JOIN post p
-												on p.id = c.postID
-												where c.postID = :postID");
+				$statementComments = $db->prepare("DELETE c FROM comment c WHERE c.postID = :postID");
 				$statementComments->bindValue(":postID", $p_vPostID);
 			
 				if($statementComments->execute()){
-					$statementLikes = $db->prepare("delete l from likes l
-												INNER JOIN post p
-												on p.id = l.postID
-												where l.postID = :postID");
+					$statementLikes = $db->prepare("DELETE l FROM likes l WHERE l.postID = :postID");
 					$statementLikes->bindValue(":postID", $p_vPostID);
 				
 					if($statementLikes->execute()){
-						$statementPost = $db->prepare("delete p from post p where id = :postID");
-						$statementPost->bindValue(":postID", $p_vPostID);
-						$statementPost->execute();
-						return true;
+							$statementPost = $db->prepare("DELETE p FROM post p WHERE id = :postID");
+							$statementPost->bindValue(":postID", $p_vPostID);
+							$statementPost->execute();
+							return true;
+						}else{
+						echo "Post cannot be deleted.";
+						return false;
 					}
+				}else{
+					echo "Comments can't be deleted.";
+					return false;
 				}
+			}else{
+				echo "inappropriate can't be deleted.";
+				return false;
 			}
 		}
 
