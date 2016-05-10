@@ -101,6 +101,15 @@ class Comment
 		}
 	}
 
+	// LINK TO HASHTAGS IN COMMENTS
+	public function tagComments($p_vText){
+		preg_match_all('/#(\w+)/',$p_vText,$matches);
+		foreach ($matches[1] as $match) {
+			$p_vText = str_replace("#$match", "<a href='tag.php?tag=$match'>#$match</a>", "$p_vText");
+		}
+		return $p_vText;
+	}
+
 
 }
 	

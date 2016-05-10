@@ -110,9 +110,9 @@
     <?php if(count($allComments) > 0):?>
     <a href="#">Load all comments</a>
     <ul class="comments__list">
-        <?php foreach( $allComments as $key => $comment ): ?>
+        <?php foreach( $allComments as $key => $c ): ?>
             <li class="comments__list__item">
-                <p><a href="#"><?php echo $comment['username']?></a> <?php echo $comment['comment']?></p>
+                <p><a href="#"><?php echo $c['username']?></a> <?php echo $comment->tagComments($c['comment']);?></p>
             </li>
         <?php endforeach; ?>
     </ul>

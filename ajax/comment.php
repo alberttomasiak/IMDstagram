@@ -13,7 +13,7 @@ $username = $_SESSION['username'];
 
 if($comment->createComment($postID, $text)){
     $response['status'] = 'success';
-    $response['text'] = htmlspecialchars($text);
+    $response['text'] = $comment->tagComments(htmlspecialchars($text));
     $response['username'] = $username;
 }else{
     $response['status'] = 'fail';
