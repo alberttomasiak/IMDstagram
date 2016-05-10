@@ -64,7 +64,7 @@
           <div class="postHeader">
           <div class="postUser">
            <!-- Profile picture -->
-           <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
+           <img src="<?php echo $timelinePost['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
             
             <!-- Username link -->
             <a href="profile.php?profile=<?php echo $timelinePost['username']; ?>"><?php echo $timelinePost['username']; ?></a>

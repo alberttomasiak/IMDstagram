@@ -45,11 +45,12 @@
 
         if( !empty( $_POST['btnChangeProfilePicture'] ) ){
             try {
-                $user->setProfilePicture($_FILES["fileToUpload"]["name"]);
+                $user->setProfilePicture();
             }catch(Exception $e){
                 $feedback = $e->getMessage();
             }
         }
+		
     }else{
         header('location: login.php');
     }
@@ -67,7 +68,7 @@
     <script src="public/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
 
-    <script type="text/javascript" src="public/js/realtimeUsernameCheck.js"></script>
+    <script type="text/javascript" src="public/js/interaction.js"></script>
 </head>
 <body>
     <?php include 'nav.inc.php' ?>
@@ -129,16 +130,17 @@
     </form>
     </div>
     <div class="col-sm-7 col-md-6">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" id="profilePicForm" enctype="multipart/form-data">
             <div class="form-group">
                 <h3>Profile picture</h3>
-                <img src="<?php echo $userData['profilePicture']; ?>" alt="" style="border-radius: 100%">
+                <img class="profPic" src="<?php echo $userData['profilePicture']; ?>" alt="" style="border-radius: 100%">
                 <div class="form-group">
-                    <label for="avatarUpload">Choose profile picture</label>
-                    <input type="file" name="fileToUpload" class="form-control" id="avatarUpload">
+                   <p class="profilePicFeedback"></p>
+                    <label for="profileImage">Choose profile picture</label>
+                    <input type="file" name="profileImage" class="fileToUpload" class="form-control" id="avatarUpload">
                 </div>
             </div>
-            <input type="submit" name="btnChangeProfilePicture" value="Change profile picture" class="btn btn-primary">
+            <input type="submit" class="profPicSubmit" name="btnChangeProfilePicture" value="Change profile picture" class="btn btn-primary">
         </form>
     </div>
     </div>
@@ -175,5 +177,101 @@
     </div>
     <?php include 'footer.inc.php' ?>
     </div>
+    
+    <script type="text/javascript">
+	$(document).ready(function(){
+		function previewImage(input){
+			
+			if(input.files && input.files[0]){
+				var reader = new FileReader();
+				
+				reader.onload = function(e){
+				
+				$('.profPic').attr('src', e.target.result);
+				$('.profPic').css('width', 150);
+				$('.profPic').css('height', 150);
+				
+				}
+				reader.readAsDataURL(input.files[0]);
+			}	
+		}
+		
+		$('.fileToUpload').change(function(e){
+			var image = $('.fileToUpload');
+			
+			$.ajax({
+				url: "ajax/profilePicPreview.php",
+				type: "POST",
+				data: new FormData($("#profilePicForm")[0]),
+				dataType: 'json',
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(data)
+				{
+					//console.log(data);
+					if(image.val() == ""){
+						$('.profilePicFeedback').html("Choose an image.");
+					}else{
+						if(data.image == "false"){
+							$('.profilePicFeedback').html("This file is not an image.");
+						}else if(data.image != "false"){
+							if(data.size == "false"){
+								$('.profilePicFeedback').html("Your image is too large. Choose a different one please.");
+							}
+							
+							if(data.ratio == "false"){
+								$('.profilePicFeedback').html("Choose a square image.");
+							}
+							
+							if(data.dimensions == "false"){
+								$('.profilePicFeedback').html("Your image doesn't meat the size requirements. Choose an image between 100x100 and 500x500 pixels.");
+							}
+							
+							if(data.check == "success"){
+								previewImage(e.target);
+							}
+						}
+					}
+				},
+				error: function(request, status, error){
+					console.log(error);
+				}
+			});
+			e.preventDefault();
+		});
+		
+		$('.profPicSubmit').on("click", function(e){
+			var image = $('.fileToUpload');
+			
+			$.ajax({
+				url: "ajax/profilePicUpload.php",
+				type: "POST",
+				data: new FormData($("#profilePicForm")[0]),
+				dataType: 'json',
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(data)
+				{
+					console.log(data);
+					
+					if(image.val() == ""){
+						$('.profilePicFeedback').html('Select an image.');
+					}else{
+						if(data.check == "success"){
+							$('.profilePicFeedback').html('Your profile picture has been succesfully updated.');
+							$('#profilePicForm').find('input:file').val('');
+						}
+					}
+				},
+				error: function(request, status, error){
+					console.log(error);
+				}
+			});
+		e.preventDefault();
+	});
+});
+	</script>
 </body>
 </html>

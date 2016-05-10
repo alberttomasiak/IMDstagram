@@ -178,7 +178,7 @@ if(!empty($_POST)){
 				cache: false,
 				processData: false,
 				success: function(data){
-					console.log(data);
+					//console.log(data);
 					if(data.check == "success"){
 						$("#previewImage").css('display', 'block');
 						$('.filterSelection').css('display', 'block');
@@ -230,6 +230,7 @@ if(!empty($_POST)){
 				processData:false,        
 				success: function(data)  
 				{
+					//console.log(data);
 					if(image.val() == "" || message.val() == ""){
 						$("#postFeedback").html("The fields cannot be empty.");
 					}else if(image != "" && message != ""){
@@ -239,6 +240,7 @@ if(!empty($_POST)){
 							$("#postForm").find('input:file').val('');
 							$('.filterSelection').css('display', 'none');
 							$('#previewImage').css('display','none');
+							window.location.href = "index.php";
 						}
 					}
 				},

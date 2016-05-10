@@ -54,7 +54,7 @@
 			$conn = Db::getInstance();
 			$activeUser = $_SESSION['userID'];
 			
-			$statement = $conn->prepare("SELECT user.username, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp, post.filter, post.location
+			$statement = $conn->prepare("SELECT user.username, user.profilePicture, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp, post.filter, post.location
  											FROM post
  											INNER JOIN user
  											ON post.userID=user.id
@@ -124,7 +124,7 @@
 		}
 		
 		public function checkIfImage(){
-			$file_name = $_SESSION['userID']."-".time().".jpg";
+			//$file_name = $_SESSION['userID']."-".time().".jpg";
 			$file_tmp_name = $_FILES['postImage']['tmp_name'];
 			$check = getimagesize($file_tmp_name);
 			
@@ -140,7 +140,7 @@
 		}
 		
 		public function checkFileSize(){
-			if($_FILES["postImage"]["size"] > 2097152){
+			if($_FILES["postImage"]["size"] > 4000000){
 				$uploadReady = 0;
 				return $uploadReady;
 			}else{
@@ -204,20 +204,13 @@
 			$uploadReady = 0;
 			$file_name = $_SESSION['userID']."-".time().".jpg";
 			//$p_file_tmp_name = $_FILES['postImage']['tmp_name'];
-			$file_path = "img/".$file_name;
+			$file_path = "img/posts/".$file_name;
 			$imageFileType = pathinfo($file_path, PATHINFO_EXTENSION);
 			$check = getimagesize($p_file_tmp_name);
 			$path = realpath(dirname(getcwd()));
 			//echo $path;
 			
 			$post = new Post();
-			
-			// Alle bovenstaande functies uitvoeren voor een post gemaakt kan worden.
-			$post->checkIfImage();
-			$post->checkFileSize();
-			$post->checkFileFormat();
-			$post->checkAspectRatio();
-			$post->checkFileDimensions();
 				
 			// uploadReady op 1 zetten als alles goed gaat bij functies hier boven vermeld.
 			if ($post->checkIfImage() && $post->checkFileSize() && $post->checkFileFormat() && $post->checkAspectRatio() && $post->checkFileDimensions()){
@@ -238,7 +231,7 @@
 				$statement->bindValue(":location", $_POST['location']);
 				$statement->bindValue(":filter", $_POST['filter']);
 				$result = $statement->execute();
-				MOVE_UPLOADED_FILE($p_file_tmp_name, "../img/$file_name");
+				MOVE_UPLOADED_FILE($p_file_tmp_name, "../img/posts/$file_name");
 				//echo "Post succesfully made.";				
 				}
 			}
