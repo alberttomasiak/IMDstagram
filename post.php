@@ -14,41 +14,14 @@
     $user = new User();
     $userData = $user->getUserDetailsByUserID($getUserID);
 
-
-	if(!empty($_POST)){
+    // ALBERT JE MOET EEN SUBMIT KNOP KIEZEN :o
+	/*if(!empty($_POST)){
 		$deletePostID = $_POST['deletePostID'];
 		$post = new Post();
 		$post->deletePost($deletePostID);
 		header('Location: profile.php?profile='.$_SESSION['username'].'');
-	}
+	}*/
 
-    // CODE BRENT
-    /*$comment = new Comment();
-    
-    //controleer of er een update wordt verzonden
-    if(!empty($_POST['activitymessage']))
-    {
-        $cmmment->Comment = $_POST['activitymessage'];
-        try 
-        {
-            $comment->Save();
-        } 
-        catch (Exception $e) 
-        {
-            $feedback = $e->getMessage();
-        }
-    }
-    
-    //altijd alle laatste activiteiten ophalen
-    $recentActivities = $comment->GetRecentActivities();*/
-    /*
-    if(!empty($_POST['btnPlaceComment'])){
-        $comment = new Comment();
-        $comment->Post = $postData['id'];
-        $comment->Comment = $_POST['inputComment'];
-        $comment->Save();
-        header('Location: '.$_SERVER['REQUEST_URI']);
-    }*/
     $comment = new Comment();
     $allComments = $comment->getAllCommentsForPost($getPost);
 
@@ -58,6 +31,16 @@
         }else{
             //echo "Error";
         }
+    }
+
+    if(!empty($_POST['btnLike'])){
+        $postID = $_POST['likePostID'];
+        if($post->like($postID)){
+            header('Location: '.$_SERVER['REQUEST_URI']);
+        }else{
+            echo "Error";
+        }
+
     }
 
 ?><!doctype html>
@@ -73,29 +56,6 @@
     <link rel="stylesheet" href="public/css/cssgram.min.css">
     <link rel="stylesheet" href="public/css/style.css" type="text/css">
     <script src="public/js/interaction.js"></script>
-    <!--<script>
-    $(document).ready(function(){
-        $("#btnSubmit").on("click", function(e){
-            
-            var message = $("#activitymessage").val();
-
-            $.ajax({
-              type: "POST",
-              url: "ajax/comment.php",
-              data: { activitymessage: message }
-            })
-            .done(function( msg ) {
-                //alert( "Data Saved: " + msg );
-                var li = "<li style='display:none;'><strong>: </strong> " + message  + "</li>";
-                $("#listupdates").prepend(li);
-                $("#listupdates li").first().slideDown();
-            });
-
-            e.preventDefault();
-            
-        });
-    });
-    </script>-->
 </head>
 <body>
 <?php include 'nav.inc.php'; ?>
@@ -151,10 +111,12 @@
     if(isset($_SESSION['loggedin'])){
         if($post->checkIfLiked($postData['id']) == true){
             // ALREADY LIKED
-            echo "<a href='#' id='btnLike' role='button' class='liked' data-action='dislike' data-postid='" . $postData['id'] . "'>Like</a>";
+            //echo "<a href='#' id='btnLike' role='button' class='liked' data-action='dislike' data-postid='" . $postData['id'] . "'>Like</a>";
+        echo "<form action='' method='post'><input type='submit' id='btnLike' value='Dislike' name='btnLike' class='heart heart--like'><input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'></form>";
         }else{
             // NOT LIKED YET
-            echo "<a href='#' id='btnLike' role='button' data-action='like' data-postid='" . $postData['id'] . "'>Dislike</a>";
+            //echo "<a href='#' id='btnLike' role='button' data-action='like' data-postid='" . $postData['id'] . "'>Dislike</a>";
+            echo "<form action='' method='post'><input type='submit' id='btnLike' value='Like' name='btnLike' class='heart'><input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'></form>";
         }
     }
     ?>

@@ -350,18 +350,20 @@ footer{
 //
 */
 
-#btnLike{
-    display: block;
-    height: 34px;
-    width: 38px;
-    text-indent: -9999px;
-    background-image: url('../images/heart-sprite.png');
-    background-repeat: no-repeat;
-    background-size: cover;
+.heart{
+	border: none;
+	outline: none;
+	text-indent: -9999px;
+	background-color: transparent;
+	display: block;
+	height: 37px;
+	width: 37px;
+	background-image: url(../images/heart.svg);
+	background-repeat: no-repeat;
 }
 
-.liked{
-    background: url('../images/heart-sprite.png') -38px 0
+.heart--like{
+	background-image: url(../images/heart-red.svg);
 }
 
 #singlePostImg{
