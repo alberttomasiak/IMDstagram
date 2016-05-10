@@ -34,7 +34,7 @@ if(!empty($_POST)){
 	'use strict';
 	
 	var App = {
-		APIKEY: $.ajax({url: "apiKey.php?" + new Date().getTime(), cache: false, success:function(result){App.APIKEY = result;}}),
+		APIKEY: $.ajax({url: "apiKey.php?" + new Date().getTime() + Math.random(), cache: false, success:function(result){App.APIKEY = result;}}),
 		lat: "",
 		lng: "",
 		
