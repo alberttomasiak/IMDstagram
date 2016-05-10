@@ -40,13 +40,18 @@ footer{
     font-weight: bold;
 }
 .profilepic img{
-    /*width: 150px;
-    height: 150px;*/
+    width: 150px;
+    height: 150px;
     border-radius: 100%;
     max-width: 100%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.profPic{
+	width: 150px;
+	height: 150px;
 }
 
 .profilestats{
@@ -210,6 +215,9 @@ footer{
 	margin-bottom: 0;
     text-align: left; /* enkel nodig als zoekbox in het midden staat */
 	z-index: 999;
+	position: relative;
+	left: -40%;
+	
 }
 #searchResults img{
 	width: 30px;
@@ -227,6 +235,8 @@ footer{
     height: 0;
     width: 0;
 	position: absolute;
+	left: 0;
+	right: 0;
     pointer-events: none;
 	display: block;
 
@@ -288,8 +298,8 @@ footer{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	
 }
+
 .nav__logo{
 	display: block;
 	text-indent: -9999px;
@@ -319,6 +329,7 @@ footer{
 	display: block;
 	width: 40%;
 	max-width: 230px;
+	max-height: 30px;
 }
 
 .hashtagSearch{
@@ -342,6 +353,21 @@ footer{
 	margin-bottom: 10px;
 }
 
+nav li a{
+	font-size: 1.5em;
+}
+
+.navbar{
+    background-color: #fff;
+    border-radius: 0;
+}
+
+nav .navbar-form{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+}
 
 
 /*
@@ -601,3 +627,9 @@ footer{
  .comments__list__item{
 
  }
+
+@media only screen and (min-width: 400px){
+	#searchResults{
+		left: 0%;
+	}
+}

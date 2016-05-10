@@ -3,6 +3,7 @@
 
     class User
     {
+		public $uploadReady = 1;
         private $m_sEmail;
         private $m_sFullName;
         private $m_sUsername;
@@ -155,7 +156,7 @@
             $userData = $statement->fetch(PDO::FETCH_ASSOC);
             return $userData;
         }
-
+		
         // RETURNS ALL DATA FOR A SPECIFIC USER BY USERID
         public function getUserDetailsByUserID($p_iUserID){
             $conn = Db::getInstance();
@@ -166,7 +167,7 @@
             $userData = $statement->fetch(PDO::FETCH_ASSOC);
             return $userData;
         }
-
+		
 
         // dit is de nieuwe update profile die mogelijk niet werkt
         // to do: check of email al in db zit && check username op lowercase/uppercase
@@ -556,57 +557,97 @@
             }
         }
 
-        public function echoMe(){
+        public function echoMe(){ //more like kill me AMIRITE le funny maymay 
             echo "Here's your echo";
         }
-
-        /*
+		
+		public function checkIfImage(){
+			$file = $_FILES['profileImage']['tmp_name'];
+			$check = getimagesize($file);
+			
+			if($check !== false){
+				$uploadReady = 1;
+				return $uploadReady;
+			}else{
+				$uploadReady = 0;
+				return $uploadReady;
+			}
+		}
+		
+		public function checkFileSize(){
+			$file = $_FILES['profileImage']['tmp_name'];
+			
+			if($file > 1000000){
+				$uploadReady = 0;
+				return $uploadReady;
+			}else{
+				$uploadReady = 1;
+				return $uploadReady;
+			}
+		}
+		
+		public function checkAspectRatio(){
+			$file = $_FILES['profileImage']['tmp_name'];
+			$user = new User();
+			
+			if($user->checkIfImage()){
+				list($width, $height) = getimagesize($file);
+				$ratio = $width / $height;
+				
+				if($ratio == 1){
+					$uploadReady = 1;
+					return $uploadReady;
+				}else{
+					$uploadReady = 0;
+					return $uploadReady;
+				}
+			}
+		}
+		
+		public function checkFileDimensions(){
+			$file = $_FILES['profileImage']['tmp_name'];
+			$user = new User();
+			
+			if($user->checkIfImage()){
+				list($width, $height) = getimagesize($file);
+				
+				if($width >= 100 && $width <= 500 && $height >= 100 && $height <= 500){
+					$uploadReady = 1;
+					return $uploadReady;
+				}else{
+					$uploadReady = 0;
+					return $uploadReady;
+				}
+			}
+		}
+		
         public function setProfilePicture(){
-            $target_dir = "../img/";
-            $file_name = "pp-".$_SESSION['userID']."-".time().".jpg";
-            $target_file = $target_dir . $file_name;
-            $uploadOk = 1;
-            $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"])) {
-                $check = getimagesize($_FILES[$p_file]["tmp_name"]);
-                if($check !== false) {
-                    echo "File is an image - " . $check["mime"] . ".";
-                    $uploadOk = 1;
-                } else {
-                    echo "File is not an image.";
-                    $uploadOk = 0;
-                }
-            }
-            // Check if file already exists
-            if (file_exists($target_file)) {
-                echo "Sorry, file already exists.";
-                $uploadOk = 0;
-            }
-            // Check file size
-            if ($_FILES[$p_file]["size"] > 500000) {
-                echo "Sorry, your file is too large.";
-                $uploadOk = 0;
-            }
-            // Allow certain file formats
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                && $imageFileType != "gif" ) {
-                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                $uploadOk = 0;
-            }
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                echo "Sorry, your file was not uploaded.";
-            // if everything is ok, try to upload file
-            } else {
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-                } else {
-                    echo "Sorry, there was an error uploading your file.";
-                }
-            }
-
-        }*/
-
+            $file = $_FILES['profileImage']['tmp_name'];
+			// upload default tegenhouden
+			$uploadReady = 0;
+			$user = new User();
+			$file_name = "pp-" . $_SESSION['userID']."-".time().".jpg";
+			$file_path = "img/profilepics/".$file_name;
+			$imageFileType = pathinfo($file_path, PATHINFO_EXTENSION);
+			$check = getimagesize($file);
+			$path = realpath(dirname(getcwd()));
+			
+			if($user->checkIfImage() && $user->checkFileSize() && $user->checkAspectRatio() && $user->checkFileDimensions()){
+				$uploadReady = 1;
+			}else{
+				$uploadReady = 0;
+			}
+			
+			if($uploadReady == 0){
+				// Image voldoet niet aan de voorwaarden.
+			}else if($uploadReady == 1){
+				$db = Db::getInstance();
+				$statement = $db->prepare("UPDATE user SET profilePicture = :profilePicture WHERE id = :id");
+				$statement->bindValue(":id", $_SESSION['userID']);
+				$statement->bindValue(":profilePicture", $file_path);
+				$result = $statement->execute();
+				MOVE_UPLOADED_FILE($file, "../img/profilepics/$file_name");
+			}
+        }
     }
 ?>
