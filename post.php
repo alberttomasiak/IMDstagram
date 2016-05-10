@@ -56,7 +56,7 @@
         if($comment->createComment($getPost, $_POST['inputComment'])){
             header('Location: '.$_SERVER['REQUEST_URI']);
         }else{
-            echo "Error";
+            //echo "Error";
         }
     }
 

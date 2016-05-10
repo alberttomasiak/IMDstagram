@@ -85,10 +85,12 @@ $(document).ready(function() {
                         $("#btnFollow").val('Following');
                         $("#btnFollow").attr('class', 'btn btn-success');
                         $("#btnFollow").attr('data-action', 'stopfollowing');
+                        $("#stats--followers").text(+$("#stats--followers").text()+1);
                     }else if(response.action == 'notfollowing'){
                         $("#btnFollow").val('Follow');
                         $("#btnFollow").attr('class', 'btn btn-primary');
                         $("#btnFollow").attr('data-action', 'follow');
+                        $("#stats--followers").text(+$("#stats--followers").text()-1);
                     }else if(response.action == 'pending'){
                         $("#btnFollow").val('Pending');
                         $("#btnFollow").attr('class', 'btn btn-default');
@@ -113,6 +115,7 @@ $(document).ready(function() {
                     var url = "'profile.php?profile=" + response.username + "'";
                     var li = "<li class='comments__list__item'><p><a href="+ url +">"+ response.username +"</a> "+ response.text +"</p></li>";
                     $(".comments__list").append(li);
+                    $("#inputComment").val("");
                 }else{
                     console.log('Fail');
                 }
