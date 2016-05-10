@@ -627,7 +627,7 @@
 			$uploadReady = 0;
 			$user = new User();
 			$file_name = "pp-" . $_SESSION['userID']."-".time().".jpg";
-			$file_path = "img/profile-pictures/".$file_name;
+			$file_path = "img/profilepics/".$file_name;
 			$imageFileType = pathinfo($file_path, PATHINFO_EXTENSION);
 			$check = getimagesize($file);
 			$path = realpath(dirname(getcwd()));
@@ -646,7 +646,7 @@
 				$statement->bindValue(":id", $_SESSION['userID']);
 				$statement->bindValue(":profilePicture", $file_path);
 				$result = $statement->execute();
-				MOVE_UPLOADED_FILE($file, "../img/profile-pictures/$file_name");
+				MOVE_UPLOADED_FILE($file, "../img/profilepics/$file_name");
 			}
         }
     }
