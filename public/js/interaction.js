@@ -17,24 +17,20 @@ $(document).ready(function() {
     //      FUNCTIONS
     //
 
-    // LIKE FUNCTION (like or stop liking a post)
     function like(e){
         console.log("Like klik");
-        var postID = $(this).attr("data-postid");
-        var action = $(this).attr("data-action");
+        var postID = $("#likePostID").val();
 
-        $.post( "ajax/like.php", {postID:postID, action:action} )
+        $.post( "ajax/like.php", {postID:postID} )
             .done(function( response ) {
 
                 if(response.status == 'success'){
                     console.log('Success');
                     if(response.action == 'liked'){
-                        $("#btnLike").toggleClass("liked");
-                        $("#btnLike").attr('data-action', 'dislike');
+                        $("#btnLike").toggleClass("heart--like");
                         $("#likeCount").text(+$("#likeCount").text() + 1);
                     }else if(response.action == 'disliked'){
-                        $("#btnLike").toggleClass("liked");
-                        $("#btnLike").attr('data-action', 'like');
+                        $("#btnLike").toggleClass("heart--like");
                         $("#likeCount").text(+$("#likeCount").text() - 1);
                     }
                 }else{

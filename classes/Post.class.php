@@ -73,19 +73,32 @@
 
         // LIKE A POST
         public function like($p_iPostID){
-			$conn = Db::getInstance();
-			$statement = $conn->prepare("INSERT INTO likes(postID, userID)
+			if($this->checkIfLiked($p_iPostID) == true){
+				$conn = Db::getInstance();
+				$statement = $conn->prepare("DELETE FROM likes WHERE postID=:postID AND userID=:userID");
+
+				$statement->bindparam(":postID", $p_iPostID);
+				$statement->bindparam(":userID", $_SESSION['userID']);
+				if ($statement->execute()) {
+					return true;
+				}
+			}else{
+				$conn = Db::getInstance();
+				$statement = $conn->prepare("INSERT INTO likes(postID, userID)
                                                            VALUES(:postID, :userID)");
 
-			$statement->bindparam(":postID", $p_iPostID);
-			$statement->bindparam(":userID", $_SESSION['userID']);
-			if ($statement->execute()) {
-				return true;
+				$statement->bindparam(":postID", $p_iPostID);
+				$statement->bindparam(":userID", $_SESSION['userID']);
+				if ($statement->execute()) {
+					return true;
+				}
 			}
+			//echo "binnen" . $p_iPostID;
+
         }
 
 		// STOP LIKING A POST
-		public function dislike($p_iPostID){
+		/*public function dislike($p_iPostID){
 			$conn = Db::getInstance();
 			$statement = $conn->prepare("DELETE FROM likes WHERE postID=:postID AND userID=:userID");
 
@@ -94,7 +107,7 @@
 			if ($statement->execute()) {
 				return true;
 			}
-		}
+		}*/
 
 		// CHECK IF A USER LIKED A POST
 		public function checkIfLiked($p_iPostID){
