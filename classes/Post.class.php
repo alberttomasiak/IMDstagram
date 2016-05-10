@@ -234,7 +234,7 @@
 				$statement = $db->prepare("insert into post (userID, path, description, location, filter) values (:userID, :path, :description, :location, :filter)");
 				$statement->bindValue(":userID", $_SESSION['userID']);
 				$statement->bindValue(":path", $file_path);
-				$statement->bindValue(":description", $_POST['description']);
+				$statement->bindValue(":description", htmlspecialchars($_POST['description']));
 				$statement->bindValue(":location", $_POST['location']);
 				$statement->bindValue(":filter", $_POST['filter']);
 				$result = $statement->execute();
@@ -328,7 +328,7 @@
 			$statement = $db->prepare("SELECT * FROM inappropriate WHERE postID=:postID");
 			$statement->bindparam(":postID", $p_vPostID);
 			$statement->execute();
-			if($statement->rowCount() == 3){
+			if($statement->rowCount() > 2){
 				//$post->deletePost($p_vPostID);
 				return true;
 			}else{
