@@ -9,9 +9,18 @@
 
     $post = new Post();
     $postData = $post->getAllPost($getPost);
+	
     //var_dump($postData);
     $user = new User();
     $userData = $user->getUserDetailsByUserID($getUserID);
+
+
+	if(!empty($_POST)){
+		$deletePostID = $_POST['deletePostID'];
+		$post = new Post();
+		$post->deletePost($deletePostID);
+		header('Location: profile.php?profile='.$_SESSION['username'].'');
+	}
 
     // CODE BRENT
     /*$comment = new Comment();
@@ -51,14 +60,6 @@
         }
     }
 
-	if(!empty($_POST['deletePost'])){
-		$deletePostID = $_POST['deletePostID'];
-		$post = new Post();
-		$post->deletePost($deletePostID);
-		header('location: profile.php?profile='.$_SESSION['username'].'');
-	}
-
-
 ?><!doctype html>
 <html lang="en">
 <head>
@@ -85,7 +86,7 @@
             })
             .done(function( msg ) {
                 //alert( "Data Saved: " + msg );
-                var li = "<li style='display:none;'><strong><?php echo $userData['username'] ?>: </strong> " + message  + "</li>";
+                var li = "<li style='display:none;'><strong>: </strong> " + message  + "</li>";
                 $("#listupdates").prepend(li);
                 $("#listupdates li").first().slideDown();
             });
