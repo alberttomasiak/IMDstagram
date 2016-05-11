@@ -59,83 +59,72 @@
 </head>
 <body>
 <?php include 'nav.inc.php'; ?>
-<div class="container">
-<div class="row detailpostRow">
-    <header class="col-xs-12 detailpostHeader">
-       <div>
-        <a href="profile.php?profile=<?php echo $userData['username'] ?>">
-        <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
-        </a>
-        <a href="profile.php?profile=<?php echo $userData['username'] ?>"> <?php echo $userData['username'] ?></a>
-        <p class="postLocation"><?php echo $postData['location']; ?></p>
+
+<div class="container--custom">
+
+    <div class="post">
+        <div class="post__header">
+            <div class="userinfo">
+                <a href="profile.php?profile=<?php echo $userData['username'] ?>">
+                    <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username'] ?>'s profile picture" class="userinfo__picture">
+                </a>
+                <div class="userinfo__text">
+                    <a href="profile.php?profile=<?php echo $userData['username'] ?>" class="userinfo__username"><?php echo $userData['username'] ?></a>
+                    <span class="userinfo__location"><?php echo $postData['location']; ?></span>
+                </div>
+            </div>
         </div>
-        <?php if($_SESSION['username'] == $userData['username']): ?>
-        <form action="" method="POST">
-            	<input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
-			<button type="submit" class="post__delete" name="deletePost"><span class="glyphicon glyphicon-trash"></span></button>
-        </form>
-        <?php endif; ?>
-    </header>
-
-    <!--<div class="col-xs-12">-->
-        <img src="<?php echo $postData['path'] ?>" alt="" id="singlePostImg">
-    <!--</div>-->
-
-    <div class="col-xs-12 detailpostLikesAndTime">
-        <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
-        <span><?php echo $post->timeAgo($postData['timestamp']); ?></span>
-    </div>
-
-    <div class="col-xs-12">
-        <p><a href="#"><?php echo $userData['username'] ?></a> <?php echo $post->tagPostDescription($postData['description']) ?></p>
-    </div>
-
-    <div class="comments col-xs-12">
-    <?php if(count($allComments) > 0):?>
-    <a href="#">Load all comments</a>
-    <ul class="comments__list">
-        <?php foreach( $allComments as $key => $c ): ?>
-            <li class="comments__list__item">
-                <p><a href="#"><?php echo $c['username']?></a> <?php echo $comment->tagComments($c['comment']);?></p>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-    <?php else: ?>
-        <ul class="comments__list"></ul>
-    <?php endif; ?>
-
-   
-    <div class="col-xs-1">
-    <?php
-    // CHECK IF YOU LIKED THE POST ALREADY
-    if(isset($_SESSION['loggedin'])){
-        if($post->checkIfLiked($postData['id']) == true){
-            // ALREADY LIKED
-            //echo "<a href='#' id='btnLike' role='button' class='liked' data-action='dislike' data-postid='" . $postData['id'] . "'>Like</a>";
-        echo "<form action='' method='post'><input type='submit' id='btnLike' value='Dislike' name='btnLike' class='heart heart--like'><input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'></form>";
-        }else{
-            // NOT LIKED YET
-            //echo "<a href='#' id='btnLike' role='button' data-action='like' data-postid='" . $postData['id'] . "'>Dislike</a>";
-            echo "<form action='' method='post'><input type='submit' id='btnLike' value='Like' name='btnLike' class='heart'><input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'></form>";
-        }
-    }
-    ?>
-    </div>
-
-    <form action="" class="col-xs-11" method="post">
-        <div class="input-group">
-            <input type="text" class="form-control" name="inputComment" id="inputComment" placeholder="Add a comment...">
-        <span class="input-group-btn">
-            <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default">
-        </span>
+        <img src="<?php echo $postData['path'] ?>" alt="" class="post__image <?php echo $postData['filter']; ?>" id="singlePostImg">
+        <div class="post__info">
+            <span><span id="likeCount" class="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
+            <span><?php echo $post->timeAgo($postData['timestamp']); ?></span>
         </div>
-        <input type="hidden" id="inputPostID" value="<?php echo $postData['id'];?>">
-    </form>
+        <div class="post__description">
+            <p><a href="profile.php?profile=<?php echo $userData['username'] ?>"><?php echo $userData['username']; ?></a> <?php echo $post->tagPostDescription($postData['description']) ?></p>
+        </div>
+        <div class="post__comments">
+            <?php if(count($allComments) > 0):?>
+            <ul class="comments__list">
+                <?php foreach( $allComments as $key => $c ): ?>
+                <li class="comments__list__item">
+                    <p><a href="profile.php?profile=<?php echo $c['username'] ?>"><?php echo $c['username']?></a> <?php echo $comment->tagComments($c['comment']);?></p>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php else: ?>
+                <ul class="comments__list"></ul>
+            <?php endif; ?>
+        </div>
+        <div class="post__actions">
+            <?php
+            if(isset($_SESSION['loggedin'])){
+            if($post->checkIfLiked($postData['id']) == true){
+                // ALREADY LIKED
+                echo "<form action='' method='post'>
+                            <input type='submit' id='btnLike' value='Dislike' name='btnLike' class='btnLike heart heart--like' data-postid='". $postData['id'] ."'>
+                            <input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'>
+                        </form>";
+            }else{
+                // NOT LIKED YET
+                echo "<form action='' method='post'>
+                            <input type='submit' id='btnLike' value='Like' name='btnLike' class='btnLike heart' data-postid='". $postData['id'] ."'>
+                            <input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'>
+                        </form>";
+            }
+            }
+            ?>
 
-    </div>
-    <div class="col-xs-2">
-        <div class="row">
-        <div class="col-xs-2 commentsFlag--Individual">
+            <form action="" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control inputComment" name="inputComment" id="inputComment" placeholder="Add a comment...">
+                        <span class="input-group-btn">
+                        <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default btnPlaceComment" data-postid="<?php echo $postData['id'] ?>>
+                        </span>
+                </div>
+                <input type="hidden" id="inputPostID" value="<?php echo $postData['id'];?>">
+            </form>
+        </div>
+        <div class="commentsFlag--Individual">
             <form action="" method="POST">
                 <input type="hidden" name="postID" class="flagID" value="<?php echo $postData['id']; ?>">
                 <?php if($post->checkIfFlagged($postData['id']) == true): ?>
@@ -145,8 +134,14 @@
                 <?php endif; ?>
             </form>
         </div>
-        </div>
+        <?php if($_SESSION['username'] == $userData['username']): ?>
+            <form action="" method="POST">
+                <input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
+                <button type="submit" class="post__delete" name="deletePost"><span class="glyphicon glyphicon-trash"></span></button>
+            </form>
+        <?php endif; ?>
     </div>
+
 </div>
 </body>
 </html>

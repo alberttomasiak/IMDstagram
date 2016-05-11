@@ -47,7 +47,7 @@
             try {
                 $user->setProfilePicture();
             }catch(Exception $e){
-                $feedback = $e->getMessage();
+                //$feedback = $e->getMessage();
             }
         }
 		

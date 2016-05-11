@@ -170,7 +170,7 @@
 
             <!-- SHOW POSTS OR SHOW MESSAGE WHEN THERE ARE NO POSTS -->
             <?php if($userPosts == false): ?>
-                <p>No posts yet.</p>
+                <p class="text-center">No posts yet.</p>
             <?php else: ?>
                 <div class="gallery">
                     <?php foreach( $userPosts as $key => $userPost ): ?>
@@ -182,8 +182,8 @@
 
         <?php else: ?>
             <!-- HIDE POSTS -->
-            <h4>This account is private</h4>
-            <p>Request to follow <?php echo $userData['username']?> to see their photos.</p>
+            <h4 class="text-center">This account is private</h4>
+            <p class="text-center">Request to follow <?php echo $userData['username']?> to see their photos.</p>
         <?php endif; ?>
 
     </section>
@@ -203,12 +203,18 @@
                         <h4 class="modal-title">Followers</h4>
                     </div>
                     <div class="modal-body">
-                        <ul>
+                        <ul class="followlist">
                             <?php foreach($followers as $key => $follower): ?>
                                 <li>
-                                    <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
-                                    <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
-                                    <span><?php echo $follower['fullName']; ?></span>
+                                    <div class="userinfo">
+                                        <a href="profile.php?profile=<?php echo $follower['username'] ?>">
+                                            <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username'] ?>'s profile picture" class="userinfo__picture">
+                                        </a>
+                                        <div class="userinfo__text">
+                                            <a href="profile.php?profile=<?php echo $follower['username'] ?>" class="userinfo__username"><?php echo $follower['username'] ?></a>
+                                            <span class="userinfo__name"><?php echo $follower['fullName']; ?></span>
+                                        </div>
+                                    </div>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -229,12 +235,18 @@
                         <h4 class="modal-title">Following</h4>
                     </div>
                     <div class="modal-body">
-                        <ul>
+                        <ul class="followlist">
                             <?php foreach($following as $key => $follower): ?>
                                 <li>
-                                    <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
-                                    <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
-                                    <span><?php echo $follower['fullName']; ?></span>
+                                    <div class="userinfo">
+                                        <a href="profile.php?profile=<?php echo $follower['username'] ?>">
+                                            <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username'] ?>'s profile picture" class="userinfo__picture">
+                                        </a>
+                                        <div class="userinfo__text">
+                                            <a href="profile.php?profile=<?php echo $follower['username'] ?>" class="userinfo__username"><?php echo $follower['username'] ?></a>
+                                            <span class="userinfo__name"><?php echo $follower['fullName']; ?></span>
+                                        </div>
+                                    </div>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
