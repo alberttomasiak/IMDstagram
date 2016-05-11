@@ -77,68 +77,12 @@
 </head>
 <body>
 
-    <?php include 'nav.inc.php'; ?>
-	<div class="hideMe">
-    <section class="postsWrapper">
-    <?php if ($timelinePosts == false): ?>
-    	<p>There are no posts to display yet. Try following some people.</p>
-    <?php else: ?>
-    <?php foreach($timelinePosts as $key => $timelinePost): ?>
-        <article class="postTimeline <?php echo $timelinePost['id']; ?>">
-          <div class="postHeader">
-          <div class="postUser">
-           <!-- Profile picture -->
-           <img src="<?php echo $timelinePost['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
-            
-            <!-- Username link -->
-            <a href="profile.php?profile=<?php echo $timelinePost['username']; ?>"><?php echo $timelinePost['username']; ?></a>
-            <p class="timelineLocation"><?php echo $timelinePost['location']; ?></p>
-            </div>
-            <!-- Timestamp -->
-            <p class="postTimestamp"><?php echo $post->timeAgo($timelinePost['timestamp']); ?></p>
-            </div>
-            
-            
-            <!-- Image met link naar de bijhorende post pagina -->
-            <a class="postImage" href="post.php?p=<?php echo $timelinePost['id'] ?>&u=<?php echo $timelinePost['userID'] ?>">
-            <img src="<?php echo $timelinePost['path']; ?>" class="<?php echo $timelinePost['filter']; ?>" alt="">
-        	</a>
-        	
-        	
-        	<!-- wrapper voor comments, like & flag-->
-        	<div class="commentsWrapper">
-			<div class="commentsLike">
-				
-			</div>
-       		
-        	<!-- Hier komen de comments voor elke post -->
-        	<div class="commentsPost">
-        		<ul>
-        			<!-- comments in li => username + comment -->
-        		</ul>
-        	</div>
-        	
-        	<div class="commentsFlag">
-        		<form action="" method="POST">
-        			<input type="hidden" name="postID" class="flagID" value="<?php echo $timelinePost['id']; ?>">
-        			<?php if($post->checkIfFlagged($timelinePost['id']) == true): ?>
-        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> flagged glyphicon-flag"></span></button>
-        			<?php else: ?>
-        			<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> glyphicon-flag"></span></button>
-        			<?php endif; ?>
-        		</form>
-        	</div>
-        	</div>
-        	   
-        	
-        </article>
-    <?php endforeach; ?>
-    <?php endif; ?>
-    </section>
-	</div>
+<?php include 'nav.inc.php'; ?>
 
 <div class="container--custom">
-
+<?php if ($timelinePosts == false): ?>
+	<p class="text-center">There are no posts to display yet. Try following some people.</p>
+<?php else: ?>
 <?php foreach($timelinePosts as $key => $timelinePost): ?>
 	<div class="post">
 		<div class="post__header">
@@ -152,7 +96,7 @@
 				</div>
 			</div>
 		</div>
-		<img src="<?php echo $timelinePost['path'] ?>" alt="" class="post__image <?php echo $timelinePost['filter']; ?>" id="singlePostImg">
+		<a href="post.php?p=<?php echo $timelinePost['id'] ?>&u=<?php echo $timelinePost['userID'] ?>"><img src="<?php echo $timelinePost['path'] ?>" alt="" class="post__image <?php echo $timelinePost['filter']; ?>" id="singlePostImg"></a>
 		<div class="post__info">
 			<span><span id="likeCount" class="likeCount"><?php echo $post->countLikes($timelinePost['id']) ?></span> likes</span>
 			<span><?php echo $post->timeAgo($timelinePost['timestamp']); ?></span>
@@ -195,15 +139,15 @@
 
 			<form action="" method="post">
 				<div class="input-group">
-					<input type="text" class="form-control" name="inputComment" id="inputComment" placeholder="Add a comment...">
+					<input type="text" class="form-control inputComment" name="inputComment" id="inputComment" placeholder="Add a comment...">
 					<span class="input-group-btn">
-					<input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default">
+					<input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default btnPlaceComment" data-postid="<?php echo $timelinePost['id'] ?>">
 					</span>
 				</div>
 				<input type="hidden" id="inputPostID" name="inputPostID" value="<?php echo $timelinePost['id'];?>">
 			</form>
 		</div>
-		<div class="commentsFlag--Individual">
+		<div class="commentsFlag">
 			<form action="" method="POST">
 				<input type="hidden" name="postID" class="flagID" value="<?php echo $timelinePost['id']; ?>">
 				<?php if($post->checkIfFlagged($timelinePost['id']) == true): ?>
@@ -215,9 +159,9 @@
 		</div>
 	</div>
 <?php endforeach; ?>
-
+<?php endif; ?>
 </div>
 
-    <?php include 'footer.inc.php'; ?>
+<?php include 'footer.inc.php'; ?>
 </body>
 </html>

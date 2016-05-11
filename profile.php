@@ -170,7 +170,7 @@
 
             <!-- SHOW POSTS OR SHOW MESSAGE WHEN THERE ARE NO POSTS -->
             <?php if($userPosts == false): ?>
-                <p>No posts yet.</p>
+                <p class="text-center">No posts yet.</p>
             <?php else: ?>
                 <div class="gallery">
                     <?php foreach( $userPosts as $key => $userPost ): ?>
@@ -182,8 +182,8 @@
 
         <?php else: ?>
             <!-- HIDE POSTS -->
-            <h4>This account is private</h4>
-            <p>Request to follow <?php echo $userData['username']?> to see their photos.</p>
+            <h4 class="text-center">This account is private</h4>
+            <p class="text-center">Request to follow <?php echo $userData['username']?> to see their photos.</p>
         <?php endif; ?>
 
     </section>

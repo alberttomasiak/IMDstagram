@@ -11,7 +11,8 @@ $(document).ready(function() {
     $("#username").on("keyup", realtimeUsernameCheck);
     // FOLLOW EVENT
     $("#btnFollow").on("click", follow);
-    $("#btnPlaceComment").on("click", placeComment);
+    //$("#btnPlaceComment").on("click", placeComment);
+    $(".btnPlaceComment").on("click", placeComment);
 
 
     //
@@ -132,8 +133,15 @@ $(document).ready(function() {
 
     // PLACE COMMENT
     function placeComment(e){
-        var comment = $("#inputComment").val();
-        var postID = $("#inputPostID").val();
+        console.log('click');
+        var button = this;
+        var inputfield = $(this).closest('.post__actions').find('.inputComment');
+        var comment = $(this).closest('form').find('.inputComment').val();
+        var postID = $(this).attr("data-postid");
+        var list = $(this).closest('.post').find('.comments__list');
+        console.log("comment: "+comment);
+        console.log("postID: "+postID);
+        console.log(list);
         $.post( "ajax/comment.php", {comment:comment, postID:postID} )
             .done(function( response ) {
 
@@ -141,14 +149,14 @@ $(document).ready(function() {
                     console.log('Success');
                     var url = "'profile.php?profile=" + response.username + "'";
                     var li = "<li class='comments__list__item'><p><a href="+ url +">"+ response.username +"</a> "+ response.text +"</p></li>";
-                    $(".comments__list").append(li);
-                    $("#inputComment").val("");
+                    $(list).append(li);
+                    $(inputfield).val("");
                 }else{
                     console.log('Fail');
                 }
             });
         e.preventDefault();
-    };
+    }
 
 
 
