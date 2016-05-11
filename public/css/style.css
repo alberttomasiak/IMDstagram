@@ -375,7 +375,7 @@ nav .navbar-form{
 //      DETAIL POST PAGE
 //
 */
-
+/*
 .heart{
 	border: none;
 	outline: none;
@@ -468,6 +468,171 @@ nav .navbar-form{
 	margin-right: 10px;
 	margin-bottom: 10px;
 	
+}
+
+.commentsFlag--Individual{
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 15px;
+	margin-top: -10px;
+	margin-bottom: 15px;
+}*/
+
+
+/*
+	//
+	// CUSTOM CONTAINER
+	//
+*/
+.container--custom{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+/*
+	//
+	// USERNAME WITH PICTURE
+	//
+*/
+.userinfo{
+	display: flex;
+	align-items: center;
+}
+
+.userinfo__text{
+	display: flex;
+	flex-direction: column;
+}
+
+.userinfo__picture{
+	height: 43px;
+	width: 43px;
+	border-radius: 100%;
+	margin-right: 10px;
+}
+
+
+/*
+	//
+	// POST DESIGN
+	//
+*/
+.post{
+	background-color: #fff;
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+
+	margin-top: 20px;
+	padding: 15px 0;
+
+}
+
+.post--timeline{
+	background-color: #FAFAFA
+}
+
+.post__header{
+	margin: 0 15px 15px 15px;
+}
+
+.post__image{
+	max-width: 100%;
+}
+
+.post__info{
+	display: flex;
+	justify-content: space-between;
+
+	margin: 10px 15px;
+}
+
+.post__description,.post__comments,.post__actions{
+	margin: 10px 15px;
+}
+
+.post__comments ul{
+	list-style: none;
+}
+
+.comments__list{
+	list-style: none;
+	padding: 0;
+	margin: 15px 0 25px 0;
+}
+
+.post__actions{
+	display: flex;
+	flex-direction: row;
+}
+
+#inputComment{
+	border: none;
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.heart{
+	border: none;
+	outline: none;
+	text-indent: -9999px;
+	background-color: transparent;
+	display: block;
+	height: 37px;
+	width: 37px;
+	background-image: url(../images/heart.svg);
+	background-repeat: no-repeat;
+	margin-right: 10px;
+}
+
+.heart--like{
+	background-image: url(../images/heart-red.svg);
+}
+
+
+/*
+	//
+	// FLAG AND DELETE POST
+	//
+*/
+
+.post__delete{
+	padding: 0;
+	margin-right: 5px;
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+.post__flag{
+	margin-right: 5px;
+	background-color: transparent;
+	border: 1px solid transparent;
+	width: 40px;
+	height: 40px;
+	padding: 5px;
+	outline: none;
+}
+
+.flagged{
+	background-color: #ddd;
+	position: relative;
+}
+
+
+.glyphicon-flag{
+	font-size: 30px;
+	padding: 5px;
+}
+
+.commentsFlag{
+	display: flex;
+	justify-content: flex-end;
+	margin-right: 10px;
+	margin-bottom: 10px;
+
 }
 
 .commentsFlag--Individual{
