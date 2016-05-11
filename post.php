@@ -163,7 +163,7 @@
         </div>
         <img src="<?php echo $postData['path'] ?>" alt="" class="post__image <?php echo $postData['filter']; ?>" id="singlePostImg">
         <div class="post__info">
-            <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
+            <span><span id="likeCount" class="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
             <span><?php echo $post->timeAgo($postData['timestamp']); ?></span>
         </div>
         <div class="post__description">
@@ -188,13 +188,13 @@
             if($post->checkIfLiked($postData['id']) == true){
                 // ALREADY LIKED
                 echo "<form action='' method='post'>
-                            <input type='submit' id='btnLike' value='Dislike' name='btnLike' class='heart heart--like'>
+                            <input type='submit' id='btnLike' value='Dislike' name='btnLike' class='btnLike heart heart--like' data-postid='". $postData['id'] ."'>
                             <input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'>
                         </form>";
             }else{
                 // NOT LIKED YET
                 echo "<form action='' method='post'>
-                            <input type='submit' id='btnLike' value='Like' name='btnLike' class='heart'>
+                            <input type='submit' id='btnLike' value='Like' name='btnLike' class='btnLike heart' data-postid='". $postData['id'] ."'>
                             <input name='likePostID' id='likePostID' type='hidden' value='". $postData['id'] ."'>
                         </form>";
             }

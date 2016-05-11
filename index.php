@@ -154,7 +154,7 @@
 		</div>
 		<img src="<?php echo $timelinePost['path'] ?>" alt="" class="post__image <?php echo $timelinePost['filter']; ?>" id="singlePostImg">
 		<div class="post__info">
-			<span><span id="likeCount"><?php echo $post->countLikes($timelinePost['id']) ?></span> likes</span>
+			<span><span id="likeCount" class="likeCount"><?php echo $post->countLikes($timelinePost['id']) ?></span> likes</span>
 			<span><?php echo $post->timeAgo($timelinePost['timestamp']); ?></span>
 		</div>
 		<div class="post__description">
@@ -180,13 +180,13 @@
 				if($post->checkIfLiked($timelinePost['id']) == true){
 					// ALREADY LIKED
 					echo "<form action='' method='post'>
-						<input type='submit' id='btnLike' value='Dislike' name='btnLike' class='heart heart--like'>
+						<input type='submit' id='btnLike' value='Dislike' name='btnLike' class='btnLike heart heart--like' data-postid='". $timelinePost['id'] ."'>
 						<input name='likePostID' id='likePostID' type='hidden' value='". $timelinePost['id'] ."'>
 					</form>";
 				}else{
 					// NOT LIKED YET
 					echo "<form action='' method='post'>
-						<input type='submit' id='btnLike' value='Like' name='btnLike' class='heart'>
+						<input type='submit' id='btnLike' value='Like' name='btnLike' class='btnLike heart' data-postid='". $timelinePost['id'] ."'>
 						<input name='likePostID' id='likePostID' type='hidden' value='". $timelinePost['id'] ."'>
 					</form>";
 				}

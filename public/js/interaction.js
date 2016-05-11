@@ -5,7 +5,8 @@ $(document).ready(function() {
     //
 
     // LIKE BUTTON EVENT
-    $("#btnLike").on("click", like);
+    //$("#btnLike").on("click", like);
+    $(".btnLike").on("click", like);
     // REALTIME USERNAME CHECK EVENT
     $("#username").on("keyup", realtimeUsernameCheck);
     // FOLLOW EVENT
@@ -17,7 +18,7 @@ $(document).ready(function() {
     //      FUNCTIONS
     //
 
-    function like(e){
+    /*function like(e){
         console.log("Like klik");
         var postID = $("#likePostID").val();
 
@@ -39,7 +40,37 @@ $(document).ready(function() {
 
             });
         e.preventDefault();
+    }*/
+
+    function like(e){
+        var postID = $(this).attr("data-postid");
+        var button = this;
+        var counter = $(this).closest('.post').find('.likeCount');
+        console.log("Like klik " + postID);
+
+        $.post( "ajax/like.php", {postID:postID} )
+            .done(function( response ) {
+
+                if(response.status == 'success'){
+                    console.log('Success');
+                    if(response.action == 'liked'){
+                        $(button).toggleClass("heart--like");
+                        $(counter).text(+counter.text() + 1);
+                        console.log(counter);
+                    }else if(response.action == 'disliked'){
+                        $(button).toggleClass("heart--like");
+                        $(counter).text(+counter.text() - 1);
+                        console.log(counter);
+                    }
+                }else{
+                    console.log('Fail');
+                }
+
+            });
+        e.preventDefault();
     }
+
+
 
     // REALTIME USERNAME CHECK FUNCTION (check if username is available)
     function realtimeUsernameCheck(e){
