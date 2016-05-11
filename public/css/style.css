@@ -512,7 +512,9 @@ nav .navbar-form{
 	margin-right: 10px;
 }
 
-
+.userinfo__location{
+	font-size: 0.9em;
+}
 /*
 	//
 	// POST DESIGN
@@ -525,6 +527,7 @@ nav .navbar-form{
 	margin-right: auto;
 
 	margin-top: 20px;
+	margin-bottom: 20px;
 	padding: 15px 0;
 
 }

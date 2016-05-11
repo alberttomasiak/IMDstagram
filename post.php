@@ -161,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <img src="<?php echo $postData['path'] ?>" alt="" class="post__image" id="singlePostImg">
+        <img src="<?php echo $postData['path'] ?>" alt="" class="post__image <?php echo $postData['filter']; ?>" id="singlePostImg">
         <div class="post__info">
             <span><span id="likeCount"><?php echo $post->countLikes($postData['id']) ?></span> likes</span>
             <span><?php echo $post->timeAgo($postData['timestamp']); ?></span>
