@@ -19,29 +19,6 @@ $(document).ready(function() {
     //      FUNCTIONS
     //
 
-    /*function like(e){
-        console.log("Like klik");
-        var postID = $("#likePostID").val();
-
-        $.post( "ajax/like.php", {postID:postID} )
-            .done(function( response ) {
-
-                if(response.status == 'success'){
-                    console.log('Success');
-                    if(response.action == 'liked'){
-                        $("#btnLike").toggleClass("heart--like");
-                        $("#likeCount").text(+$("#likeCount").text() + 1);
-                    }else if(response.action == 'disliked'){
-                        $("#btnLike").toggleClass("heart--like");
-                        $("#likeCount").text(+$("#likeCount").text() - 1);
-                    }
-                }else{
-                    console.log('Fail');
-                }
-
-            });
-        e.preventDefault();
-    }*/
 
     function like(e){
         var postID = $(this).attr("data-postid");

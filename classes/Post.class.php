@@ -60,7 +60,8 @@
  											ON post.userID=user.id
  											INNER JOIN follow
  											ON user.id=follow.followingID
- 											WHERE follow.followerID = '$activeUser'");
+ 											WHERE follow.followerID = '$activeUser'
+ 											ORDER BY timestamp DESC");
 			//$statement->bindparam(":sessionID", $_SESSION['userID']);
             //SELECT * FROM post WHERE userID IN ( SELECT followingID FROM follow WHERE followerID=:followerID)
 			$statement->execute();

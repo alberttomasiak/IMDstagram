@@ -9,6 +9,10 @@ body{
 	min-height: 100%;
 }
 
+a:hover{
+	text-decoration: none;
+}
+
 footer{
 	text-align: center;
 	bottom: 20px;
@@ -406,6 +410,20 @@ nav .navbar-form{
 .userinfo__location{
 	font-size: 0.9em;
 }
+
+.userinfo__name{
+	font-size: 0.9em;
+}
+
+.followlist{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.followlist li{
+	margin: 20px 0;
+}
 /*
 	//
 	// POST DESIGN
@@ -467,6 +485,7 @@ nav .navbar-form{
 	border-left: 1px solid #ccc;
 	border-radius: 0;
 	box-shadow: none;
+	background-color: transparent;
 }
 
 .heart{
@@ -672,5 +691,14 @@ nav .navbar-form{
 @media only screen and (min-width: 400px){
 	#searchResults{
 		left: 0%;
+	}
+}
+
+@media (min-width: 600px) {
+	.post--timeline{
+		background-color: #fff;
+	}
+	#inputComment{
+		background-color: #fff;
 	}
 }

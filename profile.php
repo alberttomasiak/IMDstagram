@@ -203,12 +203,18 @@
                         <h4 class="modal-title">Followers</h4>
                     </div>
                     <div class="modal-body">
-                        <ul>
+                        <ul class="followlist">
                             <?php foreach($followers as $key => $follower): ?>
                                 <li>
-                                    <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
-                                    <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
-                                    <span><?php echo $follower['fullName']; ?></span>
+                                    <div class="userinfo">
+                                        <a href="profile.php?profile=<?php echo $follower['username'] ?>">
+                                            <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username'] ?>'s profile picture" class="userinfo__picture">
+                                        </a>
+                                        <div class="userinfo__text">
+                                            <a href="profile.php?profile=<?php echo $follower['username'] ?>" class="userinfo__username"><?php echo $follower['username'] ?></a>
+                                            <span class="userinfo__name"><?php echo $follower['fullName']; ?></span>
+                                        </div>
+                                    </div>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -229,12 +235,18 @@
                         <h4 class="modal-title">Following</h4>
                     </div>
                     <div class="modal-body">
-                        <ul>
+                        <ul class="followlist">
                             <?php foreach($following as $key => $follower): ?>
                                 <li>
-                                    <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username']; ?>'s profile picture">
-                                    <a href="profile.php?profile=<?php echo $follower['username']; ?>"><?php echo $follower['username']; ?></a>
-                                    <span><?php echo $follower['fullName']; ?></span>
+                                    <div class="userinfo">
+                                        <a href="profile.php?profile=<?php echo $follower['username'] ?>">
+                                            <img src="<?php echo $follower['profilePicture']; ?>" alt="<?php echo $follower['username'] ?>'s profile picture" class="userinfo__picture">
+                                        </a>
+                                        <div class="userinfo__text">
+                                            <a href="profile.php?profile=<?php echo $follower['username'] ?>" class="userinfo__username"><?php echo $follower['username'] ?></a>
+                                            <span class="userinfo__name"><?php echo $follower['fullName']; ?></span>
+                                        </div>
+                                    </div>
                                 </li>
                             <?php endforeach; ?>
                         </ul>

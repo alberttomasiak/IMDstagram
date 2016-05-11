@@ -84,7 +84,7 @@
 	<p class="text-center">There are no posts to display yet. Try following some people.</p>
 <?php else: ?>
 <?php foreach($timelinePosts as $key => $timelinePost): ?>
-	<div class="post">
+	<div class="post post--timeline">
 		<div class="post__header">
 			<div class="userinfo">
 				<a href="profile.php?profile=<?php echo $timelinePost['username'] ?>">
