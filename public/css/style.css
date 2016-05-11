@@ -499,12 +499,19 @@ nav .navbar-form{
 	background-image: url(../images/heart.svg);
 	background-repeat: no-repeat;
 	margin-right: 10px;
+
+	background-position: center;
+	transition: background-image 0.5s ease-in;
+	background-size: 90%;
 }
 
 .heart--like{
 	background-image: url(../images/heart-red.svg);
 }
 
+.heart:hover{
+	background-size: 100%;
+}
 
 /*
 	//
