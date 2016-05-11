@@ -778,7 +778,7 @@ nav .navbar-form{
  //      COMMENT SECTION
  //
  */
-.comments{
+/*.comments{
 	margin: 0 0 15px 0;
  }
 
@@ -794,10 +794,14 @@ nav .navbar-form{
 
  .comments__list__item{
 
- }
+ }*/
 
 @media only screen and (min-width: 400px){
 	#searchResults{
 		left: 0%;
 	}
+}
+
+.hideMe{
+	display: none;
 }

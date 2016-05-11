@@ -54,7 +54,7 @@
 			$conn = Db::getInstance();
 			$activeUser = $_SESSION['userID'];
 			
-			$statement = $conn->prepare("SELECT user.username, user.profilePicture, user.profilePicture, post.id, post.userID, post.path, post.location, post.timestamp, post.filter, post.location
+			$statement = $conn->prepare("SELECT user.username, user.profilePicture, user.profilePicture, post.id, post.userID, post.path, post.description, post.timestamp, post.filter, post.location
  											FROM post
  											INNER JOIN user
  											ON post.userID=user.id

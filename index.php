@@ -1,6 +1,7 @@
 <?php
     include_once 'classes/User.class.php';
 	include_once 'classes/Post.class.php';
+	include_once 'classes/Comment.class.php';
     session_start();
 
     if(isset($_SESSION['loggedin'])){
@@ -21,7 +22,8 @@
       header('location: login.php');
     }
 
-	if(!empty($_POST)){
+	// BUTTON NAME GEVEN
+	/*if(!empty($_POST)){
 		$flagID = $_POST['postID'];
 		$post = new Post();
 		if($post->countFlags($flagID) == true){
@@ -37,6 +39,26 @@
 			$post->unFlagPost($flagID);
 		}
 		//header('location: profile.php?profile='.$_SESSION['username'].'');
+	}*/
+
+	$comment = new Comment();
+
+	if(!empty($_POST['btnPlaceComment'])){
+		if($comment->createComment($_POST['inputPostID'], $_POST['inputComment'])){
+			header('Location: '.$_SERVER['REQUEST_URI']);
+		}else{
+			//echo "Error";
+		}
+	}
+
+	if(!empty($_POST['btnLike'])){
+		$postID = $_POST['likePostID'];
+		if($post->like($postID)){
+			header('Location: '.$_SERVER['REQUEST_URI']);
+		}else{
+			echo "Error";
+		}
+
 	}
 
 ?><!DOCTYPE html>
@@ -54,7 +76,9 @@
     <script src="public/js/interaction.js"></script>
 </head>
 <body>
+
     <?php include 'nav.inc.php'; ?>
+	<div class="hideMe">
     <section class="postsWrapper">
     <?php if ($timelinePosts == false): ?>
     	<p>There are no posts to display yet. Try following some people.</p>
@@ -111,6 +135,89 @@
     <?php endforeach; ?>
     <?php endif; ?>
     </section>
+	</div>
+
+<div class="container--custom">
+
+<?php foreach($timelinePosts as $key => $timelinePost): ?>
+	<div class="post">
+		<div class="post__header">
+			<div class="userinfo">
+				<a href="profile.php?profile=<?php echo $timelinePost['username'] ?>">
+					<img src="<?php echo $timelinePost['profilePicture']; ?>" alt="<?php echo $timelinePost['username'] ?>'s profile picture" class="userinfo__picture">
+				</a>
+				<div class="userinfo__text">
+					<a href="profile.php?profile=<?php echo $timelinePost['username'] ?>" class="userinfo__username"><?php echo $timelinePost['username'] ?></a>
+					<span class="userinfo__location"><?php echo $timelinePost['location']; ?></span>
+				</div>
+			</div>
+		</div>
+		<img src="<?php echo $timelinePost['path'] ?>" alt="" class="post__image <?php echo $timelinePost['filter']; ?>" id="singlePostImg">
+		<div class="post__info">
+			<span><span id="likeCount"><?php echo $post->countLikes($timelinePost['id']) ?></span> likes</span>
+			<span><?php echo $post->timeAgo($timelinePost['timestamp']); ?></span>
+		</div>
+		<div class="post__description">
+			<p><a href="profile.php?profile=<?php echo $timelinePost['username'] ?>"><?php echo $timelinePost['username']; ?></a> <?php echo $post->tagPostDescription($timelinePost['description']) ?></p>
+		</div>
+		<div class="post__comments">
+			<?php $allComments = $comment->getAllCommentsForPost($timelinePost['id'])?>
+			<?php if(count($allComments) > 0):?>
+				<ul class="comments__list">
+					<?php foreach( $allComments as $key => $c ): ?>
+						<li class="comments__list__item">
+							<p><a href="profile.php?profile=<?php echo $c['username'] ?>"><?php echo $c['username']?></a> <?php echo $comment->tagComments($c['comment']);?></p>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php else: ?>
+				<ul class="comments__list"></ul>
+			<?php endif; ?>
+		</div>
+		<div class="post__actions">
+			<?php
+			if(isset($_SESSION['loggedin'])){
+				if($post->checkIfLiked($timelinePost['id']) == true){
+					// ALREADY LIKED
+					echo "<form action='' method='post'>
+						<input type='submit' id='btnLike' value='Dislike' name='btnLike' class='heart heart--like'>
+						<input name='likePostID' id='likePostID' type='hidden' value='". $timelinePost['id'] ."'>
+					</form>";
+				}else{
+					// NOT LIKED YET
+					echo "<form action='' method='post'>
+						<input type='submit' id='btnLike' value='Like' name='btnLike' class='heart'>
+						<input name='likePostID' id='likePostID' type='hidden' value='". $timelinePost['id'] ."'>
+					</form>";
+				}
+			}
+			?>
+
+			<form action="" method="post">
+				<div class="input-group">
+					<input type="text" class="form-control" name="inputComment" id="inputComment" placeholder="Add a comment...">
+					<span class="input-group-btn">
+					<input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default">
+					</span>
+				</div>
+				<input type="hidden" id="inputPostID" name="inputPostID" value="<?php echo $timelinePost['id'];?>">
+			</form>
+		</div>
+		<div class="commentsFlag--Individual">
+			<form action="" method="POST">
+				<input type="hidden" name="postID" class="flagID" value="<?php echo $timelinePost['id']; ?>">
+				<?php if($post->checkIfFlagged($timelinePost['id']) == true): ?>
+					<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> flagged glyphicon-flag"></span></button>
+				<?php else: ?>
+					<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> glyphicon-flag"></span></button>
+				<?php endif; ?>
+			</form>
+		</div>
+	</div>
+<?php endforeach; ?>
+
+</div>
+
     <?php include 'footer.inc.php'; ?>
 </body>
 </html>
