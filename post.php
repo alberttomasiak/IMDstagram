@@ -22,6 +22,11 @@
 		header('Location: profile.php?profile='.$_SESSION['username'].'');
 	}*/
 
+    if(($user->isPrivate($getUserID) == true) && ($user->isFollowing($getUserID) == false) && ($_SESSION['userID'] != $getUserID)){
+        // RESTRICT ACCESS TO PRIVATE POSTS
+        header('location: index.php');
+    }
+
     $comment = new Comment();
     $allComments = $comment->getAllCommentsForPost($getPost);
 
