@@ -99,7 +99,11 @@ $(document).ready(function() {
                     }else if(response.action == 'pending'){
                         $("#btnFollow").val('Pending');
                         $("#btnFollow").attr('class', 'btn btn-default');
-                        $("#btnFollow").attr('data-action', 'stopfollowing');
+                        $("#btnFollow").attr('data-action', 'stoppending');
+                    }else if(response.action == 'stoppedpending'){
+                        $("#btnFollow").val('Follow');
+                        $("#btnFollow").attr('class', 'btn btn-primary');
+                        $("#btnFollow").attr('data-action', 'follow');
                     }
                 }else{
                     console.log('Fail');
