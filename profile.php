@@ -3,10 +3,16 @@
     include_once 'classes/Post.class.php';
     session_start();
 
-    if(isset($_SESSION['loggedin'])){
-        $profile = $_GET['profile'];
+    $profile = $_GET['profile'];
+    $user = new User();
 
-        $user = new User();
+    // REDIRECT IF PROFILE DOESN'T EXIST
+    if($user->checkIfProfileExists($profile) == false){
+        header('location: index.php');
+    }
+
+    if(isset($_SESSION['loggedin'])){
+
         $userData = $user->getUserDetailsByUsername($profile);
 
         $post = new Post();
