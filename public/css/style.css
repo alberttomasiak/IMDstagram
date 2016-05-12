@@ -8,6 +8,10 @@ body{
 	font-family: 'Montserrat', sans-serif;
 	min-height: 100%;
 }
+.container{
+	margin-bottom: 70px;
+	max-width: 955px;
+}
 
 a:hover{
 	text-decoration: none;
@@ -29,66 +33,6 @@ footer{
 //      PROFILE PAGE
 //
 */
-/*
-#profileheader{
-    margin: 30px 0 50px 0;
-}
-
-.container{
-	z-index: 0;
-}
-
-#fullname{
-    display: inline;
-    font-size: 1em;
-    font-weight: bold;
-}
-.profilepic img{
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-    max-width: 100%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.profPic{
-	width: 150px;
-	height: 150px;
-}
-
-.profilestats{
-    list-style: none;
-    display: flex;
-    padding-left: 0;
-	z-index: 0;
-}
-
-.profilestats li{
-    padding-right: 40px;
-}
-
-#usernamewrap{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-}
-
-#usernamewrap h1{
-    margin: 0 20px 0 0;
-}
-
-.profilePosts{
-	width: 600px;
-	display: block;
-	margin-bottom: 25px;
-}
-*/
-
-.hideMe{
-	display: none;
-}
 
 .nav--profile nav{
 	margin-bottom: 0;
@@ -117,6 +61,7 @@ footer{
 	max-width: 150px;
 	max-height: 150px;
 	border-radius: 100%;
+	border: 2px solid #FAFAFA;
 }
 
 .profileheader__about__name{
@@ -361,7 +306,14 @@ footer{
 //
 */
 
+.profPic{
+	width: 150px;
+	height: 150px;
+}
 
+.accountSettings{
+	margin-top: 50px;
+}
 /*
 //
 //      NAVIGATION
@@ -486,6 +438,7 @@ nav .navbar-form{
 	height: 43px;
 	width: 43px;
 	border-radius: 100%;
+	border: 1px solid #FAFAFA;
 	margin-right: 10px;
 }
 
