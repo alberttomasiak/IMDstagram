@@ -29,7 +29,7 @@ footer{
 //      PROFILE PAGE
 //
 */
-
+/*
 #profileheader{
     margin: 30px 0 50px 0;
 }
@@ -84,6 +84,88 @@ footer{
 	display: block;
 	margin-bottom: 25px;
 }
+*/
+
+.hideMe{
+	display: none;
+}
+
+.nav--profile nav{
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+.header--profile{
+	display: block;
+	width: 100%;
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+
+.container--custom--header{
+	max-width: 930px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.profileheader{
+	padding: 20px 5px;
+	max-width: 600px;
+}
+
+.profileheader__picture{
+	max-width: 150px;
+	max-height: 150px;
+	border-radius: 100%;
+}
+
+.profileheader__about__name{
+	display: inline;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.profileheader__username{
+	font-size: 2em;
+	margin: 0 0 10px 0;
+}
+
+.profileheader__profilestats{
+	margin: 0;
+	padding: 0 5px;
+	display: flex;
+	justify-content: space-between;
+	border-top: 2px solid #FAFAFA;
+	padding-top: 15px;
+	font-weight: bold;
+}
+.profileheader__profilestats a{
+	text-decoration: none;
+	color: #4b4f54;
+}
+.profilestats__item{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	width: 33.33%
+}
+.profileheader__top{
+	display: flex;
+}
+.profileheader__picture{
+	width: 25%;
+	height: 25%;
+	margin: 0 20px 0 0;
+}
+.profileheader__top__title{
+	display: flex;
+	flex-direction: column;
+}
+
+.profileheader__profilestats--big,.profileheader__about--big{
+	display: none;
+}
+
 
 /* 
 //
@@ -298,7 +380,7 @@ footer{
 .nav__container{
 	width: 97%;
 	margin: auto;
-	max-width: 1150px;
+	max-width: 930px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -707,5 +789,53 @@ nav .navbar-form{
 	}
 	#inputComment{
 		background-color: #fff;
+	}
+}
+
+@media (min-width: 480px) {
+	.profileheader__profilestats--small,.profileheader__about--small{
+		display: none;
+	}
+	.profileheader__profilestats--big,.profileheader__about--big{
+		display: block;
+	}
+	.header--profile{
+		padding: 20px 0 25px 0;
+		margin-bottom: 25px;
+	}
+
+	.profileheader__picture{
+		width: 20%;
+	}
+	.profileheader__right{
+		width: 80%;
+	}
+	.profileheader__top__title{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.profileheader__username{
+		font-size: 1.7em;
+		margin: 0 20px 0 0;
+		padding: 0;
+	}
+	.profileheader__profilestats--big{
+		margin: 0;
+		padding: 0 0;
+		display: flex;
+		justify-content: space-between;
+		border-top: none;
+		font-weight: bold;
+		max-width: 340px;
+	}
+	.profilestats__item{
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		width: auto;
+	}
+	.profilestats__item span{
+		padding: 0 5px 0 0;
 	}
 }

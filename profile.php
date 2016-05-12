@@ -70,9 +70,10 @@
     <link rel="stylesheet" href="public/css/cssgram.min.css">
 </head>
 <body>
-
+<div class="nav--profile">
 <?php include 'nav.inc.php'; ?>
-<div class="container">
+</div>
+<div class="hideMe">
     <header id="profileheader" class="row">
         <div class="profilepic col-xs-3">
             <img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture">
@@ -154,14 +155,96 @@
     </header>
 </div>
 
-    <section class="ownContainer">
-        <!-- SHOW UPLOAD PICTURE BUTTON WHEN IT'S YOUR OWN PROFILE -->
-        <?php if(isset($_SESSION['loggedin']) && $userData['username'] == $_SESSION['username']): ?>
-            <section>
-                <a href="uploadpost.php">Upload a picture</a>
-            </section>
-        <?php endif; ?>
+<header class="header--profile">
+    <div class="container--custom--header">
+        <div class="profileheader">
+            <div class="profileheader__top">
+                <img src="<?php echo $userData['profilePicture']; ?>" alt="" class="profileheader__picture">
+                <div class="profileheader__right">
+                    <div class="profileheader__top__title">
+                        <h1 class="profileheader__username"><?php echo $userData['username']; ?></h1>
+                        <?php
+                        if($userData['id'] == $_SESSION['userID']){
+                            // your profile
+                            echo "<a href='edit-profile.php' class='btn btn-default profileheader__button'>Edit profile</a>";
+                        }else{
+                            if($user->isFollowing($userData['id'])){
+                                // toon following
+                                echo "<form action='' method='post'>
+                                <input type='submit' id='btnFollow' class='btn btn-success profileheader__button' name='btnUnfollow' value='Following'
+                                data-id='".$userData['id']."' data-action='stopfollowing'>
+                                <input type='hidden' name='profileID' value='".$userData['id']."'>
+                                </form>";
+                            }else{
+                                if($user->isPending($userData['id'])){
+                                    // toon pending
+                                    echo "<form action='' method='post'>
+                                <input type='submit' id='btnFollow' class='btn btn-default profileheader__button' name='btnPending' value='Pending'
+                                data-id='".$userData['id']."' data-action='stopfollowing'>
+                                <input type='hidden' name='profileID' value='".$userData['id']."'>
+                                </form>";
+                                }else{
+                                    // toon follow
+                                    echo "<form action='' method='post'>
+                                <input type='submit' id='btnFollow' class='btn btn-primary profileheader__button' name='btnFollow' value='Follow'
+                                data-id='".$userData['id']."' data-action='follow'>
+                                <input type='hidden' name='profileID' value='".$userData['id']."'>
+                                </form>";
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
 
+                    <div class="profileheader__about profileheader__about--big">
+                        <p>
+                        <h2 id="fullname" class="profileheader__about__name"><?php echo $userData['fullName']; ?></h2>
+                                <span class="profileheader__about__bio">
+                                <?php echo $userData['bio']; ?>
+                                </span>
+                        <a href="<?php echo $userData['website']; ?>" class="profileheader__about__site"><?php echo $userData['website']; ?></a>
+                        </p>
+                    </div>
+
+                    <div class="profileheader__profilestats profileheader__profilestats--big">
+                        <a href="#" class="profilestats__item">
+                            <span id="stats--posts" ><?php echo $user->countPosts($userData['id']); ?></span> posts
+                        </a>
+                        <a href="#" class="profilestats__item" data-toggle="modal" data-target="#followersModal">
+                            <span id="stats--followers"><?php echo $user->countFollowers($userData['id']); ?></span> followers
+                        </a>
+                        <a href="#" class="profilestats__item" data-toggle="modal" data-target="#followingModal">
+                            <span id="stats--following"><?php echo $user->countFollowing($userData['id']); ?></span> following
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profileheader__about profileheader__about--small">
+                <p>
+                <h2 id="fullname" class="profileheader__about__name"><?php echo $userData['fullName']; ?></h2>
+                        <span class="profileheader__about__bio">
+                        <?php echo $userData['bio']; ?>
+                        </span>
+                <a href="#" class="profileheader__about__site"><?php echo $userData['website']; ?></a>
+                </p>
+            </div>
+            <div class="profileheader__profilestats profileheader__profilestats--small">
+                <a href="#" class="profilestats__item">
+                    <span id="stats--posts" ><?php echo $user->countPosts($userData['id']); ?></span> posts
+                </a>
+                <a href="#" class="profilestats__item" data-toggle="modal" data-target="#followersModal">
+                    <span id="stats--followers"><?php echo $user->countFollowers($userData['id']); ?></span> followers
+                </a>
+                <a href="#" class="profilestats__item" data-toggle="modal" data-target="#followingModal">
+                    <span id="stats--following"><?php echo $user->countFollowing($userData['id']); ?></span> following
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <section class="ownContainer">
 
         <?php if(($user->isPrivate($userData['id']) == false)
             || ($user->isFollowing($userData['id']) == true)
