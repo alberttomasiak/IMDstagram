@@ -34,31 +34,29 @@
 
 </head>
 <body>
-    <div class="container">
+<div class="background--full">
+    <div class="form--login">
+        <div class="form--login__logo"></div>
+        <h4 class="form--login__tagline">Log in to your IMDstagram account.</h4>
 
-
-        <div class="row">
-            <div class="col-sm-5">
-
-                <form action="" class="login__form" method="post">
-                    <?php if(isset($feedback)){ echo "<div class='alert alert-danger' role='alert'>".$feedback."</div>";}?>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="username" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" name="submitLogin" value="Log in">
-                    </div>
-                </form>
-
-                <p>Not a member? <a href="signup.php">Sign up now</a></p>
-
+        <form action="" class="login__form" method="post">
+            <?php if(isset($feedback)){ echo "<div class='alert alert-danger' role='alert'>".$feedback."</div>";}?>
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
-        </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary form--login__btn" name="submitLogin" value="Log in">
+            </div>
+        </form>
 
-        <?php include 'footer.inc.php'; ?>
+        <p class="text-center">Not a member? <a href="signup.php">Sign up now</a></p>
+
     </div>
+
+    <?php include 'footer.inc.php'; ?>
+</div>
 </body>
 </html>

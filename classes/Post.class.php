@@ -342,8 +342,20 @@
 				return false;
 			}
 		}
-		
 
+		// THIS FUNCTION CHECKS IF THE COMBINATION OF POSTID AND USERID EXISTS (used to prevent messing with url parameters on single post page)
+		public function checkComboExist($p_iPostID, $p_iUserID){
+			$conn = Db::getInstance();
+			$statement = $conn->prepare("SELECT * FROM post WHERE id=:postID AND userID=:userID");
+			$statement->bindparam(":postID", $p_iPostID);
+			$statement->bindparam(":userID", $p_iUserID);
+			$statement->execute();
+			if($statement->rowCount() > 0){
+				return true;
+			}else{
+				return false;
+			}
+		}
 
 		// niet in gebruik de functie hieronder is voldoende
 		// GET A SINGLE TIMESTAMP

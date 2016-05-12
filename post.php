@@ -22,6 +22,15 @@
 		header('Location: profile.php?profile='.$_SESSION['username'].'');
 	}*/
 
+    // REDIRECT ON UNEXISTING POST used to prevent messing with url parameters on single post page
+    if($post->checkComboExist($getPost, $getUserID) == false){
+        header('location: index.php');
+    }
+    // RESTRICT ACCESS TO PRIVATE POSTS
+    if(($user->isPrivate($getUserID) == true) && ($user->isFollowing($getUserID) == false) && ($_SESSION['userID'] != $getUserID)){
+        header('location: index.php');
+    }
+
     $comment = new Comment();
     $allComments = $comment->getAllCommentsForPost($getPost);
 

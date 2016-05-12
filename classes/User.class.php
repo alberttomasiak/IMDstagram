@@ -557,7 +557,19 @@
             }
         }
 
-        public function echoMe(){ //more like kill me AMIRITE le funny maymay 
+        public function checkIfProfileExists($p_vUsername){
+            $conn = Db::getInstance();
+            $stmt = $conn->prepare("SELECT username FROM user WHERE username=:username");
+            $stmt->bindparam(":username", $p_vUsername);
+            $stmt->execute();
+            if($stmt->rowCount() > 0){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function echoMe(){
             echo "Here's your echo";
         }
 		
