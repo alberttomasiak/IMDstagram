@@ -47,7 +47,7 @@
             try {
                 $user->setProfilePicture();
             }catch(Exception $e){
-                $feedback = $e->getMessage();
+                //$feedback = $e->getMessage();
             }
         }
 		
@@ -140,11 +140,11 @@
                     <input type="file" name="profileImage" class="fileToUpload" class="form-control" id="avatarUpload">
                 </div>
             </div>
-            <input type="submit" class="profPicSubmit" name="btnChangeProfilePicture" value="Change profile picture" class="btn btn-primary">
+            <input type="submit" name="btnChangeProfilePicture" value="Change profile picture" class="btn btn-primary profPicSubmit">
         </form>
     </div>
     </div>
-    <div class="row">
+    <div class="row accountSettings">
         <div class="col-sm-12">
             <h1>Account settings</h1>
         </div>
@@ -225,7 +225,7 @@
 							}
 							
 							if(data.dimensions == "false"){
-								$('.profilePicFeedback').html("Your image doesn't meat the size requirements. Choose an image between 100x100 and 500x500 pixels.");
+								$('.profilePicFeedback').html("Your image doesn't meet the size requirements. Choose an image between 100x100 and 500x500 pixels.");
 							}
 							
 							if(data.check == "success"){

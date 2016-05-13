@@ -25,6 +25,10 @@ if($action == 'follow'){
     $user->stopFollowing($profileID);
     $response['status'] = 'success';
     $response['action'] = 'notfollowing';
+}else if($action == 'stoppending'){
+    $user->stopFollowing($profileID);
+    $response['status'] = 'success';
+    $response['action'] = 'stoppedpending';
 }
 
 
