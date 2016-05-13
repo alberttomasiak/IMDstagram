@@ -536,6 +536,20 @@ nav .navbar-form{
 	margin: 10px 15px;
 }
 
+.post__comments__more:link{
+	color: #999;
+	text-decoration: none;
+}
+.post__comments__more:visited{
+	color: #999;
+}
+.post__comments__more:hover{
+	color: #666;
+}
+.post__comments__more:active{
+	color: #666;
+}
+
 .post__comments ul{
 	list-style: none;
 }
