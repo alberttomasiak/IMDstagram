@@ -6,8 +6,9 @@
 	$username = $_SESSION['username'];
 	$user = new User();
 	$userData = $user->getUserDetailsByUsername($username);
-	$_SESSION['searchQuery'] = $_POST['searchQuery'];
-
+	$_SESSION['searchQuery'] = preg_replace('/#([\w-]+)/i', '$1', $_POST['searchQuery']);
+	
+	
 	$conn = Db::getInstance();
 	$sqlUsers = "SELECT * FROM user where username LIKE '%".$_POST['searchQuery']."%'";
 	$arrayUsers = $conn->query($sqlUsers);
@@ -37,8 +38,8 @@
 		
 	?>
 
-	<div class="searchResult searchTag"><a href="tag.php?tag=<?php echo $_POST['searchQuery'] ?>"><?php echo "<p class='hashtagSearch'>#</p>".$_POST['searchQuery']; ?></a></div>
-	<div class="searchResult moreResultsLink"><a href="search.php?tag=<?php echo $_POST['searchQuery'] ?>">Show more results</a></div>
+	<div class="searchResult searchTag"><a href="tag.php?tag=<?php echo $_SESSION['searchQuery'] ?>"><?php echo "<p class='hashtagSearch'>#</p>".$_POST['searchQuery']; ?></a></div>
+	<div class="searchResult moreResultsLink"><a href="search.php?tag=<?php echo $_SESSION['searchQuery'] ?>">Show more results</a></div>
 	<?php
 	}
 

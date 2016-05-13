@@ -5,7 +5,6 @@
 
     if(isset($_SESSION['loggedin'])){
         $hashtag = $_GET['tag'];
-
         $user = new User();
 
         $post = new Post();
