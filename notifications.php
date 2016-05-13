@@ -51,16 +51,29 @@
             <div class="col-xs-12">
                 <h1>Notifications</h1>
                 <h4>These users want to follow you</h4>
-                <ul>
+                <ul class="friendrequests">
                     <?php foreach($pendingRequests as $key => $request): ?>
                         <li>
-                            <form action="" method="post">
-                            <img src="<?php echo $request['profilePicture']; ?>" alt="<?php echo $request['username']; ?>'s profile picture">
+                            <form action="" method="post" class="friendrequests__item">
+                                <div class="friendrequests__item__user">
+                                <div class="userinfo">
+                                    <a href="profile.php?profile=<?php echo $request['username']; ?>">
+                                        <img src="<?php echo $request['profilePicture']; ?>" alt="<?php echo $request['username']; ?>'s profile picture" class="userinfo__picture">
+                                    </a>
+                                    <div class="userinfo__text">
+                                        <a href="profile.php?profile=<?php echo $request['username']; ?>" class="userinfo__username"><?php echo $request['username']; ?></a>
+                                        <span class="userinfo__name"><?php echo $request['fullName']; ?></span>
+                                    </div>
+                                </div>
+                                </div>
+                            <!--<img src="<?php echo $request['profilePicture']; ?>" alt="<?php echo $request['username']; ?>'s profile picture">
                             <a href="profile.php?profile=<?php echo $request['username']; ?>"><?php echo $request['username']; ?></a>
-                            <span><?php echo $request['fullName']; ?></span>
-                            <input type="hidden" name="requestID" value="<?php echo $request['followerID'];?>">
-                            <input type="submit" name="btnAccept" value="Accept">
-                            <input type="submit" name="btnDecline" value="Decline">
+                            <span><?php echo $request['fullName']; ?></span>-->
+                                <div class="friendrequests__item__actions">
+                                <input type="hidden" name="requestID" value="<?php echo $request['followerID'];?>">
+                                <input type="submit" name="btnAccept" value="Accept" class="btn btn-success">
+                                <input type="submit" name="btnDecline" value="Decline" class="btn btn-danger">
+                                </div>
                             </form>
                         </li>
                     <?php endforeach; ?>

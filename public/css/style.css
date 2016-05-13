@@ -710,6 +710,29 @@ nav .navbar-form{
 	margin-left: 30px;
 }
 
+/*
+//
+//      NOTIFICATIONS PAGE
+//
+*/
+
+.friendrequests{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.friendrequests li{
+	list-style: none;
+}
+.friendrequests__item{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin: 20px 0;
+	width: 100%;
+	max-width: 360px;
+}
 
 /*
 //
