@@ -105,8 +105,14 @@
 			<p><a href="profile.php?profile=<?php echo $timelinePost['username'] ?>"><?php echo $timelinePost['username']; ?></a> <?php echo $post->tagPostDescription($timelinePost['description']) ?></p>
 		</div>
 		<div class="post__comments">
-			<?php $allComments = $comment->getAllCommentsForPost($timelinePost['id'])?>
+			<?php $allComments = $comment->getLatestCommentsForPost($timelinePost['id'], 4)?>
 			<?php if(count($allComments) > 0):?>
+				<?php
+					$commentCount = $comment->countCommentsForPost($timelinePost['id']);
+					if($commentCount > 4){
+						echo "<a href=post.php?p=".$timelinePost['id']."&u=".$timelinePost['userID']." class='post__comments__more'>View all ". $commentCount ." comments</a>";
+					}
+				?>
 				<ul class="comments__list">
 					<?php foreach( $allComments as $key => $c ): ?>
 						<li class="comments__list__item">

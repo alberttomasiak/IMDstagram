@@ -85,17 +85,35 @@ class Comment
 		}
 	}
 
-	public function getLatestCommentsForPost($p_iPostID){
+	public function getLatestCommentsForPost($p_iPostID, $p_iAmount){
 		$conn = Db::getInstance();
-		$stmt = $conn->prepare("SELECT user.username, comment.comment
-                                    FROM comment
-                                    INNER JOIN user
-                                    ON comment.userID=user.id
-                                    WHERE postID=:postID
-                                    ORDER BY timestamp ASC LIMIT 10");
+		$stmt = $conn->prepare("SELECT username, comment FROM
+									(
+										SELECT user.username, comment.comment, comment.timestamp
+                                    	FROM comment
+                                    	INNER JOIN user
+                                    	ON comment.userID=user.id
+                                    	WHERE postID=:postID
+                                    	ORDER BY timestamp DESC LIMIT :amount
+                                    ) as temp
+								ORDER BY timestamp ASC");
 		$stmt->bindparam(":postID", $p_iPostID);
+		$stmt->bindparam(":amount", $p_iAmount, PDO::PARAM_INT);
 		if($stmt->execute()){
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} else{
+			return false;
+		}
+	}
+
+	// RETURNS NUMBER OF COMMENTS A POST HAS
+	public function countCommentsForPost($p_iPostID){
+		$conn = Db::getInstance();
+		$stmt = $conn->prepare("SELECT id FROM comment WHERE postID=:postID");
+		$stmt->bindparam(":postID", $p_iPostID);
+		if($stmt->execute()){
+			$result = $stmt->rowCount();
+			return $result;
 		} else{
 			return false;
 		}
