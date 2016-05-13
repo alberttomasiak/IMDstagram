@@ -169,5 +169,6 @@
 </div>
 
 <?php include 'footer.inc.php'; ?>
+</div>
 </body>
 </html>

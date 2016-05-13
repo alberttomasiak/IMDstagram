@@ -55,8 +55,9 @@
         <p class="text-center">Not a member? <a href="signup.php">Sign up now</a></p>
 
     </div>
-
+	<div class="footerWrap">
     <?php include 'footer.inc.php'; ?>
+    </div>
 </div>
 </body>
 </html>
