@@ -15,16 +15,10 @@
                 $user->Bio = $_POST['biography'];
                 $user->Website = $_POST['website'];
                 $user->Private = $_POST['radioPrivate'];
-                $user->updateProfile($userData['id']);
-                $feedback = "Account updated successfully.";
-                header("location: logout.php");
-                /*
-                if ($user->updateProfile($userData['id'])) {
-                    $feedback = "Account updated successfully.";
-                    header("location: logout.php");
-                } else {
-                    echo "ERROR";
-                }*/
+                $user->updateProfile();
+                $feedbackEditSuccess = "Account updated successfully.";
+                $userData = $user->getUserDetailsByUsername($_SESSION['username']);
+
             }catch(Exception $e){
                 $feedback = $e->getMessage();
             }
@@ -85,6 +79,9 @@
         <?php if(isset($feedback)): ?>
             <div class="alert alert-danger" role="alert"><?php echo $feedback; ?></div>
         <?php endif; ?>
+        <?php if(isset($feedbackEditSuccess)): ?>
+            <div class="alert alert-success" role="alert"><?php echo $feedbackEditSuccess; ?></div>
+        <?php endif; ?>
         <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" name="fullName" value="<?php echo $userData['fullName']; ?>" class="form-control">
@@ -97,7 +94,7 @@
 
         <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="<?php echo $userData['username']; ?>" class="form-control">
+        <input type="text" id="username" name="username" value="<?php echo $_SESSION['username']; ?>" class="form-control">
         </div>
         <div class="usernameFeedback" style="display: none;"></div>
 

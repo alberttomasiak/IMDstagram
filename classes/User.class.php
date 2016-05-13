@@ -77,7 +77,7 @@
             if(!empty($email) && !empty($username) && !empty($password)){
                 if($this->UsernameAvailable() == true){
                     if($this->EmailAvailable($email) == true){
-                        if(strlen($username) > 3 && strlen($username) < 21){
+                        if(strlen($username) > 3 && strlen($username) < 16){
                             if(preg_match('/^[a-z0-9-_]+$/', $username)){
                                 if(strlen($password) > 5 && strlen($password) < 21){
                                     if(strlen($fullname) < 31){
@@ -96,7 +96,7 @@
                                         throw new Exception("Fullname can't be longer than 30 characters.");
                                     }
                                 }else{
-                                    throw new Exception("Password has to be 6-20 characters long.");
+                                    throw new Exception("Password has to be 6-15 characters long.");
                                 }
                             }else{
                                 throw new Exception("Username can only contain alphanumerical characters, - and _. Capital letters are not allowed.");
@@ -170,26 +170,19 @@
 		
 
         // dit is de nieuwe update profile die mogelijk niet werkt
-        // to do: check of email al in db zit && check username op lowercase/uppercase
-        // parameter $p_iUserID mag  weg want wordt niet gebruikt
-        public function updateProfile($p_iUserID)
-        {
-            if (strlen($this->m_sUsername) > 3 && !empty($this->m_sEmail)) {
-                // username lang genoeg en mail niet leeg
-                // check of username van jezelf is
-                $conn = Db::getInstance();
-                $stmt = $conn->prepare("SELECT id, username FROM user WHERE username=:username");
-                $stmt->bindparam(":username", $this->m_sUsername);
-                $stmt->execute();
-                $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($stmt->rowCount() > 0 && $userRow['id'] != $_SESSION['userID']) {
-                    // als de naam bezet is en het is niet je eigen naam
-                    // verandering niet doorvoeren
-                    throw new Exception("Username already taken");
-                } else {
-                    // naam niet in gebruik - verandering doorvoeren
-                    $conn = Db::getInstance();
-                    $statement = $conn->prepare("UPDATE user
+        public function updateProfile(){
+            $email = $this->m_sEmail;
+            $username = $this->m_sUsername;
+            $fullname = htmlspecialchars($this->m_sFullName);
+            $bio = htmlspecialchars($this->m_sBio);
+            $website = htmlspecialchars($this->m_sWebsite);
+            if(!empty($email) && !empty($username)) {
+                if (strlen($username) > 3 && strlen($username) < 16) {
+                    if($this->UsernameAvailable() == true || $username == $_SESSION['username']){
+                        if(preg_match('/^[a-z0-9-_]+$/', $username)){
+                            if(strlen($fullname) < 31){
+                                $conn = Db::getInstance();
+                                $statement = $conn->prepare("UPDATE user
                                               SET email = :email,
                                                   fullName = :fullName,
                                                   username = :username,
@@ -198,25 +191,37 @@
                                                   private = :private
                                               WHERE id = :id");
 
-                    $statement->bindparam(":email", $this->m_sEmail);
-                    $statement->bindparam(":fullName", $this->m_sFullName);
-                    $statement->bindparam(":username", $this->m_sUsername);
-                    $statement->bindparam(":bio", $this->m_sBio);
-                    $statement->bindparam(":website", $this->m_sWebsite);
-                    $statement->bindparam(":id", $p_iUserID);
-                    $statement->bindparam(":private", $this->m_iPrivate);
-                    if ($statement->execute()) {
-                        return true;
-                    } else {
-                        return false;
-                        throw new Exception("Something went wrong");
+                                $statement->bindparam(":email", $this->m_sEmail);
+                                $statement->bindparam(":fullName", $fullname);
+                                $statement->bindparam(":username", $username);
+                                $statement->bindparam(":bio", $bio);
+                                $statement->bindparam(":website", $website);
+                                $statement->bindparam(":id", $_SESSION['userID']);
+                                $statement->bindparam(":private", $this->m_iPrivate);
+                                if ($statement->execute()) {
+                                    $_SESSION['username'] = $username;
+                                    return true;
+                                } else {
+                                    throw new Exception("Something went wrong");
+                                }
+                            }else{
+                                throw new Exception("Fullname can't be longer than 30 characters");
+                            }
+                        }else{
+                            throw new Exception("Username can only contain alphanumerical characters, - and _. Capital letters are not allowed.");
+                        }
+
+                    }else{
+                        throw new Exception("Username already taken");
                     }
+                }else{
+                    throw new Exception("Username has to be 4-15 characters long");
                 }
             } else {
-                // username of email zijn leeg of niet lang genoeg
-                throw new Exception("Username has to be 6 characters or longer and email cannot bo empty");
+                throw new Exception("Username and Email are required fields");
             }
         }
+
 
         // CHECK IF A SPECIFIC USERNAME IS STILL AVAILABLE
         public function UsernameAvailable()
