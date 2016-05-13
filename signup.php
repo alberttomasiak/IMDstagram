@@ -97,8 +97,9 @@ if( !empty( $_POST ) ){
         <p class="text-center">Already a member? <a href="login.php">Log in here</a></p>
 
     </div>
-
+	<div class="footerWrap">
     <?php include 'footer.inc.php'; ?>
+	</div>
 </div>
 </body>
 </html>
