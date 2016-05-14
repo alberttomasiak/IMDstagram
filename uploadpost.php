@@ -15,6 +15,11 @@ if(!empty($_POST)){
 	}
 }
 
+if(isset($_SESSION['loggedin'])){
+    }else{
+      header('location: login.php');
+    }
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -252,5 +257,8 @@ if(!empty($_POST)){
 		});
 	});
 </script>
+<div class="footerWrap">
+<?php include 'footer.inc.php'; ?>
+</div>
 </body>
 </html>

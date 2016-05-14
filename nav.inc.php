@@ -6,8 +6,7 @@ $notificationNumber = $user->countPendingRequests();
 ?><nav class="nav">
     <div class="nav__container">
         <a href="index.php" class="nav__logo">logo</a>
-
-        <form class="nav__form" action="" method="post" role="search">
+        <form class="nav__form" id="searchForm" action="" method="post" role="search">
             <input type="text" id="searchBox" autocomplete="off" name="search" class="searchid form-control" placeholder="Search">
             <ul id="searchResults"></ul>
         </form>

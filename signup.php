@@ -66,7 +66,7 @@ if( !empty( $_POST ) ){
 </head>
 <body>
 <div class="background--full">
-
+	<div class="page--wrap__welcome">
     <div class="form--login">
         <div class="form--login__logo"></div>
         <h4 class="form--login__tagline">Sign up to see photos and videos from your friends.</h4>
@@ -97,9 +97,10 @@ if( !empty( $_POST ) ){
         <p class="text-center">Already a member? <a href="login.php">Log in here</a></p>
 
     </div>
-	<div class="footerWrap">
+    <div class="push"></div>
+    </div>
     <?php include 'footer.inc.php'; ?>
-	</div>
+	
 </div>
 </body>
 </html>
