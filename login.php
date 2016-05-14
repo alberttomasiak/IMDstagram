@@ -35,6 +35,7 @@
 </head>
 <body>
 <div class="background--full">
+   <div class="page--wrap__welcome">
     <div class="form--login">
         <div class="form--login__logo"></div>
         <h4 class="form--login__tagline">Log in to your IMDstagram account.</h4>
@@ -53,11 +54,12 @@
         </form>
 
         <p class="text-center">Not a member? <a href="signup.php">Sign up now</a></p>
-
+		
     </div>
-	<div class="footerWrap">
-    <?php include 'footer.inc.php'; ?>
+    <div class="push"></div>
     </div>
+	<?php include 'footer.inc.php'; ?>
 </div>
+    
 </body>
 </html>

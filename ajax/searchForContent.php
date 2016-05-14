@@ -38,7 +38,7 @@
 		
 	?>
 
-	<div class="searchResult searchTag"><a href="tag.php?tag=<?php echo $_SESSION['searchQuery'] ?>"><?php echo "<p class='hashtagSearch'>#</p>".$_POST['searchQuery']; ?></a></div>
+	<div class="searchResult searchTag"><a href="tag.php?tag=<?php echo $_SESSION['searchQuery'] ?>"><?php echo "<p class='hashtagSearch'>#</p>".$_SESSION['searchQuery']; ?></a></div>
 	<div class="searchResult moreResultsLink"><a href="search.php?tag=<?php echo $_SESSION['searchQuery'] ?>">Show more results</a></div>
 	<?php
 	}

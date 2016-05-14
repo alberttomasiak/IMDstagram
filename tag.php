@@ -43,6 +43,7 @@
             </div>
         </header>
     </div>
+    <div class="page--wrap">
     <section class="ownContainer">
         <h4>Most recent</h4>
 
@@ -60,11 +61,19 @@
             <!--<article>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
             </article>-->
+            
         <?php endif; ?>
-
+		
     </section>
+    
+    <div class="push"></div>
+    </div>
+    <?php if($taggedPosts == false): ?>
+    <div class="footerWrap">
     <?php include 'footer.inc.php'; ?>
-
-
+    </div>
+	<?php else: ?>
+	<?php include 'footer.inc.php'; ?>
+	<?php endif; ?>
 </body>
 </html>

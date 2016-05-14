@@ -4,6 +4,11 @@
     include_once 'classes/Comment.class.php';
     session_start();
 
+	if(isset($_SESSION['loggedin'])){
+    }else{
+      header('location: login.php');
+    }
+
     $getPost = $_GET['p'];
     $getUserID = $_GET['u'];
 
