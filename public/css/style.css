@@ -13,6 +13,11 @@ body{
 	max-width: 955px;
 }
 
+.notifications{
+	margin-bottom: 0;
+	min-height: 75vh;
+}
+
 a:hover{
 	text-decoration: none;
 }
@@ -244,6 +249,10 @@ footer, .push{
 	margin-right: auto;
 }
 
+#myList a{
+	display: none;
+}
+
 #searchResults {
     display: none;
     top:40px;
@@ -270,6 +279,7 @@ footer, .push{
 	margin-left: 10px;
 	margin-right: 15px;
 	margin-top: 5px;
+	margin-bottom: 3px;
 }
 #searchResults:after,
 #searchResults:before {
@@ -451,6 +461,10 @@ footer, .push{
 
 .searchTag a{
 	margin-left: 55px;
+}
+
+.searchTag a p{
+	margin-top: -5px;
 }
 
 .searchTag{
@@ -842,6 +856,11 @@ nav .navbar-form{
 		position: relative;
 		left: 5%;
 	}
+	
+	.notifications{
+	margin-bottom: 0;
+	min-height: 80vh;
+	}
 }
 
 @media (min-width: 600px) {
@@ -850,6 +869,11 @@ nav .navbar-form{
 	}
 	#inputComment{
 		background-color: #fff;
+	}
+	
+	.notifications{
+	margin-bottom: 0;
+	min-height: 88vh;
 	}
 }
 

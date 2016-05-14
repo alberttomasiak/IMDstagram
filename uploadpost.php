@@ -257,8 +257,6 @@ if(isset($_SESSION['loggedin'])){
 		});
 	});
 </script>
-<div class="footerWrap">
-<?php include 'footer.inc.php'; ?>
-</div>
+
 </body>
 </html>

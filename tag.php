@@ -5,6 +5,7 @@
 
     if(isset($_SESSION['loggedin'])){
         $hashtag = $_GET['tag'];
+
         $user = new User();
 
         $post = new Post();
@@ -52,8 +53,7 @@
         <?php else: ?>
             <div class="gallery">
             <?php foreach( $taggedPosts as $key => $taggedPost ): ?>
-
-<a href="post.php?p=<?php echo $taggedPost['id'] .'&u='.$taggedPost['userID'] ?>" style="background-image: url(<?php echo "'".$taggedPost['path']."'" ?>)" class="gallery__item <?php echo $taggedPost['filter']; ?>"></a>
+<a href="post.php?p=<?php echo $taggedPost['postID'] .'&u='. $taggedPost['userID'] ?>" style="background-image: url(<?php echo "'".$taggedPost['path']."'" ?>)" class="gallery__item <?php echo $taggedPost['filter']; ?>"></a>
 
             <?php endforeach; ?>
             </div>

@@ -20,7 +20,7 @@
     $userData = $user->getUserDetailsByUserID($getUserID);
 
     // ALBERT JE MOET EEN SUBMIT KNOP KIEZEN :o
-	/*if(!empty($_POST)){
+	/*if(!empty($_POST['btnDeletePost'])){
 		$deletePostID = $_POST['deletePostID'];
 		$post = new Post();
 		$post->deletePost($deletePostID);
@@ -132,7 +132,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control inputComment" name="inputComment" id="inputComment" placeholder="Add a comment...">
                         <span class="input-group-btn">
-                        <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default btnPlaceComment" data-postid="<?php echo $postData['id'] ?>>
+                        <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default btnPlaceComment" data-postid="<?php echo $postData['id']; ?>"
                         </span>
                 </div>
                 <input type="hidden" id="inputPostID" value="<?php echo $postData['id'];?>">
@@ -151,7 +151,7 @@
         <?php if($_SESSION['username'] == $userData['username']): ?>
             <form action="" method="POST">
                 <input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
-                <button type="submit" class="post__delete" name="deletePost"><span class="glyphicon glyphicon-trash"></span></button>
+                <button type="submit" class="post__delete" name="btnDeletePost" id="btnDeletePost"><span class="glyphicon glyphicon-trash"></span></button>
             </form>
         <?php endif; ?>
     </div>

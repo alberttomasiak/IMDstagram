@@ -36,7 +36,21 @@
 			$conn = Db::getInstance();
 			$hashtag = "%#" . $p_vTag . " %";
 			$hashtagEnd = "%#" . $p_vTag;
-			$statement = $conn->prepare("SELECT * FROM post WHERE description LIKE :tag OR description LIKE :tagEnd ORDER BY timestamp DESC");
+			$activeUser = $_SESSION['userID'];
+			
+			$statement = $conn->prepare("SELECT p.id as postID, p.userID, p.path, p.filter, u.id FROM post p 
+  				INNER JOIN user u on p.userID = u.id 
+  				INNER JOIN follow f on u.id = f.followingID
+				WHERE p.description LIKE :tag
+  				 AND u.private = 0
+				 AND (f.followerid = p.userID OR f.followingid = p.userID)
+  				 OR (u.private = 1 AND f.followingID = :user AND f.accepted = 1 AND p.description LIKE :tag)
+  				 OR (u.private = 1 AND f.followerID = :user AND f.accepted = 1 AND p.description LIKE :tag)
+				 OR (u.private = 1 AND f.followingID = :user AND f.accepted = 1 AND p.description LIKE :tagEnd)
+  				 OR (u.private = 1 AND f.followerID = :user AND f.accepted = 1 AND p.description LIKE :tagEnd)
+				Group by p.description
+				Order by p.timestamp desc");
+			$statement->bindparam(":user", $activeUser);
 			$statement->bindparam(":tag", $hashtag);
 			$statement->bindparam(":tagEnd", $hashtagEnd);
 			$statement->execute();
@@ -60,7 +74,7 @@
  											ON post.userID=user.id
  											INNER JOIN follow
  											ON user.id=follow.followingID
- 											WHERE follow.followerID = '$activeUser'
+ 											WHERE follow.followerID = '$activeUser' AND follow.accepted = 1
  											ORDER BY timestamp DESC");
 			//$statement->bindparam(":sessionID", $_SESSION['userID']);
             //SELECT * FROM post WHERE userID IN ( SELECT followingID FROM follow WHERE followerID=:followerID)
@@ -165,16 +179,18 @@
 		}
 		
 		public function checkFileFormat(){
-			$file_name = $_SESSION['userID']."-".time().".jpg";
-			$file_path = "img/".$file_name;
+			$tmp_file = $_FILES['postImage']['name'];
+			$file_path = "img/".$tmp_file;
 			$imageFileType = pathinfo($file_path, PATHINFO_EXTENSION);
 			// Kijken naar de extensie van het bestand. Enkel JPG, PNG, JPEG & GIF zijn toegelaten.
-			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+			if($imageFileType !== "jpg" && $imageFileType !== "png" && $imageFileType !== "jpeg") {
 				$uploadReady = 0;
 				return $uploadReady;
+				return false;
 			}else{
 				$uploadReady = 1;
 				return $uploadReady;
+				return false;
 			}
 		}
 		
@@ -217,12 +233,15 @@
 			// declaratie van variabelen.
 			$uploadReady = 0;
 			$file_name = $_SESSION['userID']."-".time().".jpg";
+			
 			//$p_file_tmp_name = $_FILES['postImage']['tmp_name'];
 			$file_path = "img/posts/".$file_name;
 			$imageFileType = pathinfo($file_path, PATHINFO_EXTENSION);
 			$check = getimagesize($p_file_tmp_name);
 			$path = realpath(dirname(getcwd()));
 			//echo $path;
+			
+			
 			
 			$post = new Post();
 				

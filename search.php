@@ -37,7 +37,7 @@ $arrayHashtags = $conn->query($sqlHashtags);
 </head>
 <body>
 	<?php include_once("nav.inc.php"); ?>
-	
+
 	<section class="moreResults">
 	<h3>Search results for: <?php echo $value; ?></h3>
 	<div class="scheiding"></div>
@@ -55,18 +55,23 @@ $arrayHashtags = $conn->query($sqlHashtags);
 		
 		}
 		
+		?>
+		
+		<?php
 		foreach($arrayUsers as $key){
 			
 		?>	
 		
-		<div class="searchResult"><a href="profile.php?profile=<?php echo $key['username'] ?>"><img src="<?php echo $userData['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture"><?php echo $key['username'] ?></a></div>
+		<div class="searchResult"><a href="profile.php?profile=<?php echo $key['username'] ?>"><img src="<?php echo $key['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture"><?php echo $key['username'] ?></a></div>
+		
 		<?php
 			
 		}
 		
-		
 		?>
+
 	</div>
 	</section>
+
 </body>
 </html>
