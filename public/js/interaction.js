@@ -176,26 +176,29 @@ $(document).ready(function() {
 	
 	// POST FLAG
 	$('.post__flag').on("click", function(e){
-					var flagID = $(this).parent().find('input[type="hidden"]').val();
-						$.ajax({
-							url: "ajax/flagpost.php",
-							type: "POST",
-							data: {flagID: flagID},
-							dataType: 'json',
-							cache: false,
-							success: function(status){
-								if(status.check == "true"){
-									$('.f'+flagID).addClass('flagged');
-								}else if(status.check != "true"){
-									$('.f'+flagID).removeClass('flagged');
-								}
-							},
-							error: function (request, status, error) {
-								console.log(error);
+		var flagID = $(this).parent().find('input[type="hidden"]').val();
+		
+				$.ajax({
+					url: "ajax/flagpost.php",
+					type: "POST",
+					data: {flagID: flagID},
+					dataType: 'json',
+					cache: false,
+					success: function(status){
+						if(status.check == "true"){
+							$('.f'+flagID).addClass('flagged');
+							$("btn"+flagID).addClass('flagged');	
+						}else if(status.check != "true"){
+							$('.f'+flagID).removeClass('flagged');
+							$("btn"+flagID).remove('flagged');
 						}
-					});
-				e.preventDefault();
+					},
+					error: function (request, status, error) {
+						console.log(error);
+				}
 			});
+		e.preventDefault();
+	});
 	
 	
 });
