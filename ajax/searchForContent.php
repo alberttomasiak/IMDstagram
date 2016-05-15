@@ -27,7 +27,6 @@
 	$i = 0;
 	foreach($arrayUsers as $key){
 	?>
-
 	<div class="searchResult"><a href="profile.php?profile=<?php echo $key['username'] ?>"><img src="<?php echo $key['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture"><?php echo $key['username'] ?></a></div>
 	<?php
 		if(++$i == 5) break;
@@ -42,5 +41,4 @@
 	<div class="searchResult moreResultsLink"><a href="search.php?tag=<?php echo $_SESSION['searchQuery'] ?>">Show more results</a></div>
 	<?php
 	}
-
 ?>
