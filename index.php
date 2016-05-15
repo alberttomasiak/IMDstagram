@@ -152,23 +152,58 @@
 				</div>
 				<input type="hidden" id="inputPostID" name="inputPostID" value="<?php echo $timelinePost['id'];?>">
 			</form>
+			
 		</div>
+		<div class="scheidingStreep"></div>
+        <div class="flagDeleteButton">
+        	<a class="btn-open" href="#" onclick="return false;">...</a>
+        </div>
+       
+	</div>
+	 <div class="flagDeleteWrap <?php echo $timelinePost['id']."fdw"; ?>">
+        <section class="flagDeleteMenu">
 		<div class="commentsFlag">
 			<form action="" method="POST">
 				<input type="hidden" name="postID" class="flagID" value="<?php echo $timelinePost['id']; ?>">
 				<?php if($post->checkIfFlagged($timelinePost['id']) == true): ?>
-					<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> flagged glyphicon-flag"></span></button>
+					<button type="submit" class="post__flag <?php echo "btn" . $timelinePost['id']; ?> flagged" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?>"></span>Report inappropriate</button>
 				<?php else: ?>
-					<button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> glyphicon-flag"></span></button>
+					<button type="submit" class="post__flag <?php echo "f" . $timelinePost['id']; ?>" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> "></span>Report inapropriate</button>
 				<?php endif; ?>
 			</form>
 		</div>
-	</div>
+		<div class="cancelFlagDelete">
+        	<a href="#">Cancel</a>
+        </div>
+		</section>
+		</div>
 <?php endforeach; ?>
 <?php endif; ?>
 </div>
 
 <?php include 'footer.inc.php'; ?>
 </div>
+
+<script type="text/javascript">
+		$('.post').on("click", function(e){
+			var flagID = $(this).find('input[type="hidden"]').val();
+			console.log(flagID);
+		
+			if($(e.target).is('.flagDeleteButton a')){
+				$('body').css('overflow', 'hidden');
+				$("."+flagID+"fdw").show();
+			}
+			//e.preventDefault();
+		});
+		
+	$('.flagDeleteWrap').on('click', function(e){
+		$('.flagDeleteWrap').hide();
+		$('body').css('overflow', 'scroll');
+	});
+	
+	$('.cancelFlagDelete a').click(function(e){
+		e.preventDefault();
+	});
+</script>
 </body>
 </html>

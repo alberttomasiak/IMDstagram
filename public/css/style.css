@@ -496,6 +496,7 @@ nav .navbar-form{
 .container--custom{
 	margin-left: auto;
 	margin-right: auto;
+	height: 100%;
 }
 
 
@@ -649,13 +650,8 @@ nav .navbar-form{
 */
 
 .post__delete{
-	padding: 0;
-	margin-right: 5px;
 	background-color: transparent;
 	border: 1px solid transparent;
-	position: absolute;
-	top: 70px;
-	left: 40px;
 }
 
 .post__flag{
@@ -668,35 +664,111 @@ nav .navbar-form{
 	outline: none;
 }
 
-.flagged{
-	background-color: #ddd;
-	position: relative;
-}
-
-
 .glyphicon-flag{
 	font-size: 30px;
 	padding: 5px;
 }
 
-.commentsFlag{
-	display: flex;
-	justify-content: flex-end;
-	margin-right: 10px;
-	margin-bottom: 10px;
-
+.flagDeleteWrap{
+	display: none;
+	position: fixed;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(102, 102, 102, .4);
+	overflow: auto;
+	z-index: 998;
 }
 
+.flagDeleteMenu{
+	background-color: #fff;
+	border-radius: 4px;
+	width: 250px;
+	height: auto;
+	opacity: 1;
+	position: absolute;
+	top: 50%;
+	margin-top: -70px;
+	left: 50%;
+	margin-left: -125px;
+}
+
+.flagDeleteMenu div{
+	height: 40px;
+	width: 100%;
+	text-align: center;
+}
+
+.flagDeleteMenu div:hover{
+	background-color: #eee;
+	border-radius: 4px;
+}
+
+
 .commentsFlag--Individual{
+	width: 100%;
+	display: block;
+}
+
+.commentsFlag--Individual button{
+	border-radius: 4px;
+	width: 100%;
+}
+
+.commentsFlag{
+	width: 100%;
+	display: block;
+}
+
+.commentsFlag button{
+	border-radius: 4px;
+	width: 100%;
+}
+
+.cancelFlagDelete{
+	padding-top: 10px;
+}
+
+.flagged{
+	background-color: #e92a31;
+	color: white;
+	position: relative;
+	border-radius: 4px;
+}
+
+.deleteOwnPost button{
+	border-radius: 4px;
+	width: 100%;
+	padding-top: 10px;
+}
+
+.flagDeleteButton{
 	display: flex;
 	justify-content: flex-end;
-	padding-right: 15px;
-	margin-top: -10px;
-	margin-bottom: 15px;
+	margin-right: 11px;
+	font-size: 20px;
+}
 
-	position: absolute;
-	top: 80px;
-	left: 150px;
+.scheidingStreep{
+	width: 95%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #eee;
+	height: 1px;
+}
+
+.flagDeleteButton a{
+	color: gray;
+	text-decoration: none;
+	height: 20px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
+#btnDeletePost{
+	padding-top: 10px;
 }
 
 /*
