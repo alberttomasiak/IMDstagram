@@ -317,6 +317,72 @@ footer, .push{
 
 /*
 //
+//		SEARCH.PHP
+//
+*/
+.loadbutton {
+	display: block;
+	width: 150px;
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+}
+.circle {
+  position: relative;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #fafafa;
+  box-shadow: 60px -60px 0 2px #fafafa, -60px -60px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #fafafa;
+}
+.circle .loadmore, .loadmorePosts {
+  position: absolute;
+  top: 38px;
+  left: 30px;
+  width: 60px;
+  color: #31618B;
+  text-align: center;
+  text-transform: uppercase;
+  font: 18px sans-serif;
+  transition: opacity .2s ease;
+}
+.circle:hover {
+  animation: border .3s ease 1 forwards;
+  cursor: none;
+}
+.circle:hover .loadmore, .loadmorePosts {
+  opacity: 1;
+}
+@keyframes border {
+  0% {
+    box-shadow: 60px -60px 0 2px #fafafa, -60px -60px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  25% {
+    box-shadow: 0 -125px 0 2px #fafafa, -60px -60px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  50% {
+    box-shadow: 0 -125px 0 2px #fafafa, -125px 0px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  75% {
+    box-shadow: 0 -125px 0 2px #fafafa, -125px 0px 0 2px #fafafa, 0px 125px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  100% {
+    box-shadow: 0 -125px 0 2px #fafafa, -125px 0px 0 2px #fafafa, 0px 125px 0 2px #fafafa, 120px 40px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+}
+
+.loadbuttonNoFeed{
+	font-size: 18px;
+	width: 240px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*
+//
 //      LOGIN PAGE + SIGN UP PAGE
 //
 */

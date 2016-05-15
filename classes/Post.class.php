@@ -75,7 +75,7 @@
  											INNER JOIN follow
  											ON user.id=follow.followingID
  											WHERE follow.followerID = '$activeUser' AND follow.accepted = 1
- 											ORDER BY timestamp DESC");
+ 											ORDER BY timestamp DESC LIMIT 5");
 			//$statement->bindparam(":sessionID", $_SESSION['userID']);
             //SELECT * FROM post WHERE userID IN ( SELECT followingID FROM follow WHERE followerID=:followerID)
 			$statement->execute();
