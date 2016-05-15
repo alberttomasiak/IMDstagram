@@ -3,6 +3,11 @@ include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 $user = new User();
 $notificationNumber = $user->countPendingRequests();
+
+if(!empty($_POST['search'])){
+	header('location: search.php?tag='. $_SESSION['searchQuery']);
+}
+
 ?><nav class="nav">
     <div class="nav__container">
         <a href="index.php" class="nav__logo">logo</a>
@@ -10,7 +15,13 @@ $notificationNumber = $user->countPendingRequests();
             <input type="text" id="searchBox" autocomplete="off" name="search" class="searchid form-control" placeholder="Search">
             <ul id="searchResults"></ul>
         </form>
-
+        <script type="text/javascript">
+		$('#searchBox').keypress(function(e){
+			if (e.keyCode === 13){
+				$("#searchBox").submit();
+			}
+		});		
+		</script>
         <div class="nav__links">
             <?php if($notificationNumber > 0): ?>
             <a href="notifications.php" class="nav__links__item" aria-label="Notifications" title="Notifications">
