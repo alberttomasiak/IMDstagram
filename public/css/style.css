@@ -41,6 +41,11 @@ footer, .push{
 	width: 100%;
 }
 
+.footer--login{
+	color: #fff;
+	text-shadow: 1px 1px #000;
+}
+
 /*test class*/
 .problem{
 	background-color: red;
@@ -345,7 +350,7 @@ footer, .push{
   color: #31618B;
   text-align: center;
   text-transform: uppercase;
-  font: 18px sans-serif;
+  //font: 18px sans-serif;
   transition: opacity .2s ease;
 }
 .circle:hover {
