@@ -13,6 +13,23 @@ $conn = Db::getInstance();
 
 $comment = new Comment();
 
+if(!empty($_POST['btnPlaceComment'])){
+	if($comment->createComment($_POST['inputPostID'], $_POST['inputComment'])){
+		header('Location: '.$_SERVER['REQUEST_URI']);
+	}else{
+		//echo "Error";
+	}
+}
+
+if(!empty($_POST['btnLike'])){
+	$postID = $_POST['likePostID'];
+	if($post->like($postID)){
+		header('Location: '.$_SERVER['REQUEST_URI']);
+	}else{
+		echo "Error";
+	}
+}
+
 if(isset($_POST['page'])):
 $paged = $_POST['page'];
 $activeUser = $_SESSION['userID'];
@@ -26,7 +43,7 @@ $query = "SELECT user.username, user.profilePicture, user.profilePicture, post.i
  											ORDER BY timestamp DESC";
 
 
-$resultsPerPage = 5;
+$resultsPerPage = 20;
 
 if($paged > 0){
 	$page_limit = $resultsPerPage*($paged-1);
@@ -37,10 +54,24 @@ if($paged > 0){
 $timelinePosts = $conn->query($query.$pagination_sql);
 $num_rows = $timelinePosts->fetch(PDO::FETCH_ASSOC);
 
-if($num_rows > 0){ ?>
+if($num_rows > 0){ ?><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <title>IMDStagram</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="public/js/jquery-2.2.3.min.js"></script>
+    <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
+    <script src="public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="public/css/style.css" type="text/css">
+    <link rel="stylesheet" href="public/css/cssgram.min.css">
+    <script src="public/js/interaction.js"></script>
+</head>
+<body>
+<div class="container--custom">
 <?php include '../index.inc.php'; ?>
-
+</div>
 <?php
 }
 if($num_rows == $resultsPerPage){ ?>
@@ -51,3 +82,32 @@ if($num_rows == $resultsPerPage){ ?>
 }
 endif;
 ?>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.post').on("click", function(e){
+			var flagID = $(this).find('input[type="hidden"]').val();
+		
+			if($(e.target).is('.flagDeleteButton a')){
+				$('body').css('overflow', 'hidden');
+				$('body').css('margin-right', '16px');
+				$("."+flagID+"fdw").show();
+			}
+			//e.preventDefault();
+		});
+		
+		$('.flagDeleteWrap').on('click', function(e){
+			$('.flagDeleteWrap').hide();
+			$('body').css('margin-right', '0px');
+			$('body').css('overflow', 'scroll');
+		});
+	
+		$('.cancelFlagDelete a').click(function(e){
+			e.preventDefault();
+		});
+
+	});
+</script>
+</body>
+</html>
+
+

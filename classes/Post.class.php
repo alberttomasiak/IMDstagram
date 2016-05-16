@@ -67,7 +67,7 @@
         public function getAllTimeline(){
 			$conn = Db::getInstance();
 			$activeUser = $_SESSION['userID'];
-			
+			$resultsPerPage = 20;
 			$statement = $conn->prepare("SELECT user.username, user.profilePicture, user.profilePicture, post.id, post.userID, post.path, post.description, post.timestamp, post.filter, post.location
  											FROM post
  											INNER JOIN user
@@ -75,7 +75,7 @@
  											INNER JOIN follow
  											ON user.id=follow.followingID
  											WHERE follow.followerID = '$activeUser' AND follow.accepted = 1
- 											ORDER BY timestamp DESC LIMIT 5");
+ 											ORDER BY timestamp DESC LIMIT 0, $resultsPerPage");
 			//$statement->bindparam(":sessionID", $_SESSION['userID']);
             //SELECT * FROM post WHERE userID IN ( SELECT followingID FROM follow WHERE followerID=:followerID)
 			$statement->execute();

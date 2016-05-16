@@ -92,10 +92,10 @@
 	$(document).ready(function(){
 		$('.post').on("click", function(e){
 			var flagID = $(this).find('input[type="hidden"]').val();
-			console.log(flagID);
 		
 			if($(e.target).is('.flagDeleteButton a')){
 				$('body').css('overflow', 'hidden');
+				$('body').css('margin-right', '16px');
 				$("."+flagID+"fdw").show();
 			}
 			//e.preventDefault();
@@ -103,6 +103,7 @@
 		
 		$('.flagDeleteWrap').on('click', function(e){
 			$('.flagDeleteWrap').hide();
+			$('body').css('margin-right', '0px');
 			$('body').css('overflow', 'scroll');
 		});
 	
