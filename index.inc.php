@@ -86,7 +86,7 @@
 				<?php if($post->checkIfFlagged($timelinePost['id']) == true): ?>
 					<button type="submit" class="post__flag <?php echo "btn" . $timelinePost['id']; ?> flagged" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?>"></span>Report inappropriate</button>
 				<?php else: ?>
-					<button type="submit" class="post__flag <?php echo "f" . $timelinePost['id']; ?>" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> "></span>Report inapropriate</button>
+					<button type="submit" class="post__flag <?php echo "f" . $timelinePost['id']; ?>" name="flagPost"><span class="glyphicon <?php echo "f" . $timelinePost['id']; ?> "></span>Report inappropriate</button>
 				<?php endif; ?>
 			</form>
 		</div>
