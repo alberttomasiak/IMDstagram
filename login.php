@@ -58,7 +58,7 @@
     </div>
     <div class="push"></div>
     </div>
-	<?php include 'footer.inc.php'; ?>
+    <div class="footer--login"><?php include 'footer.inc.php'; ?></div>
 </div>
     
 </body>
