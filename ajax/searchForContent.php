@@ -6,8 +6,9 @@
 	$username = $_SESSION['username'];
 	$user = new User();
 	$userData = $user->getUserDetailsByUsername($username);
-	$_SESSION['searchQuery'] = $_POST['searchQuery'];
-
+	$_SESSION['searchQuery'] = preg_replace('/#([\w-]+)/i', '$1', $_POST['searchQuery']);
+	list($searchQuery) = explode(' ', $_SESSION['searchQuery']);
+	
 	$conn = Db::getInstance();
 	$sqlUsers = "SELECT * FROM user where username LIKE '%".$_POST['searchQuery']."%'";
 	$arrayUsers = $conn->query($sqlUsers);
@@ -26,7 +27,6 @@
 	$i = 0;
 	foreach($arrayUsers as $key){
 	?>
-
 	<div class="searchResult"><a href="profile.php?profile=<?php echo $key['username'] ?>"><img src="<?php echo $key['profilePicture']; ?>" alt="<?php echo $userData['username']; ?>'s profile picture"><?php echo $key['username'] ?></a></div>
 	<?php
 		if(++$i == 5) break;
@@ -37,9 +37,8 @@
 		
 	?>
 
-	<div class="searchResult searchTag"><a href="tag.php?tag=<?php echo $_POST['searchQuery'] ?>"><?php echo "<p class='hashtagSearch'>#</p>".$_POST['searchQuery']; ?></a></div>
-	<div class="searchResult moreResultsLink"><a href="search.php?tag=<?php echo $_POST['searchQuery'] ?>">Show more results</a></div>
+	<div class="searchResult searchTag"><a href="tag.php?tag=<?php echo $searchQuery; ?>"><?php echo "<p class='hashtagSearch'>#</p>".$searchQuery; ?></a></div>
+	<div class="searchResult moreResultsLink"><a href="search.php?tag=<?php echo $_SESSION['searchQuery'] ?>">Show more results</a></div>
 	<?php
 	}
-
 ?>

@@ -44,6 +44,7 @@
             </div>
         </header>
     </div>
+    <div class="page--wrap">
     <section class="ownContainer">
         <h4>Most recent</h4>
 
@@ -52,8 +53,7 @@
         <?php else: ?>
             <div class="gallery">
             <?php foreach( $taggedPosts as $key => $taggedPost ): ?>
-
-<a href="post.php?p=<?php echo $taggedPost['id'] .'&u='.$taggedPost['userID'] ?>" style="background-image: url(<?php echo "'".$taggedPost['path']."'" ?>)" class="gallery__item <?php echo $taggedPost['filter']; ?>"></a>
+<a href="post.php?p=<?php echo $taggedPost['postID'] .'&u='. $taggedPost['userID'] ?>" style="background-image: url(<?php echo "'".$taggedPost['path']."'" ?>)" class="gallery__item <?php echo $taggedPost['filter']; ?>"></a>
 
             <?php endforeach; ?>
             </div>
@@ -61,11 +61,19 @@
             <!--<article>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Coca_Cola-bxyz.jpg" alt="">
             </article>-->
+            
         <?php endif; ?>
-
+		
     </section>
+    
+    <div class="push"></div>
+    </div>
+    <?php if($taggedPosts == false): ?>
+    <div class="footerWrap">
     <?php include 'footer.inc.php'; ?>
-
-
+    </div>
+	<?php else: ?>
+	<?php include 'footer.inc.php'; ?>
+	<?php endif; ?>
 </body>
 </html>

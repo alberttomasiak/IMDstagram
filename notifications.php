@@ -46,7 +46,8 @@
 </head>
 <body>
     <?php include 'nav.inc.php'; ?>
-    <div class="container">
+    <div class="page--wrap">
+    <div class="container notifications">
         <div class="row">
             <div class="col-xs-12">
                 <h1>Notifications</h1>
@@ -80,6 +81,9 @@
                 </ul>
             </div>
         </div>
+        <div class="push"></div>
     </div>
+    <?php include 'footer.inc.php'; ?>
+	</div>
 </body>
 </html>

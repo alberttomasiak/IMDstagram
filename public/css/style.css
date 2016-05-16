@@ -6,11 +6,16 @@ body{
     color: #4b4f54;
 	z-index: -999;
 	font-family: 'Montserrat', sans-serif;
-	min-height: 100%;
+	min-height: 100vh;
 }
 .container{
-	margin-bottom: 70px;
+	
 	max-width: 955px;
+}
+
+.notifications{
+	margin-bottom: 0;
+	min-height: 75vh;
 }
 
 a:hover{
@@ -19,10 +24,23 @@ a:hover{
 
 footer{
 	text-align: center;
-	bottom: 20px;
-	width: 100%;
-	margin-top: 100px;
+	width: 90%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	
 }
+
+footer, .push{
+	height: 20px;
+}
+
+.footerWrap{
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+}
+
 /*test class*/
 .problem{
 	background-color: red;
@@ -231,6 +249,10 @@ footer{
 	margin-right: auto;
 }
 
+#myList a{
+	display: none;
+}
+
 #searchResults {
     display: none;
     top:40px;
@@ -257,6 +279,7 @@ footer{
 	margin-left: 10px;
 	margin-right: 15px;
 	margin-top: 5px;
+	margin-bottom: 3px;
 }
 #searchResults:after,
 #searchResults:before {
@@ -294,6 +317,71 @@ footer{
 
 /*
 //
+//		SEARCH.PHP
+//
+*/
+.loadbutton {
+	display: block;
+	width: 150px;
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+	cursor: pointer;
+}
+.circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #fafafa;
+  box-shadow: 60px -60px 0 2px #fafafa, -60px -60px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #fafafa;
+}
+.circle .loadmore, .loadmorePosts {
+  position: absolute;
+  top: 38px;
+  left: 30px;
+  width: 60px;
+  color: #31618B;
+  text-align: center;
+  text-transform: uppercase;
+  font: 18px sans-serif;
+  transition: opacity .2s ease;
+}
+.circle:hover {
+  animation: border .3s ease 1 forwards;
+}
+.circle:hover .loadmore, .loadmorePosts {
+  opacity: 1;
+}
+@keyframes border {
+  0% {
+    box-shadow: 60px -60px 0 2px #fafafa, -60px -60px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  25% {
+    box-shadow: 0 -125px 0 2px #fafafa, -60px -60px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  50% {
+    box-shadow: 0 -125px 0 2px #fafafa, -125px 0px 0 2px #fafafa, -60px 60px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  75% {
+    box-shadow: 0 -125px 0 2px #fafafa, -125px 0px 0 2px #fafafa, 0px 125px 0 2px #fafafa, 60px 60px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+  100% {
+    box-shadow: 0 -125px 0 2px #fafafa, -125px 0px 0 2px #fafafa, 0px 125px 0 2px #fafafa, 120px 40px 0 2px #fafafa, 0 0 0 2px #31618B;
+  }
+}
+
+.loadbuttonNoFeed{
+	font-size: 18px;
+	width: 240px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*
+//
 //      LOGIN PAGE + SIGN UP PAGE
 //
 */
@@ -306,6 +394,21 @@ footer{
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding-top: 10vh;
+	
+}
+
+.page--wrap{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -30px;
+}
+
+.page--wrap__welcome{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -40px;
 }
 
 .form--login{
@@ -316,6 +419,7 @@ footer{
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 4px;
+	margin-bottom: 50px;
 }
 
 .form--login__logo{
@@ -424,6 +528,10 @@ footer{
 	margin-left: 55px;
 }
 
+.searchTag a p{
+	margin-top: -5px;
+}
+
 .searchTag{
 	margin-bottom: 10px;
 }
@@ -453,6 +561,7 @@ nav .navbar-form{
 .container--custom{
 	margin-left: auto;
 	margin-right: auto;
+	height: 100%;
 }
 
 
@@ -606,13 +715,8 @@ nav .navbar-form{
 */
 
 .post__delete{
-	padding: 0;
-	margin-right: 5px;
 	background-color: transparent;
 	border: 1px solid transparent;
-	position: absolute;
-	top: 70px;
-	left: 40px;
 }
 
 .post__flag{
@@ -625,35 +729,111 @@ nav .navbar-form{
 	outline: none;
 }
 
-.flagged{
-	background-color: #ddd;
-	position: relative;
-}
-
-
 .glyphicon-flag{
 	font-size: 30px;
 	padding: 5px;
 }
 
-.commentsFlag{
-	display: flex;
-	justify-content: flex-end;
-	margin-right: 10px;
-	margin-bottom: 10px;
-
+.flagDeleteWrap{
+	display: none;
+	position: fixed;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(102, 102, 102, .4);
+	overflow: auto;
+	z-index: 998;
 }
 
+.flagDeleteMenu{
+	background-color: #fff;
+	border-radius: 4px;
+	width: 250px;
+	height: auto;
+	opacity: 1;
+	position: absolute;
+	top: 50%;
+	margin-top: -70px;
+	left: 50%;
+	margin-left: -125px;
+}
+
+.flagDeleteMenu div{
+	height: 40px;
+	width: 100%;
+	text-align: center;
+}
+
+.flagDeleteMenu div:hover{
+	background-color: #eee;
+	border-radius: 4px;
+}
+
+
 .commentsFlag--Individual{
+	width: 100%;
+	display: block;
+}
+
+.commentsFlag--Individual button{
+	border-radius: 4px;
+	width: 100%;
+}
+
+.commentsFlag{
+	width: 100%;
+	display: block;
+}
+
+.commentsFlag button{
+	border-radius: 4px;
+	width: 100%;
+}
+
+.cancelFlagDelete{
+	padding-top: 10px;
+}
+
+.flagged{
+	background-color: #e92a31;
+	color: white;
+	position: relative;
+	border-radius: 4px;
+}
+
+.deleteOwnPost button{
+	border-radius: 4px;
+	width: 100%;
+	padding-top: 10px;
+}
+
+.flagDeleteButton{
 	display: flex;
 	justify-content: flex-end;
-	padding-right: 15px;
-	margin-top: -10px;
-	margin-bottom: 15px;
+	margin-right: 11px;
+	font-size: 20px;
+}
 
-	position: absolute;
-	top: 80px;
-	left: 150px;
+.scheidingStreep{
+	width: 95%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #eee;
+	height: 1px;
+}
+
+.flagDeleteButton a{
+	color: gray;
+	text-decoration: none;
+	height: 20px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
+#btnDeletePost{
+	padding-top: 10px;
 }
 
 /*
@@ -742,8 +922,10 @@ nav .navbar-form{
 .ownContainer{
 	width: 99%;
 	max-width: 930px;
+	margin-bottom: 50px;
 	margin-left: auto;
 	margin-right: auto;
+	height: 100%;
 }
 
 .gallery{
@@ -803,12 +985,18 @@ nav .navbar-form{
 	-webkit-animation:blink normal 2s infinite ease-in-out; /* Webkit */
 	-ms-animation:blink normal 2s infinite ease-in-out; /* IE */
 	animation:blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
-}​
+}
 
 
-@media only screen and (min-width: 400px){
+@media (min-width: 400px){
 	#searchResults{
-		left: 0%;
+		position: relative;
+		left: 5%;
+	}
+	
+	.notifications{
+	margin-bottom: 0;
+	min-height: 80vh;
 	}
 }
 
@@ -818,6 +1006,11 @@ nav .navbar-form{
 	}
 	#inputComment{
 		background-color: #fff;
+	}
+	
+	.notifications{
+	margin-bottom: 0;
+	min-height: 88vh;
 	}
 }
 

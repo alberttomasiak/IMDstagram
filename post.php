@@ -4,6 +4,11 @@
     include_once 'classes/Comment.class.php';
     session_start();
 
+	if(isset($_SESSION['loggedin'])){
+    }else{
+      header('location: login.php');
+    }
+
     $getPost = $_GET['p'];
     $getUserID = $_GET['u'];
 
@@ -15,12 +20,12 @@
     $userData = $user->getUserDetailsByUserID($getUserID);
 
     // ALBERT JE MOET EEN SUBMIT KNOP KIEZEN :o
-	/*if(!empty($_POST)){
+	if(!empty($_POST['btnDeletePost'])){
 		$deletePostID = $_POST['deletePostID'];
 		$post = new Post();
 		$post->deletePost($deletePostID);
 		header('Location: profile.php?profile='.$_SESSION['username'].'');
-	}*/
+	}
 
     // REDIRECT ON UNEXISTING POST used to prevent messing with url parameters on single post page
     if($post->checkComboExist($getPost, $getUserID) == false){
@@ -127,30 +132,52 @@
                 <div class="input-group">
                     <input type="text" class="form-control inputComment" name="inputComment" id="inputComment" placeholder="Add a comment...">
                         <span class="input-group-btn">
-                        <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default btnPlaceComment" data-postid="<?php echo $postData['id'] ?>>
+                        <input type="submit" name="btnPlaceComment" id="btnPlaceComment" value="Submit" class="btn btn-default btnPlaceComment" data-postid="<?php echo $postData['id']; ?>"
                         </span>
                 </div>
                 <input type="hidden" id="inputPostID" value="<?php echo $postData['id'];?>">
             </form>
         </div>
+        <div class="scheidingStreep"></div>
+        <div class="flagDeleteButton">
+        	<a class="btn-open" href="#">...</a>
+        </div>
+</div>
+<div class="flagDeleteWrap">
+      
+       <section class="flagDeleteMenu">
         <div class="commentsFlag--Individual">
             <form action="" method="POST">
                 <input type="hidden" name="postID" class="flagID" value="<?php echo $postData['id']; ?>">
                 <?php if($post->checkIfFlagged($postData['id']) == true): ?>
-                    <button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> flagged glyphicon-flag"></span></button>
+                    <button type="submit" class="post__flag <?php echo "btn" . $postData['id']; ?> flagged" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?>"></span>Report inappropriate</button>
                 <?php else: ?>
-                    <button type="submit" class="post__flag" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> glyphicon-flag"></span></button>
+                    <button type="submit" class="post__flag <?php echo "f" . $postData['id']; ?>" name="flagPost"><span class="glyphicon <?php echo "f" . $postData['id']; ?> "></span>Report inappropriate</button>
                 <?php endif; ?>
             </form>
         </div>
         <?php if($_SESSION['username'] == $userData['username']): ?>
-            <form action="" method="POST">
-                <input type="hidden" name="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
-                <button type="submit" class="post__delete" name="deletePost"><span class="glyphicon glyphicon-trash"></span></button>
+        <div class="deleteOwnPost">
+               <form action="" method="POST">
+                <input type="hidden" name="deletePostID" id="deletePostID" class="deleteID" value="<?php echo $postData['id']; ?>">
+                <input type="submit" value="Delete this post" class="post__delete" name="btnDeletePost" id="btnDeletePost">
             </form>
+			</div>
         <?php endif; ?>
-    </div>
-
-</div>
+        <div class="cancelFlagDelete">
+        	<a href="#">Cancel</a>
+        </div>
+        </section>
+        </div>
+		</div>
+		<script type="text/javascript">
+			$('html').on("click", function(e){
+				if($(e.target).is('.flagDeleteButton a')){
+					$('.flagDeleteWrap').show();
+				}else if($(e.target) != $('.flagDeleteMenu')){
+					$('.flagDeleteWrap').hide();
+				}
+			});
+		</script>
 </body>
 </html>
