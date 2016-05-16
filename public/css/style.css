@@ -327,10 +327,10 @@ footer, .push{
 	margin-left: auto;
 	margin-right: auto;
 	overflow: hidden;
+	cursor: pointer;
 }
 .circle {
   position: relative;
-  overflow: hidden;
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -350,7 +350,6 @@ footer, .push{
 }
 .circle:hover {
   animation: border .3s ease 1 forwards;
-  cursor: none;
 }
 .circle:hover .loadmore, .loadmorePosts {
   opacity: 1;
