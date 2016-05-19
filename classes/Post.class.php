@@ -41,7 +41,7 @@
 			$statement = $conn->prepare("SELECT p.id as postID, p.userID, p.path, p.filter, u.id FROM post p 
   				INNER JOIN user u on p.userID = u.id 
   				INNER JOIN follow f on u.id = f.followingID
-				WHERE p.description LIKE :tag
+				WHERE p.description LIKE :tag OR p.description LIKE :tagEnd
   				 AND u.private = 0
 				 AND (f.followerid = p.userID OR f.followingid = p.userID)
   				 OR (u.private = 1 AND f.followingID = :user AND f.accepted = 1 AND p.description LIKE :tag)
