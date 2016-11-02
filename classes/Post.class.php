@@ -43,7 +43,7 @@
   				INNER JOIN follow f on u.id = f.followingID
 				WHERE p.description LIKE :tag OR p.description LIKE :tagEnd
   				 AND u.private = 0
-				 AND (f.followerid = p.userID OR f.followingid = p.userID)
+				 AND (f.followerID = p.userID OR f.followingID = p.userID)
   				 OR (u.private = 1 AND f.followingID = :user AND f.accepted = 1 AND p.description LIKE :tag)
   				 OR (u.private = 1 AND f.followerID = :user AND f.accepted = 1 AND p.description LIKE :tag)
 				 OR (u.private = 1 AND f.followingID = :user AND f.accepted = 1 AND p.description LIKE :tagEnd)
